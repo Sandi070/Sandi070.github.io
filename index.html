@@ -1,25 +1,25 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Pembelajaran Kimia</title>
+    <title>SandIChemistry</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f2f5;
             color: #333;
         }
         header, footer {
-            background-color: #0b5394;
+            background-color: #005a9e;
             color: #fff;
             text-align: center;
             padding: 20px 0;
         }
         nav {
-            background-color: #073763;
+            background-color: #0066cc;
             overflow: hidden;
         }
         nav a {
@@ -30,9 +30,43 @@
             padding: 14px 16px;
             text-decoration: none;
         }
-        nav a:hover {
-            background-color: #ddd;
+        nav a:hover, .dropdown:hover .dropbtn {
+            background-color: #004080;
+        }
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+        .dropdown .dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            margin: 0;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            float: none;
             color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
         .content {
             padding: 20px;
@@ -43,23 +77,57 @@
         .section h2 {
             margin-top: 0;
         }
+        .profile {
+            text-align: center;
+        }
+        .profile img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+        .contact-info {
+            list-style-type: none;
+            padding: 0;
+        }
+        .contact-info li {
+            margin-bottom: 10px;
+        }
+        @media screen and (max-width: 600px) {
+            nav a, .dropdown .dropbtn {
+                float: none;
+                display: block;
+                text-align: left;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Web Pembelajaran Kimia</h1>
+        <h1>SandIChemistry</h1>
     </header>
     
     <nav>
         <a href="#materi-kimia">Materi Kimia</a>
-        <a href="#bank-soal">Bank Soal</a>
+        <div class="dropdown">
+            <button class="dropbtn">Bank Soal 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#soal-pilihan-ganda">Soal Pilihan Ganda</a>
+                <a href="#soal-essay">Soal Essay</a>
+            </div>
+        </div> 
         <a href="#praktikum-kimia">Praktikum Kimia</a>
-        <a href="#OSN">OSN</a>
         <a href="#video-pembelajaran">Video Pembelajaran</a>
+        <a href="#soal-osn">Soal OSN</a>
         <a href="#kontak">Kontak</a>
     </nav>
     
     <div class="content">
+        <div class="profile">
+            <img src="Gambar-Pembelajaran-Kimia.jpeg" alt="Pembelajaran Kimia MAN ICK">
+        </div>
+
         <div id="materi-kimia" class="section">
             <h2>Materi Kimia</h2>
             <p>Di sini Anda dapat menemukan berbagai materi kimia yang dapat membantu dalam pembelajaran Anda.</p>
@@ -70,6 +138,16 @@
             <p>Bank soal ini menyediakan berbagai soal latihan dan pembahasan untuk mempersiapkan ujian Anda.</p>
         </div>
         
+        <div id="soal-pilihan-ganda" class="section">
+            <h2>Soal Pilihan Ganda</h2>
+            <p>Berbagai soal pilihan ganda untuk menguji pemahaman Anda dalam kimia.</p>
+        </div>
+
+        <div id="soal-essay" class="section">
+            <h2>Soal Essay</h2>
+            <p>Soal essay yang menantang untuk memperdalam pemahaman Anda.</p>
+        </div>
+
         <div id="praktikum-kimia" class="section">
             <h2>Praktikum Kimia</h2>
             <p>Bagian ini mencakup berbagai praktikum kimia yang dapat dilakukan di rumah atau di laboratorium.</p>
@@ -80,17 +158,24 @@
             <p>Koleksi video pembelajaran kimia yang dapat membantu memperdalam pemahaman Anda.</p>
         </div>
         
+        <div id="soal-osn" class="section">
+            <h2>Soal OSN</h2>
+            <p>Latihan soal Olimpiade Sains Nasional (OSN) yang dapat menantang dan meningkatkan kemampuan Anda dalam kimia.</p>
+        </div>
+        
         <div id="kontak" class="section">
             <h2>Kontak</h2>
-            <p>Email: <a href="mailto:sandisaputra070.ss@gmail.com">sandisaputra070.ss@gmail.com</a></p>
-            <p>Nomor HP: 0821-9415-2620</p>
-            <p>Pekerjaan: Guru Kimia</p>
-            <p>Tempat Kerja: MAN Insan Cendekia Kota Kendari</p>
+            <ul class="contact-info">
+                <li>Email: <a href="mailto:sandisaputra070.ss@gmail.com">sandisaputra070.ss@gmail.com</a></li>
+                <li>Nomor HP: 0821-9415-2620</li>
+                <li>Pekerjaan: Guru Kimia</li>
+                <li>Tempat Kerja: MAN Insan Cendekia Kota Kendari</li>
+            </ul>
         </div>
     </div>
     
     <footer>
-        <p>&copy; 2024 Guru Kimia</p>
+        <p>&copy; 2024 SandIChemistry</p>
     </footer>
 </body>
 </html>
