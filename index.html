@@ -6,32 +6,50 @@
     <title>SandIChemistry</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
             margin: 0;
             padding: 0;
-            background-color: #f0f2f5;
-            color: #333;
         }
-        header, footer {
-            background-color: #005a9e;
-            color: #fff;
+        header {
+            background-image: url('background-sekolah.jpeg');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
             text-align: center;
-            padding: 20px 0;
+            color: #fff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
         nav {
-            background-color: #0066cc;
-            overflow: hidden;
-        }
-        nav a {
-            float: left;
-            display: block;
+            background-color: #333;
             color: #fff;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
+            padding: 10px 0;
         }
-        nav a:hover, .dropdown:hover .dropbtn {
-            background-color: #004080;
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1;
+            position: relative;
+        }
+        nav ul li {
+            margin: 0 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover, .dropdown:hover .dropbtn {
+            color: #ffcc00;
         }
         .dropdown {
             float: left;
@@ -79,25 +97,50 @@
         }
         .profile {
             text-align: center;
+            margin-top: 20px;
+            padding: 20px 0;
         }
         .profile img {
             border-radius: 50%;
+            border: 5px solid #fff;
             width: 150px;
             height: 150px;
+            object-fit: cover;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
         }
-        .contact-info {
-            list-style-type: none;
-            padding: 0;
+        .content {
+            padding: 20px;
+            text-align: center;
         }
-        .contact-info li {
-            margin-bottom: 10px;
+        .content h2 {
+            color: #333;
+            margin-bottom: 20px;
         }
-        @media screen and (max-width: 600px) {
-            nav a, .dropdown .dropbtn {
-                float: none;
-                display: block;
-                text-align: left;
-            }
+        .content p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .social-icons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #ffcc00;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -105,78 +148,84 @@
     <header>
         <h1>SandIChemistry</h1>
     </header>
-    
+
     <nav>
-        <a href="#materi-kimia">Materi Kimia</a>
-        <a href="konsep-mol.pdf" target="_blank">Unduh Konsep Mol (PDF)</a>
-        <div class="dropdown">
+        <ul>
+            <li><div class="dropdown">
+            <button class="dropbtn">Materi Kimia 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#struktur-atom">Struktur Atom</a>
+                <a href="#ikatan-kimia">Ikatan Kimia</a>
+                <a href="konsep-mol.pdf" target="_blank">Konsep Mol</a>
+            </div>
+        </div> </li>
+            <li><div class="dropdown">
             <button class="dropbtn">Bank Soal 
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a href="#soal-pilihan-ganda">Soal Pilihan Ganda</a>
-                <a href="#soal-essay">Soal Essay</a>
+                <a href="#struktur-atom">Struktur Atom</a>
+                <a href="#ikatan-kimia">Ikatan Kimia</a>
+                <a href="#konsep-mol">Konsep Mol</a>
             </div>
-        </div> 
-        <a href="#praktikum-kimia">Praktikum Kimia</a>
-        <a href="#video-pembelajaran">Video Pembelajaran</a>
-        <a href="#soal-osn">Soal OSN</a>
-        <a href="#kontak">Kontak</a>
+        </div> </li>
+            <li><div class="dropdown">
+            <button class="dropbtn">Praktikum Kimia 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#hukum-kekekalan-massa">Hukum Kekekalan Massa</a>
+                <a href="#titrasi-asam-basa">Titrasi Asam Basa</a>
+                <a href="#faktor-yang-mempengaruhi-laju-reaksi">Faktor Yang Mempengaruhi Laju Reaksi</a>
+            </div>
+        </div> </li>
+            <li><div class="dropdown">
+            <button class="dropbtn">Video Pembelajaran 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="ukuran-atom.mp4" target="_blank">Ukuran Atom</a>
+                <a href="#proses-terjadinya-ikatan-kimia">Proses Terjadinya Ikatan Kimia</a>
+                <a href="#proses-tumbukan-partikel">Proses Tumbukan Partikel</a>
+            </div>
+        </div> </li>
+            <li><div class="dropdown">
+            <button class="dropbtn">Soal OSN 
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#OSK-2024">OSK 2024</a>
+                <a href="#OSK-2023">OSK 2023</a>
+                <a href="#OSK-2022">OSK 2022</a>
+                <a href="#OSK-2021">OSK 2021</a>
+                <a href="#OSK-2020">OSK 2020</a>
+                <a href="#OSK-2019">OSK 2019</a>
+            </div>
+        </div> </li>
+        </ul>
     </nav>
-    
-    <div class="content">
-        <div class="profile">
-            <img src="Gambar-Pembelajaran-Kimia.jpeg" alt="Pembelajaran Kimia MAN ICK">
-        </div>
 
-        <div id="materi-kimia" class="section">
-            <h2>Materi Kimia</h2>
-            <p>Di sini Anda dapat menemukan berbagai materi kimia yang dapat membantu dalam pembelajaran Anda.</p>
-        </div>
-        
-        <div id="bank-soal" class="section">
-            <h2>Bank Soal</h2>
-            <p>Bank soal ini menyediakan berbagai soal latihan dan pembahasan untuk mempersiapkan ujian Anda.</p>
-        </div>
-        
-        <div id="soal-pilihan-ganda" class="section">
-            <h2>Soal Pilihan Ganda</h2>
-            <p>Berbagai soal pilihan ganda untuk menguji pemahaman Anda dalam kimia.</p>
-        </div>
-
-        <div id="soal-essay" class="section">
-            <h2>Soal Essay</h2>
-            <p>Soal essay yang menantang untuk memperdalam pemahaman Anda.</p>
-        </div>
-
-        <div id="praktikum-kimia" class="section">
-            <h2>Praktikum Kimia</h2>
-            <p>Bagian ini mencakup berbagai praktikum kimia yang dapat dilakukan di rumah atau di laboratorium.</p>
-        </div>
-        
-        <div id="video-pembelajaran" class="section">
-            <h2>Video Pembelajaran</h2>
-            <p>Koleksi video pembelajaran kimia yang dapat membantu memperdalam pemahaman Anda.</p>
-        </div>
-        
-        <div id="soal-osn" class="section">
-            <h2>Soal OSN</h2>
-            <p>Latihan soal Olimpiade Sains Nasional (OSN) yang dapat menantang dan meningkatkan kemampuan Anda dalam kimia.</p>
-        </div>
-        
-        <div id="kontak" class="section">
-            <h2>Kontak</h2>
-            <ul class="contact-info">
-                <li>Email: <a href="mailto:sandisaputra070.ss@gmail.com">sandisaputra070.ss@gmail.com</a></li>
-                <li>Nomor HP: 0821-9415-2620</li>
-                <li>Pekerjaan: Guru Kimia</li>
-                <li>Tempat Kerja: MAN Insan Cendekia Kota Kendari</li>
-            </ul>
-        </div>
+    <div class="profile">
+        <img src="foto-profil.jpg" alt="Foto Profil">
     </div>
-    
+
+    <div class="content">
+        <h2>Selamat Datang di SandIChemistry</h2>
+        <p>
+            Website ini menyediakan berbagai materi pembelajaran kimia, soal-soal, dan video pembelajaran untuk membantu Anda memahami konsep-konsep kimia dengan lebih baik. Jelajahi menu di atas untuk menemukan konten yang Anda butuhkan.
+        </p>
+    </div>
+
+    <div class="social-icons">
+        <a href="#"><img src="icon-facebook.png" alt="Facebook" width="30"></a>
+        <a href="#"><img src="icon-twitter.png" alt="Twitter" width="30"></a>
+        <a href="#"><img src="icon-instagram.png" alt="Instagram" width="30"></a>
+    </div>
+
     <footer>
-        <p>&copy; 2024 SandIChemistry</p>
+        <p>© 2024 SandIChemistry | Hubungi: sandisaputra070.ss@gmail.com | Nomor HP: 0821-9415-2620</p>
     </footer>
 </body>
 </html>
