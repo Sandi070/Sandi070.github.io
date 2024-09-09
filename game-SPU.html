@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabel Periodik Interaktif</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, 50px); /* 18 kolom untuk setiap golongan */
+            grid-template-rows: repeat(9, 50px); /* 9 baris untuk setiap periode */
+            gap: 5px;
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+        .element-box {
+            border: 1px solid #ccc;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background-color: white;
+            user-select: none;
+        }
+        .element-draggable {
+            cursor: pointer;
+            border: 2px solid #333;
+            padding: 5px;
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            margin: 10px;
+        }
+        .correct {
+            background-color: #8BC34A;
+        }
+        .wrong {
+            background-color: #FF5722;
+        }
+        .empty {
+            background-color: transparent;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tabel Periodik Interaktif</h1>
+    <div class="periodic-table">
+        <!-- Periode 1 -->
+        <div id="H" class="element-box" style="grid-column: 1; grid-row: 1;"></div>
+        <div class="element-box empty" style="grid-column: 2 / span 16; grid-row: 1;"></div>
+        <div id="He" class="element-box" style="grid-column: 18; grid-row: 1;"></div>
+        
+        <!-- Periode 2 -->
+        <div id="Li" class="element-box" style="grid-column: 1; grid-row: 2;"></div>
+        <div id="Be" class="element-box" style="grid-column: 2; grid-row: 2;"></div>
+        <div class="element-box empty" style="grid-column: 3 / span 10; grid-row: 2;"></div>
+        <div id="B" class="element-box" style="grid-column: 13; grid-row: 2;"></div>
+        <div id="C" class="element-box" style="grid-column: 14; grid-row: 2;"></div>
+        <div id="N" class="element-box" style="grid-column: 15; grid-row: 2;"></div>
+        <div id="O" class="element-box" style="grid-column: 16; grid-row: 2;"></div>
+        <div id="F" class="element-box" style="grid-column: 17; grid-row: 2;"></div>
+        <div id="Ne" class="element-box" style="grid-column: 18; grid-row: 2;"></div>
+
+        <!-- Periode 3 -->
+        <div id="Na" class="element-box" style="grid-column: 1; grid-row: 3;"></div>
+        <div id="Mg" class="element-box" style="grid-column: 2; grid-row: 3;"></div>
+        <div class="element-box empty" style="grid-column: 3 / span 10; grid-row: 3;"></div>
+        <div id="Al" class="element-box" style="grid-column: 13; grid-row: 3;"></div>
+        <div id="Si" class="element-box" style="grid-column: 14; grid-row: 3;"></div>
+        <div id="P" class="element-box" style="grid-column: 15; grid-row: 3;"></div>
+        <div id="S" class="element-box" style="grid-column: 16; grid-row: 3;"></div>
+        <div id="Cl" class="element-box" style="grid-column: 17; grid-row: 3;"></div>
+        <div id="Ar" class="element-box" style="grid-column: 18; grid-row: 3;"></div>
+
+        <!-- Periode 4 -->
+        <div id="K" class="element-box" style="grid-column: 1; grid-row: 4;"></div>
+        <div id="Ca" class="element-box" style="grid-column: 2; grid-row: 4;"></div>
+        <div id="Sc" class="element-box" style="grid-column: 3; grid-row: 4;"></div>
+        <div id="Ti" class="element-box" style="grid-column: 4; grid-row: 4;"></div>
+        <div id="V" class="element-box" style="grid-column: 5; grid-row: 4;"></div>
+        <div id="Cr" class="element-box" style="grid-column: 6; grid-row: 4;"></div>
+        <div id="Mn" class="element-box" style="grid-column: 7; grid-row: 4;"></div>
+        <div id="Fe" class="element-box" style="grid-column: 8; grid-row: 4;"></div>
+        <div id="Co" class="element-box" style="grid-column: 9; grid-row: 4;"></div>
+        <div id="Ni" class="element-box" style="grid-column: 10; grid-row: 4;"></div>
+        <div id="Cu" class="element-box" style="grid-column: 11; grid-row: 4;"></div>
+        <div id="Zn" class="element-box" style="grid-column: 12; grid-row: 4;"></div>
+        <div id="Ga" class="element-box" style="grid-column: 13; grid-row: 4;"></div>
+        <div id="Ge" class="element-box" style="grid-column: 14; grid-row: 4;"></div>
+        <div id="As" class="element-box" style="grid-column: 15; grid-row: 4;"></div>
+        <div id="Se" class="element-box" style="grid-column: 16; grid-row: 4;"></div>
+        <div id="Br" class="element-box" style="grid-column: 17; grid-row: 4;"></div>
+        <div id="Kr" class="element-box" style="grid-column: 18; grid-row: 4;"></div>
+
+        <!-- Periode 5 -->
+        <div id="Rb" class="element-box" style="grid-column: 1; grid-row: 5;"></div>
+        <div id="Sr" class="element-box" style="grid-column: 2; grid-row: 5;"></div>
+        <div id="Y" class="element-box" style="grid-column: 3; grid-row: 5;"></div>
+        <div id="Zr" class="element-box" style="grid-column: 4; grid-row: 5;"></div>
+        <div id="Nb" class="element-box" style="grid-column: 5; grid-row: 5;"></div>
+        <div id="Mo" class="element-box" style="grid-column: 6; grid-row: 5;"></div>
+        <div id="Tc" class="element-box" style="grid-column: 7; grid-row: 5;"></div>
+        <div id="Ru" class="element-box" style="grid-column: 8; grid-row: 5;"></div>
+        <div id="Rh" class="element-box" style="grid-column: 9; grid-row: 5;"></div>
+        <div id="Pd" class="element-box" style="grid-column: 10; grid-row: 5;"></div>
+        <div id="Ag" class="element-box" style="grid-column: 11; grid-row: 5;"></div>
+        <div id="Cd" class="element-box" style="grid-column: 12; grid-row: 5;"></div>
+        <div id="In" class="element-box" style="grid-column: 13; grid-row: 5;"></div>
+        <div id="Sn" class="element-box" style="grid-column: 14; grid-row: 5;"></div>
+        <div id="Sb" class="element-box" style="grid-column: 15; grid-row: 5;"></div>
+        <div id="Te" class="element-box" style="grid-column: 16; grid-row: 5;"></div>
+        <div id="I" class="element-box" style="grid-column: 17; grid-row: 5;"></div>
+        <div id="Xe" class="element-box" style="grid-column: 18; grid-row: 5;"></div>
+
+        <!-- Periode 6 -->
+        <div id="Cs" class="element-box" style="grid-column: 1; grid-row: 6;"></div>
+        <div id="Ba" class="element-box" style="grid-column: 2; grid-row: 6;"></div>
+        <div class="element-box empty" style="grid-column: 3 / span 3; grid-row: 6;"></div>
+        <div id="Hf" class="element-box" style="grid-column: 4; grid-row: 6;"></div>
+        <div id="Ta" class="element-box" style="grid-column: 5; grid-row: 6;"></div>
+        <div id="W" class="element-box" style="grid-column: 6; grid-row: 6;"></div>
+        <div id="Re" class="element-box" style="grid-column: 7; grid-row: 6;"></div>
+        <div id="Os" class="element-box" style="grid-column: 8; grid-row: 6;"></div>
+        <div id="Ir" class="element-box" style="grid-column: 9; grid-row: 6;"></div>
+        <div id="Pt" class="element-box" style="grid-column: 10; grid-row: 6;"></div>
+        <div id="Au" class="element-box" style="grid-column: 11; grid-row: 6;"></div>
+        <div id="Hg" class="element-box" style="grid-column: 12; grid-row: 6;"></div>
+        <div id="Tl" class="element-box" style="grid-column: 13; grid-row: 6;"></div>
+        <div id="Pb" class="element-box" style="grid-column: 14; grid-row: 6;"></div>
+        <div id="Bi" class="element-box" style="grid-column: 15; grid-row: 6;"></div>
+        <div id="Po" class="element-box" style="grid-column: 16; grid-row: 6;"></div>
+        <div id="At" class="element-box" style="grid-column: 17; grid-row: 6;"></div>
+        <div id="Rn" class="element-box" style="grid-column: 18; grid-row: 6;"></div>
+
+        <!-- Periode 7 -->
+        <div id="Fr" class="element-box" style="grid-column: 1; grid-row: 7;"></div>
+        <div id="Ra" class="element-box" style="grid-column: 2; grid-row: 7;"></div>
+        <div class="element-box empty" style="grid-column: 3 / span 3; grid-row: 7;"></div>
+        <div id="Rf" class="element-box" style="grid-column: 4; grid-row: 7;"></div>
+        <div id="Db" class="element-box" style="grid-column: 5; grid-row: 7;"></div>
+        <div id="Sg" class="element-box" style="grid-column: 6; grid-row: 7;"></div>
+        <div id="Bh" class="element-box" style="grid-column: 7; grid-row: 7;"></div>
+        <div id="Hs" class="element-box" style="grid-column: 8; grid-row: 7;"></div>
+        <div id="Mt" class="element-box" style="grid-column: 9; grid-row: 7;"></div>
+        <div id="Ds" class="element-box" style="grid-column: 10; grid-row: 7;"></div>
+        <div id="Rg" class="element-box" style="grid-column: 11; grid-row: 7;"></div>
+        <div id="Cn" class="element-box" style="grid-column: 12; grid-row: 7;"></div>
+        <div id="Nh" class="element-box" style="grid-column: 13; grid-row: 7;"></div>
+        <div id="Fl" class="element-box" style="grid-column: 14; grid-row: 7;"></div>
+        <div id="Mc" class="element-box" style="grid-column: 15; grid-row: 7;"></div>
+        <div id="Lv" class="element-box" style="grid-column: 16; grid-row: 7;"></div>
+        <div id="Ts" class="element-box" style="grid-column: 17; grid-row: 7;"></div>
+        <div id="Og" class="element-box" style="grid-column: 18; grid-row: 7;"></div>
+    </div>
+
+    <div id="elements">
+        <div class="element-draggable" draggable="true" id="dragF">F</div>
+        <div class="element-draggable" draggable="true" id="dragTi">Ti</div>
+        <div class="element-draggable" draggable="true" id="dragCr">Cr</div>
+        <div class="element-draggable" draggable="true" id="dragAs">As</div>
+        <div class="element-draggable" draggable="true" id="dragGa">Ga</div>
+        <div class="element-draggable" draggable="true" id="dragGe">Ge</div>
+        <div class="element-draggable" draggable="true" id="dragN">N</div>
+        <div class="element-draggable" draggable="true" id="dragMn">Mn</div>
+        <div class="element-draggable" draggable="true" id="dragH">H</div>
+        <div class="element-draggable" draggable="true" id="dragNe">Ne</div>
+        <div class="element-draggable" draggable="true" id="dragRb">Rb</div>
+        <div class="element-draggable" draggable="true" id="dragMg">Mg</div>
+        <div class="element-draggable" draggable="true" id="dragNh">Nh</div>
+        <div class="element-draggable" draggable="true" id="dragSi">Si</div>
+        <div class="element-draggable" draggable="true" id="dragS">S</div>
+        <div class="element-draggable" draggable="true" id="dragK">K</div>
+        <div class="element-draggable" draggable="true" id="dragAr">Ar</div>
+        <div class="element-draggable" draggable="true" id="dragCl">Cl</div>
+        <div class="element-draggable" draggable="true" id="dragCa">Ca</div>
+        <div class="element-draggable" draggable="true" id="dragSc">Sc</div>
+        <div class="element-draggable" draggable="true" id="dragHe">He</div>
+        <div class="element-draggable" draggable="true" id="dragV">V</div>
+        <div class="element-draggable" draggable="true" id="dragLi">Li</div>
+        <div class="element-draggable" draggable="true" id="dragO">O</div>
+        <div class="element-draggable" draggable="true" id="dragFe">Fe</div>
+        <div class="element-draggable" draggable="true" id="dragCo">Co</div>
+        <div class="element-draggable" draggable="true" id="dragB">B</div>
+        <div class="element-draggable" draggable="true" id="dragCu">Cu</div>
+        <div class="element-draggable" draggable="true" id="dragZn">Zn</div>
+        <div class="element-draggable" draggable="true" id="dragNa">Na</div>
+        <div class="element-draggable" draggable="true" id="dragC">C</div>
+        <div class="element-draggable" draggable="true" id="dragBe">Be</div>
+        <div class="element-draggable" draggable="true" id="dragSe">Se</div>
+        <div class="element-draggable" draggable="true" id="dragBr">Br</div>
+        <div class="element-draggable" draggable="true" id="dragKr">Kr</div>
+        <div class="element-draggable" draggable="true" id="dragHf">Hf</div>
+        <div class="element-draggable" draggable="true" id="dragSr">Sr</div>
+        <div class="element-draggable" draggable="true" id="dragY">Y</div>
+        <div class="element-draggable" draggable="true" id="dragZr">Zr</div>
+        <div class="element-draggable" draggable="true" id="dragNb">Nb</div>
+        <div class="element-draggable" draggable="true" id="dragMo">Mo</div>
+        <div class="element-draggable" draggable="true" id="dragTc">Tc</div>
+        <div class="element-draggable" draggable="true" id="dragRu">Ru</div>
+        <div class="element-draggable" draggable="true" id="dragRh">Rh</div>
+        <div class="element-draggable" draggable="true" id="dragLv">Lv</div>
+        <div class="element-draggable" draggable="true" id="dragFr">Fr</div>
+        <div class="element-draggable" draggable="true" id="dragW">W</div>
+        <div class="element-draggable" draggable="true" id="dragIn">In</div>
+        <div class="element-draggable" draggable="true" id="dragSn">Sn</div>
+        <div class="element-draggable" draggable="true" id="dragSb">Sb</div>
+        <div class="element-draggable" draggable="true" id="dragTe">Te</div>
+        <div class="element-draggable" draggable="true" id="dragI">I</div>
+        <div class="element-draggable" draggable="true" id="dragCn">Cn</div>
+        <div class="element-draggable" draggable="true" id="dragCs">Cs</div>
+        <div class="element-draggable" draggable="true" id="dragTs">Ts</div>
+        <div class="element-draggable" draggable="true" id="dragCd">Cd</div>
+        <div class="element-draggable" draggable="true" id="dragTa">Ta</div>
+        <div class="element-draggable" draggable="true" id="dragPt">Pt</div>
+        <div class="element-draggable" draggable="true" id="dragRe">Re</div>
+        <div class="element-draggable" draggable="true" id="dragOs">Os</div>
+        <div class="element-draggable" draggable="true" id="dragIr">Ir</div>
+        <div class="element-draggable" draggable="true" id="dragBi">Bi</div>
+        <div class="element-draggable" draggable="true" id="dragAu">Au</div>
+        <div class="element-draggable" draggable="true" id="dragFl">Fl</div>
+        <div class="element-draggable" draggable="true" id="dragTl">Tl</div>
+        <div class="element-draggable" draggable="true" id="dragPb">Pb</div>
+        <div class="element-draggable" draggable="true" id="dragPd">Pd</div>
+        <div class="element-draggable" draggable="true" id="dragAl">Al</div>
+        <div class="element-draggable" draggable="true" id="dragAt">At</div>
+        <div class="element-draggable" draggable="true" id="dragRn">Rn</div>
+        <div class="element-draggable" draggable="true" id="dragHg">Hg</div>
+        <div class="element-draggable" draggable="true" id="dragOg">Og</div>
+        <div class="element-draggable" draggable="true" id="dragRf">Rf</div>
+        <div class="element-draggable" draggable="true" id="dragDb">Db</div>
+        <div class="element-draggable" draggable="true" id="dragBa">Ba</div>
+        <div class="element-draggable" draggable="true" id="dragHs">Hs</div>
+        <div class="element-draggable" draggable="true" id="dragMt">Mt</div>
+        <div class="element-draggable" draggable="true" id="dragP">P</div>
+        <div class="element-draggable" draggable="true" id="dragDs">Ds</div>
+        <div class="element-draggable" draggable="true" id="dragRg">Rg</div>
+        <div class="element-draggable" draggable="true" id="dragXe">Xe</div>
+        <div class="element-draggable" draggable="true" id="dragAg">Ag</div>
+        <div class="element-draggable" draggable="true" id="dragSg">Sg</div>
+        <div class="element-draggable" draggable="true" id="dragMc">Mc</div>
+        <div class="element-draggable" draggable="true" id="dragPo">Po</div>
+        <div class="element-draggable" draggable="true" id="dragNi">Ni</div>
+        <div class="element-draggable" draggable="true" id="dragRa">Ra</div>
+    </div>
+
+    <script>
+        const elements = document.querySelectorAll('.element-draggable');
+        const boxes = document.querySelectorAll('.element-box');
+
+        elements.forEach(element => {
+            element.addEventListener('dragstart', dragStart);
+        });
+
+        boxes.forEach(box => {
+            box.addEventListener('dragover', dragOver);
+            box.addEventListener('drop', drop);
+        });
+
+        function dragStart(e) {
+            e.dataTransfer.setData('text', e.target.id);
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            const id = e.dataTransfer.getData('text');
+            const element = document.getElementById(id);
+            const correctId = e.target.id;
+
+            if (correctId === id.replace('drag', '')) {
+                e.target.textContent = element.textContent;
+                e.target.classList.add('correct');
+                element.classList.add('hidden');
+            } else {
+                e.target.classList.add('wrong');
+                setTimeout(() => e.target.classList.remove('wrong'), 1000);
+            }
+        }
+    </script>
+</body>
+</html>
