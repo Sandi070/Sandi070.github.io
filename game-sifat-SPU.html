@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Sifat Periodik Unsur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .game-container {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .sortable-list {
+            list-style: none;
+            padding: 0;
+        }
+        .sortable-list li {
+            background-color: #ececec;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            cursor: move;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Game Sifat Periodik Unsur</h1>
+
+<div class="game-container">
+    <div class="question">
+        <p>Urutkan unsur-unsur berikut berdasarkan **Jari-jari Atom** (dari yang terbesar ke yang terkecil):</p>
+        <ul id="sortable-radius" class="sortable-list">
+            <li>K</li>
+            <li>Al</li>
+            <li>Na</li>
+            <li>Rb</li>
+            <li>Cl</li>
+            <li>H</li>
+            <li>He</li>
+            <li>Cs</li>
+        </ul>
+    </div>
+    <div class="question">
+        <p>Urutkan unsur-unsur berikut berdasarkan **Energi Ionisasi** (dari yang terkecil ke yang terbesar):</p>
+        <ul id="sortable-ionization" class="sortable-list">
+            <li>F</li>
+            <li>B</li>
+            <li>N</li>
+            <li>Na</li>
+            <li>Li</li>
+            <li>Ne</li>
+            <li>K</li>
+            <li>Rb</li>
+        </ul>
+    </div>
+    <div class="question">
+        <p>Urutkan unsur-unsur berikut berdasarkan **Afinitas Elektron** (dari yang terbesar ke yang terkecil):</p>
+        <ul id="sortable-affinity" class="sortable-list">
+            <li>Li</li>
+            <li>F</li>
+            <li>O</li>
+            <li>Na</li>
+            <li>Cs</li>
+            <li>Rb</li>
+            <li>K</li>
+            <li>Ne</li>
+        </ul>
+    </div>
+    <div class="question">
+        <p>Urutkan unsur-unsur berikut berdasarkan **Elektronegativitas** (dari yang terkecil ke yang terbesar):</p>
+        <ul id="sortable-electronegativity" class="sortable-list">
+            <li>S</li>
+            <li>Po</li>
+            <li>Se</li>
+            <li>O</li>
+            <li>Cs</li>
+            <li>N</li>
+            <li>Te</li>
+            <li>F</li>
+        </ul>
+    </div>
+    
+    <button onclick="checkAnswers()">Submit</button>
+    <div id="result"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
+<script>
+    // Fungsi untuk membuat elemen sortable
+    function makeSortable(listId) {
+        const list = document.getElementById(listId);
+        if (list) {
+            new Sortable(list, {
+                animation: 150,
+                ghostClass: 'sortable-ghost'
+            });
+        }
+    }
+    
+    // Inisialisasi sortable untuk tiap list
+    makeSortable("sortable-radius");
+    makeSortable("sortable-ionization");
+    makeSortable("sortable-affinity");
+    makeSortable("sortable-electronegativity");
+    
+    // Jawaban yang benar
+    const correctOrderRadius = ["Cs", "Rb", "K", "Na", "Al", "Cl", "H", "He"];
+    const correctOrderIonization = ["Rb", "K", "Na", "Li", "B", "N", "F", "Ne"];
+    const correctOrderAffinity = ["F", "O", "Li", "Na", "K", "Rb", "Cs", "Ne"];
+    const correctOrderElectronegativity = ["Cs", "Po", "Te", "Se", "S", "N", "O", "F"];
+    
+    // Fungsi untuk memeriksa jawaban
+    function checkAnswers() {
+        const userOrderRadius = [...document.querySelectorAll('#sortable-radius li')].map(li => li.innerText);
+        const userOrderIonization = [...document.querySelectorAll('#sortable-ionization li')].map(li => li.innerText);
+        const userOrderAffinity = [...document.querySelectorAll('#sortable-affinity li')].map(li => li.innerText);
+        const userOrderElectronegativity = [...document.querySelectorAll('#sortable-electronegativity li')].map(li => li.innerText);
+        
+        let isCorrect = true;
+        
+        if (JSON.stringify(userOrderRadius) !== JSON.stringify(correctOrderRadius)) {
+            isCorrect = false;
+        }
+        if (JSON.stringify(userOrderIonization) !== JSON.stringify(correctOrderIonization)) {
+            isCorrect = false;
+        }
+        if (JSON.stringify(userOrderAffinity) !== JSON.stringify(correctOrderAffinity)) {
+            isCorrect = false;
+        }
+        if (JSON.stringify(userOrderElectronegativity) !== JSON.stringify(correctOrderElectronegativity)) {
+            isCorrect = false;
+        }
+        
+        document.getElementById('result').innerText = isCorrect ? 'Jawaban Anda Benar!' : 'Jawaban Anda Salah. Silakan coba lagi!';
+    }
+</script>
+
+</body>
+</html>
