@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pengumuman Hasil Penilaian Akhir Tahun Siswa MAN Insan Cendekia Kota Kendari</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+    h1 {
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+      font-size: 2.4rem;
+      text-align: center;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+    }
+    p.subtitle {
+      margin-top: 0;
+      font-weight: 400;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #dcd6f7;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .search-container {
+      margin-bottom: 1.5rem;
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+    .search-container input {
+      width: 80%;
+      max-width: 400px;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 25px;
+      outline: none;
+      box-shadow: 0 0 10px rgba(255,255,255,0.2);
+      transition: box-shadow 0.3s ease;
+    }
+    .search-container input:focus {
+      box-shadow: 0 0 15px #b39ddb;
+    }
+
+    table {
+      width: 100%;
+      max-width: 700px;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 0.8rem;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+    }
+    thead tr {
+      background: #9561e2;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: left;
+    }
+    thead th {
+      padding: 1rem 1.2rem;
+    }
+    tbody tr {
+      color: #f2e9ff;
+      transition: background-color 0.3s ease;
+      cursor: default;
+    }
+    tbody tr:hover {
+      background-color: rgba(149, 97, 226, 0.3);
+      box-shadow: 0 0 8px rgba(149, 97, 226, 0.5);
+      border-radius: 0.8rem;
+    }
+    tbody td {
+      padding: 0.9rem 1.2rem;
+      font-weight: 500;
+      vertical-align: middle;
+    }
+    tbody td.status {
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+      width: 140px;
+      text-align: center;
+      border-radius: 0.5rem;
+      user-select: none;
+    }
+    tbody td.status.tuntas {
+      background-color: #43a047;
+      box-shadow: 0 0 6px #43a047cc;
+    }
+    tbody td.status.tidak-tuntas {
+      background-color: #e53935;
+      box-shadow: 0 0 6px #e53935cc;
+    }
+
+    .footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #ccc;
+      text-align: center;
+      font-style: italic;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      table {
+        font-size: 0.85rem;
+      }
+      .search-container input {
+        width: 95%;
+        max-width: none;
+      }
+      tbody td.status {
+        width: 100px;
+        font-size: 0.85rem;
+        padding: 0.6rem 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Pengumuman Hasil Penilaian Akhir Tahun</h1>
+  <p class="subtitle">MAN Insan Cendekia Kota Kendari - Tahun Pelajaran 2024/2025</p>
+
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Cari nama siswa..." onkeyup="filterTable()" aria-label="Search students">
+  </div>
+
+  <table id="resultsTable" aria-describedby="Pengumuman hasil penilaian akhir tahun siswa MAN Insan Cendekia Kota Kendari">
+    <thead>
+      <tr>
+        <th scope="col">Nama Siswa</th>
+        <th scope="col">Nilai</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <!-- Rows inserted by JS -->
+    </tbody>
+  </table>
+
+  <div class="footer">
+    * Nilai di atas atau sama dengan 60 dianggap tuntas.
+  </div>
+
+  <script>
+    // Sample data of students and their final scores
+    const students = [
+      { name: "Ahmad Hidayat M.", nilai: 28 },
+      { name: "Ahmad Imam M.", nilai: 40 },
+      { name: "Ahmad Ridho.", nilai: 60 },
+      { name: "Aira Ayunindiya M.", nilai: 36 },
+      { name: "Aisyah Hanifa A.", nilai: 44 },
+      { name: "Aizar Bustani N.", nilai: 28 },
+      { name: "Al Charly R.L.", nilai: 72 },
+      { name: "Amsyar Wira Agung", nilai: 64 },
+      { name: "Andi Shafwah M.A.", nilai: 36 },
+      { name: "Annisa Annasyithah R.", nilai: 84 },
+      { name: "Annisa Azzakiyah R.", nilai: 72 },
+      { name: "Ashfa Quaneisha R", nilai: 48 },
+      { name: "Athar Ghaozan D.L.", nilai: 76 },
+      { name: "Aqilah Fawzah D.", nilai: 48 },
+      { name: "Azzam Ahmad Nejad A.", nilai: 52 },
+      { name: "Endah", nilai: 68 },
+      { name: "Fikratun Nazihah", nilai: 68 },
+      { name: "Filzah Aldanisha L", nilai: 72 },
+      { name: "Hafidzah Khalishah M.", nilai: 48 },
+      { name: "Hilyah Anas", nilai: 84 },
+      { name: "Humairah Alifah B.", nilai: 36 },
+      { name: "Khofifa Al Kubra", nilai: 56 },
+      { name: "L.M. Rihza M.A.", nilai: 44 },
+      { name: "Marsyah Aulia", nilai: 48 },
+      { name: "Muh. Alfaizi R.", nilai: 24 },
+      { name: "Muh. Alif G.S.", nilai: 20 },
+      { name: "Muh. Aqli T.H.", nilai: 44 },
+      { name: "Muh. Deorva A.", nilai: 52 },
+      { name: "Muh. Fadil A.R.", nilai: 36 },
+      { name: "Muh. Fajri A.R.", nilai: 48 },
+      { name: "Muh. Febyan M.W.", nilai: 36 },
+      { name: "Muh. Gien Alamsyah J.", nilai: 72 },
+      { name: "Muh. Rayhan J.", nilai:36 },
+      { name: "Muh. Rezky S.H.", nilai: 60 },
+      { name: "Muh. Rifky A.L.", nilai: 44 },
+      { name: "Muh. Rifki E.", nilai: 36 },
+      { name: "Muh. Syamil Al Faruq", nilai: 24 },
+      { name: "Muh. Tuan Muda", nilai: 0 },
+      { name: "Muh. Zulfahmi H.", nilai: 20 },
+      { name: "Nadhif Nanditama", nilai: 60 },
+      { name: "Nasya Nawal P.", nilai: 80 },
+      { name: "Naurah Andira G.", nilai: 60 },
+      { name: "Nawshira Al Mira", nilai: 64 },
+      { name: "Nayla Riqkatul Z.", nilai: 64 },
+      { name: "Nurul Hikmah", nilai: 32 },
+      { name: "Nurul Maitsa", nilai: 52 },
+      { name: "Putri Berlian", nilai: 20 },
+      { name: "Queen Faaizah A.Z.P.", nilai: 60 },
+      { name: "Qulbiana Audhi Y.", nilai: 60 },
+      { name: "Rischa Delvira C.A.", nilai: 60 },
+      { name: "Salsabila Putri T.", nilai: 64 },
+      { name: "Salwa", nilai: 80 },
+      { name: "Satria Wyakta W.", nilai: 20 },
+      { name: "Shafa Aqilah S.", nilai: 72 },
+      { name: "Sitti Salwa N.A..", nilai: 80 },
+      { name: "Sulthan Nafiys", nilai: 80 },
+      { name: "Syakirah Dzatil I.P.L.", nilai: 64 },
+      { name: "Wa Ode Nurul K.U.", nilai: 76 },
+      { name: "Wa Ode Uyun Ramadhani", nilai: 84 },
+      { name: "Zaim Islamic Fajri", nilai: 56 },
+      { name: "Zakwan Athaya", nilai: 36 }
+    ];
+
+    const tuntasThreshold = 60;
+
+    function renderTable() {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      students.forEach(student => {
+        const tr = document.createElement('tr');
+        const tuntas = student.nilai >= tuntasThreshold;
+
+        tr.innerHTML = `
+          <td>${student.name}</td>
+          <td>${student.nilai}</td>
+          <td class="status ${tuntas ? 'tuntas' : 'tidak-tuntas'}">${tuntas ? 'Tuntas' : 'Tidak Tuntas'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterTable() {
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toLowerCase();
+      const tbody = document.getElementById('tableBody');
+      const rows = tbody.getElementsByTagName('tr');
+
+      for (let row of rows) {
+        let nameCell = row.getElementsByTagName('td')[0];
+        if (nameCell) {
+          let name = nameCell.textContent || nameCell.innerText;
+          if (name.toLowerCase().indexOf(filter) > -1) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        }
+      }
+    }
+
+    // Initial rendering of the table on page load
+    renderTable();
+  </script>
+</body>
+</html>
+
