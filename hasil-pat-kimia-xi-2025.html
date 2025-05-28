@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pengumuman Hasil Penilaian Akhir Tahun Siswa MAN Insan Cendekia Kota Kendari</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+    h1 {
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+      font-size: 2.4rem;
+      text-align: center;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+    }
+    p.subtitle {
+      margin-top: 0;
+      font-weight: 400;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #dcd6f7;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .search-container {
+      margin-bottom: 1.5rem;
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+    .search-container input {
+      width: 80%;
+      max-width: 400px;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 25px;
+      outline: none;
+      box-shadow: 0 0 10px rgba(255,255,255,0.2);
+      transition: box-shadow 0.3s ease;
+    }
+    .search-container input:focus {
+      box-shadow: 0 0 15px #b39ddb;
+    }
+
+    table {
+      width: 100%;
+      max-width: 700px;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 0.8rem;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+    }
+    thead tr {
+      background: #9561e2;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: left;
+    }
+    thead th {
+      padding: 1rem 1.2rem;
+    }
+    tbody tr {
+      color: #f2e9ff;
+      transition: background-color 0.3s ease;
+      cursor: default;
+    }
+    tbody tr:hover {
+      background-color: rgba(149, 97, 226, 0.3);
+      box-shadow: 0 0 8px rgba(149, 97, 226, 0.5);
+      border-radius: 0.8rem;
+    }
+    tbody td {
+      padding: 0.9rem 1.2rem;
+      font-weight: 500;
+      vertical-align: middle;
+    }
+    tbody td.status {
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+      width: 140px;
+      text-align: center;
+      border-radius: 0.5rem;
+      user-select: none;
+    }
+    tbody td.status.tuntas {
+      background-color: #43a047;
+      box-shadow: 0 0 6px #43a047cc;
+    }
+    tbody td.status.tidak-tuntas {
+      background-color: #e53935;
+      box-shadow: 0 0 6px #e53935cc;
+    }
+
+    .footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #ccc;
+      text-align: center;
+      font-style: italic;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      table {
+        font-size: 0.85rem;
+      }
+      .search-container input {
+        width: 95%;
+        max-width: none;
+      }
+      tbody td.status {
+        width: 100px;
+        font-size: 0.85rem;
+        padding: 0.6rem 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Pengumuman Hasil Penilaian Akhir Tahun</h1>
+  <p class="subtitle">MAN Insan Cendekia Kota Kendari - Tahun Pelajaran 2024/2025</p>
+
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Cari nama siswa..." onkeyup="filterTable()" aria-label="Search students">
+  </div>
+
+  <table id="resultsTable" aria-describedby="Pengumuman hasil penilaian akhir tahun siswa MAN Insan Cendekia Kota Kendari">
+    <thead>
+      <tr>
+        <th scope="col">Nama Siswa</th>
+        <th scope="col">Nilai</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <!-- Rows inserted by JS -->
+    </tbody>
+  </table>
+
+  <div class="footer">
+    * Nilai di atas atau sama dengan 60 dianggap tuntas. Terima kasih karena sudah bekerja dengan jujur. Sampai jumpa di Bimbel TKA semester depan.
+  </div>
+
+  <script>
+    // Sample data of students and their final scores
+    const students = [
+      { name: "AHSYIFHA NAILAH MEHRUNNISA", nilai: 64 },
+      { name: "AILA AZZAHRA", nilai: 68 },
+      { name: "AL FATIH ASHSHIDIQ GUSTIAR", nilai: 60 },
+      { name: "ALTHAFUNISA RAHMADHANI", nilai: 84 },
+      { name: "ALYA NABILAH", nilai: 84 },
+      { name: "ANNISA NADHIRAH RAMADANI", nilai: 76 },
+      { name: "ANNISA NUR FADHILLAH BOTJI", nilai: 48 },
+      { name: "FADHILAH FAIZAH", nilai: 84 },
+      { name: "FALILA ALFANI NUR LAIL", nilai: 76 },
+      { name: "FIKRI ALGIFARI SIMBALA", nilai: 52 },
+      { name: "KAYLA SHAZREEN AQUILA", nilai: 84 },
+      { name: "KEYSHA NA'ILA SALSABILA", nilai: 60 },
+      { name: "MARSYA PUTRI FADILLAH MAHMUD", nilai: 44 },
+      { name: "MELLY ALFARIZI", nilai: 84 },
+      { name: "MOZADILA KASRAN RAMSI", nilai: 80 },
+      { name: "MUHAMMAD DZAKWAN RAFIU", nilai: 44 },
+      { name: "NAFEEZA AULIA", nilai: 92 },
+      { name: "NUR FAADILLAH FAWZIYAH A.Y.P.", nilai: 80 },
+      { name: "RAFIKA NAYSAH HAMLIN", nilai: 76 },
+      { name: "SHERLY OKTAVIANI HUSRIN", nilai: 68 },
+      { name: "SITI FAUZIYAH RAHMI BAERI", nilai: 92 },
+      { name: "SITTI ALTHAFUNNISA", nilai: 88 },
+      { name: "SUCI FITRIANI", nilai: 84 },
+      { name: "TIARA PUSPITA ANGGRAINI", nilai: 84 },
+      { name: "ZARA ZETIRA ANZAR ZAMILU", nilai: 64 },
+      { name: "AMANY AFIFAH ASFAR", nilai: 88 },
+      { name: "ANGGUN NAILATUL IZZA R", nilai: 76 },
+      { name: "ARIL KONTARA", nilai: 100 },
+      { name: "AYUNDA MAGHFIRAH RAMADHANI", nilai: 60 },
+      { name: "CHEELSY AMEYLIA LUBIS", nilai: 84 },
+      { name: "ELFREDA SYAHRIAL ARISANDY", nilai: 40 },
+      { name: "FAHREZY DIRGA FAQIH", nilai: 36 },
+      { name: "FAIRUZ KHAIRAH ARISANDI", nilai:96 },
+      { name: "HABIB REZKY ALAMSYAH A.", nilai: 56 },
+      { name: "KEYSAH FATHIYYAH ASRAF", nilai: 72 },
+      { name: "MEUTYA DISATRA", nilai: 60 },
+      { name: "MUHAMAD AZHAR", nilai: 76 },
+      { name: "MUHAMAD DIRGA ALMUSTAQIM T.", nilai: 84 },
+      { name: "MUHAMMAD FAUZAN DINAR", nilai: 56 },
+      { name: "MUHAMMAD KHANZA FAUQAL F.L.", nilai: 56 },
+      { name: "MUHAMMAD RAUF ANAOPA", nilai: 24 },
+      { name: "MUTIARA SYARIFA ALWAN", nilai: 64 },
+      { name: "NASYA NURIYANI PUTRI", nilai: 88 },
+      { name: "NIZAM MULKIL AHMAD", nilai: 32 },
+      { name: "NUR ALMIRA SYAHRANI", nilai: 80 },
+      { name: "NUR FAIZAH KAMILLA N.", nilai: 68 },
+      { name: "REIDINDHO ILYAS", nilai: 96 },
+      { name: "WA ODE KEISHA ZAHIRAH", nilai: 72 },
+      { name: "WA ODE TAUSHIYATUN T.H.", nilai: 60 },
+      { name: "WA ODE ZULEYKA AZZAHRA", nilai: 84 },
+      { name: "ZHAFIRAH NUR RAMADHANTY H.", nilai: 76 },
+      { name: "ALIEF SHAFARUDDIN PRATAMA", nilai: 60 },
+      { name: "AQILA TAUFIQURRAHMAN", nilai: 56 },
+      { name: "AQSA IKHTIAR SIDIQ", nilai: 76 },
+      { name: "ATHYFA KHANSA NAFISAH", nilai: 92 },
+      { name: "FAWZAN RAHMAD HISYAM", nilai: 64 },
+      { name: "HILMI AFIF AZMI TORA", nilai: 80 },
+      { name: "ISNAN AULIA MAGFIRA", nilai: 92 },
+      { name: "MOH. RAMA HOYRUL ANWAR", nilai: 60 },
+      { name: "MUH. AKMAL DZAKWAN", nilai: 100 },
+      { name: "MUH. DAIF ALFAYEZ", nilai: 52 },
+      { name: "MUH. ZULFAN ARZA", nilai: 44 },
+      { name: "MUHAMAD ABILAL DZAKI", nilai: 56 },
+      { name: "MUHAMMAD AFZHAL F.H.", nilai: 80 },
+      { name: "MUHAMMAD FACHRUDDIN", nilai: 80 },
+      { name: "MUHAMMAD FADLI MUNTAZAM", nilai: 64 },
+      { name: "MURSYID", nilai: 44 }
+    ];
+
+    const tuntasThreshold = 60;
+
+    function renderTable() {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      students.forEach(student => {
+        const tr = document.createElement('tr');
+        const tuntas = student.nilai >= tuntasThreshold;
+
+        tr.innerHTML = `
+          <td>${student.name}</td>
+          <td>${student.nilai}</td>
+          <td class="status ${tuntas ? 'tuntas' : 'tidak-tuntas'}">${tuntas ? 'Tuntas' : 'Tidak Tuntas'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterTable() {
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toLowerCase();
+      const tbody = document.getElementById('tableBody');
+      const rows = tbody.getElementsByTagName('tr');
+
+      for (let row of rows) {
+        let nameCell = row.getElementsByTagName('td')[0];
+        if (nameCell) {
+          let name = nameCell.textContent || nameCell.innerText;
+          if (name.toLowerCase().indexOf(filter) > -1) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        }
+      }
+    }
+
+    // Initial rendering of the table on page load
+    renderTable();
+  </script>
+</body>
+</html>
+
