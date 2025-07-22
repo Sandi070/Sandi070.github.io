@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soal Latihan Konsep Mol</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #f3f4f6, #e0e7ff);
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 15px auto;
+      padding: 20px;
+      max-width: 700px;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.02);
+    }
+    .question {
+      font-size: 1.1em;
+      margin-bottom: 10px;
+    }
+    .answer {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: #eef2ff;
+      border-left: 4px solid #6366f1;
+      border-radius: 8px;
+    }
+    button {
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #4f46e5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Soal Latihan Konsep Mol</h1>
+
+  <!-- Soal 1 -->
+  <div class="card">
+    <div class="question">1. Dalam 0,1 mol H<sub>2</sub>SO<sub>4</sub>, tentukan jumlah partikel H<sub>2</sub>SO<sub>4</sub>!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 2 -->
+  <div class="card">
+    <div class="question">2. Hitunglah jumlah molekul urea yang terkandung dalam 20 mol urea!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 3 -->
+  <div class="card">
+    <div class="question">3. Dalam 0,75 mol NH<sub>3</sub>, tentukan jumlah molekul NH<sub>3</sub>!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 4 -->
+  <div class="card">
+    <div class="question">4. Hitunglah banyaknya mol besi yang mengandung 4,816 × 10<sup>24</sup> atom besi!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 5 -->
+  <div class="card">
+    <div class="question">5. Hitunglah banyaknya mol air yang mengandung 3,01 × 10<sup>22</sup> molekul air!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 6 -->
+  <div class="card">
+    <div class="question">6. Dalam 5 mol C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>, hitunglah banyaknya molekul C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 7 -->
+  <div class="card">
+    <div class="question">7. Hitunglah banyaknya mol kapur CaCO<sub>3</sub> yang mengandung 3,612 × 10<sup>23</sup> molekul CaCO<sub>3</sub>!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 8 -->
+  <div class="card">
+    <div class="question">8. Hitunglah banyaknya mol CO<sub>2</sub> yang mengandung 1,204 × 10<sup>18</sup> molekul CO<sub>2</sub>!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 9-13: Massa zat -->
+  <div class="card">
+    <div class="question">9. Hitunglah massa dari: <br>
+      a. 0,5 mol barium (Ar Ba = 137)<br>
+      b. 5 mol belerang (Ar S = 32)<br>
+      c. 2,5 mol K<sub>2</sub>SO<sub>4</sub> (Ar K = 19, S = 32, O = 16)<br>
+      d. 0,3 mol CO<sub>2</sub> (Ar C = 12, O = 16)<br>
+      e. 10 mol K<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub> (Ar K = 39, Cr = 52, O = 16)
+    </div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 14-18: Hitung mol dari massa -->
+  <div class="card">
+    <div class="question">10. Hitunglah banyaknya mol dari: <br>
+      a. 8 gram H<sub>2</sub> (Ar H = 1)<br>
+      b. 800 gram CaCO<sub>3</sub> (Ar Ca = 40, C = 12, O = 16)<br>
+      c. 232 gram Mg(OH)<sub>2</sub> (Ar Mg = 24, O = 16, H = 1)<br>
+      d. 158 gram KMnO<sub>4</sub> (Ar K = 39, Mn = 55, O = 16)<br>
+      e. 478 gram CHCl<sub>3</sub> (Ar C = 12, H = 1, Cl = 35,5)
+    </div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 19-20 -->
+  <div class="card">
+    <div class="question">11. Tentukan Ar perak jika 5 mol perak massanya 540 gram!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+  <div class="card">
+    <div class="question">12. Tentukan Ar emas jika 2 mol emas mempunyai massa 394 gram!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 21-25: Volume gas -->
+  <div class="card">
+    <div class="question">13. Tentukan volume dari 0,25 mol gas oksigen pada suhu 27°C dan tekanan 1 atm!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+  <div class="card">
+    <div class="question">14. Tentukan volume dari 5 mol gas karbon dioksida pada keadaan standar (STP)!</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+  <div class="card">
+    <div class="question">15. Berapakah volume dari 0,75 mol gas belerang yang diukur pada suhu dan tekanan yang sama pada saat 3 mol gas nitrogen volumenya 12 liter?</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+  <div class="card">
+    <div class="question">16. Berapakah volume dari 2,5 mol gas nitrogen dioksida pada keadaan kamar (RTP)?</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+  <div class="card">
+    <div class="question">17. Tentukan volume dari 0,6 mol gas hidrogen yang diukur pada keadaan standar (STP).</div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 26-29: Volume standar -->
+  <div class="card">
+    <div class="question">18. Tentukan volume standar (STP) dari:<br>
+      a. 4,4 gram gas CO<sub>2</sub><br>
+      b. 4 mol O<sub>2</sub><br>
+      c. 6,8 gram NH<sub>3</sub><br>
+      d. 1,806 × 10<sup>22</sup> molekul hidrogen
+    </div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 30-32: Massa zat -->
+  <div class="card">
+    <div class="question">19. Tentukan massa dari:<br>
+      a. 4,48 liter gas dinitrogen pentaoksida (STP)<br>
+      b. 5 mol CO(NH<sub>2</sub>)<sub>2</sub><br>
+      c. 6,02 × 10<sup>21</sup> atom besi
+    </div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <!-- Soal 33-37: Jumlah partikel -->
+  <div class="card">
+    <div class="question">20. Tentukan jumlah partikel dari:<br>
+      a. 3 mol molekul H<sub>2</sub>O<br>
+      b. 2 liter gas oksigen pada 27°C dan tekanan 1 atm<br>
+      c. 3,2 gram O<sub>2</sub> (Ar O = 16)<br>
+      d. 40 gram CaCO<sub>3</sub> (Ar Ca = 40, C = 12, O = 16)<br>
+      e. 6,72 liter gas NO<sub>2</sub> (STP)
+    </div>
+    <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+    <div class="answer">Jawaban: (Isi pembahasan Anda di sini)</div>
+  </div>
+
+  <script>
+    function toggleAnswer(btn) {
+      const answer = btn.nextElementSibling;
+      answer.style.display = answer.style.display === "block" ? "none" : "block";
+      btn.textContent = answer.style.display === "block" ? "Tutup Jawaban" : "Lihat Jawaban";
+    }
+  </script>
+</body>
+</html>
