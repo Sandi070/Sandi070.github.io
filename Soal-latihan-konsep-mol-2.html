@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soal Latian Konsep Mol - Versi Baru</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f0f4ff, #e5ecff);
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 720px;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.01);
+    }
+    .question {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .answer {
+      display: none;
+      margin-top: 10px;
+      background-color: #eef4ff;
+      padding: 10px;
+      border-left: 4px solid #3b82f6;
+      border-radius: 8px;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Soal Latihan Konsep Mol (Set Baru)</h1>
+
+<div class="card">
+  <div class="question">1. Dalam 0,2 mol HNO<sub>3</sub>, tentukan jumlah molekul HNO<sub>3</sub>!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: 0,2 × 6,022 × 10²³ = 1,2044 × 10²³ molekul HNO₃</div>
+</div>
+
+<div class="card">
+  <div class="question">2. Hitunglah jumlah molekul glukosa (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) dalam 0,4 mol glukosa!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: 0,4 × 6,022 × 10²³ = 2,4088 × 10²³ molekul glukosa</div>
+</div>
+
+<div class="card">
+  <div class="question">3. Hitunglah banyaknya mol magnesium yang mengandung 3,01 × 10<sup>23</sup> atom!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: mol = jumlah partikel / 6,02 × 10²³ = 3,01 × 10²³ / 6,02 × 10²³ = 0,5 mol</div>
+</div>
+
+<div class="card">
+  <div class="question">4. Hitunglah massa dari 1,5 mol NaOH (Ar Na = 23, O = 16, H = 1)!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: Mr NaOH = 40, massa = mol × Mr = 1,5 × 40 = 60 gram</div>
+</div>
+
+<div class="card">
+  <div class="question">5. Hitunglah mol dari 60 gram C<sub>2</sub>H<sub>6</sub> (Ar C = 12, H = 1)!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: Mr = 30, mol = 60 / 30 = 2 mol</div>
+</div>
+
+<div class="card">
+  <div class="question">6. Jika 2 mol logam Y massanya 394 gram, tentukan Ar logam Y!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: Ar = massa / mol = 394 / 2 = 197</div>
+</div>
+
+<div class="card">
+  <div class="question">7. Tentukan volume dari 0,3 mol gas nitrogen pada STP!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: volume = mol × 22,4 L = 0,3 × 22,4 = 6,72 L</div>
+</div>
+
+<div class="card">
+  <div class="question">8. Jika 3 mol gas klorin memiliki volume 72 L, berapa volume dari 1,5 mol gas fluor pada kondisi yang sama?</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: 1 mol = 72 / 3 = 24 L, jadi 1,5 mol = 1,5 × 24 = 36 L</div>
+</div>
+
+<div class="card">
+  <div class="question">9. Tentukan volume standar (STP) dari 8,8 gram CO<sub>2</sub> (Mr = 44)!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: mol = 8,8 / 44 = 0,2 mol, volume = 0,2 × 22,4 = 4,48 L</div>
+</div>
+
+<div class="card">
+  <div class="question">10. Tentukan jumlah partikel dari 2,24 liter CO<sub>2</sub> pada STP!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: mol = 2,24 / 22,4 = 0,1 mol, partikel = 0,1 × 6,022 × 10²³ ≈ 6.02 × 10²² molekul</div>
+</div>
+
+<div class="card">
+  <div class="question">11. Dalam 0,5 mol Na<sub>2</sub>CO<sub>3</sub>, berapa jumlah molekul Na<sub>2</sub>CO<sub>3</sub>?</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: 0,5 × 6,02 × 10²³ = 3,01 × 10²³ molekul</div>
+</div>
+
+<div class="card">
+  <div class="question">12. Hitunglah banyaknya mol dalam 9,03 × 10<sup>23</sup> molekul H<sub>2</sub>!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: mol = jumlah partikel / 6,02 × 10²³ = 9,03 × 10²³ / 6,02 × 10²³ ≈ 1,5 mol</div>
+</div>
+
+<div class="card">
+  <div class="question">13. Hitunglah massa dari 2 mol Ca(OH)<sub>2</sub> (Ar Ca = 40, O = 16, H = 1)!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: Mr = 40 + (2×16) + (2×1) = 74, massa = 2 × 74 = 148 gram</div>
+</div>
+
+<div class="card">
+  <div class="question">14. Hitunglah volume dari 0,25 mol gas metana (CH<sub>4</sub>) pada STP!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: volume = 0,25 × 22,4 = 5,6 liter</div>
+</div>
+
+<div class="card">
+  <div class="question">15. Jika 6 gram karbon (Ar C = 12) direaksikan, berapa mol karbon yang digunakan?</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: mol = massa / Ar = 6 / 12 = 0,5 mol</div>
+</div>
+
+<div class="card">
+  <div class="question">18. Tentukan jumlah molekul dalam 1,5 mol H<sub>2</sub>O!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: jumlah partikel = 1,5 × 6,02 × 10²³ = 9,03 × 10²³ molekul</div>
+</div>
+
+<div class="card">
+  <div class="question">17. Berapa jumlah molekul gas CH<sub>4</sub> dalam 4,48 liter pada STP?</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: mol = 4,48 / 22,4 = 0,2 mol ⇒ partikel = 0,2 × 6,02 × 10²³ = 1,204 × 10²³ molekul</div>
+</div>
+
+<div class="card">
+  <div class="question">18. Tentukan jumlah molekul dalam 16 gram O<sub>2</sub> (Ar O = 16)!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: Mr O₂ = 32, mol = 16 / 32 = 0,5 mol ⇒ molekul = 0,5 × 6,02 × 10²³ = 3,01 × 10²³ molekul</div>
+</div>
+
+<div class="card">
+  <div class="question">19. Hitung jumlah atom Al dalam 0,3 mol logam aluminium (Ar Al = 27)!</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: jumlah atom = 0,3 × 6,02 × 10²³ = 1,806 × 10²³ atom</div>
+</div>
+
+<div class="card">
+  <div class="question">20. Berapa jumlah molekul gas NO<sub>2</sub> dalam 6,72 liter gas pada STP?</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">Jawaban: mol = 6,72 / 22,4 = 0,3 mol ⇒ molekul = 0,3 × 6,02 × 10²³ = 1,806 × 10²³ molekul</div>
+</div>
+
+<script>
+  function toggleAnswer(button) {
+    const answer = button.nextElementSibling;
+    const isVisible = answer.style.display === 'block';
+    answer.style.display = isVisible ? 'none' : 'block';
+    button.innerText = isVisible ? 'Lihat Jawaban' : 'Tutup Jawaban';
+  }
+</script>
+
+</body>
+</html>
