@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Latihan SNBT Literasi Kimia - Tawas dan Penjernihan Air</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; line-height: 1.6; }
+    h1 { color: #2c3e50; }
+    .text { background-color: #eef6f8; padding: 15px; border-left: 5px solid #2980b9; margin-bottom: 30px; }
+    .question { background-color: #ffffff; padding: 15px; border-left: 5px solid #3498db; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .answer { margin-left: 20px; }
+    .key, .explanation { display: none; margin-top: 10px; }
+    .reveal-btn { margin-top: 10px; padding: 6px 12px; background-color: #3498db; color: #fff; border: none; cursor: pointer; border-radius: 5px; }
+    .reveal-btn:hover { background-color: #2980b9; }
+  </style>
+  <script>
+    function toggleAnswer(id) {
+      var key = document.getElementById("key-" + id);
+      var explanation = document.getElementById("explanation-" + id);
+      key.style.display = key.style.display === "none" ? "block" : "none";
+      explanation.style.display = explanation.style.display === "none" ? "block" : "none";
+    }
+  </script>
+</head>
+<body>
+
+<h1>Latihan SNBT Literasi Kimia - Tawas dan Penjernihan Air</h1>
+
+<div class="text">
+  <p><strong>Ringkasan Teks:</strong> Teks ini membahas fungsi kaporit, tawas, dan PAC dalam penjernihan air. Kaporit berfungsi sebagai desinfektan, tawas dan PAC sebagai koagulan. Dosis yang digunakan harus sesuai uji laboratorium agar tidak berdampak negatif.</p>
+</div>
+
+<!-- Soal 11 -->
+<div class="question">
+  <p><strong>11. Rumus kimia PAC dengan Al berjumlah 8 dan gugus OH berjumlah 5 adalah ...</strong></p>
+  <div class="answer">A. Al₅(OH)₃Cl₆</div>
+  <div class="answer">B. Al₅(OH)₈Cl₇</div>
+  <div class="answer">C. Al₅(OH)₅Cl₁₃</div>
+  <div class="answer">D. Al₈(OH)₅Cl₁₉</div>
+  <div class="answer">E. Al₈(OH)₅Cl₂₄</div>
+  <button class="reveal-btn" onclick="toggleAnswer(11)">Lihat Jawaban</button>
+  <div class="key" id="key-11"><strong>Kunci Jawaban:</strong> D</div>
+  <div class="explanation" id="explanation-11"><em>Gunakan rumus PAC: Alₓ(OH)ᵧCl(3x–y). 3×8−5 = 19 → Al₈(OH)₅Cl₁₉.</em></div>
+</div>
+
+<!-- Soal 12 -->
+<div class="question">
+  <p><strong>12. Tawas adalah garam yang mengandung ...</strong></p>
+  <div class="answer">A. kalium sulfat</div>
+  <div class="answer">B. aluminium sulfat</div>
+  <div class="answer">C. kaporit</div>
+  <div class="answer">D. hipoklorit</div>
+  <div class="answer">E. klorin</div>
+  <button class="reveal-btn" onclick="toggleAnswer(12)">Lihat Jawaban</button>
+  <div class="key" id="key-12"><strong>Kunci Jawaban:</strong> B</div>
+  <div class="explanation" id="explanation-12"><em>Tawas mengandung aluminium sulfat: Al₂(SO₄)₃·nH₂O.</em></div>
+</div>
+
+<!-- Soal 13 -->
+<div class="question">
+  <p><strong>13. Menurut bacaan, air kolam renang dianggap aman dan bersih jika…</strong></p>
+  <div class="answer">A. telah ditambahkan koagulan poli-kationik khlorida</div>
+  <div class="answer">B. mempunyai bau klorin tidak terlalu tajam</div>
+  <div class="answer">C. kontaminannya telah diflokulasi menggunakan tawas</div>
+  <div class="answer">D. air yang digunakan berasal dari sumur artesis</div>
+  <div class="answer">E. sama sekali tidak berbau klorin dari kaporit</div>
+  <button class="reveal-btn" onclick="toggleAnswer(13)">Lihat Jawaban</button>
+  <div class="key" id="key-13"><strong>Kunci Jawaban:</strong> B</div>
+  <div class="explanation" id="explanation-13"><em>Bau klorin yang ringan menandakan kaporit bekerja dalam dosis tepat.</em></div>
+</div>
+
+<!-- Soal 14 -->
+<div class="question">
+  <p><strong>14. Keunggulan penggunaan kaporit dibandingkan tawas dan PAC adalah dapat ....</strong></p>
+  <div class="answer">A. mengendapkan kotoran secara lebih efektif</div>
+  <div class="answer">B. menggumpalkan lumpur dengan lebih cepat</div>
+  <div class="answer">C. menghilangkan bau yang ditimbulkan oleh kotoran</div>
+  <div class="answer">D. membasmi bakteri yang terdapat dalam air</div>
+  <div class="answer">E. menurunkan nilai pH pada air limbah industri</div>
+  <button class="reveal-btn" onclick="toggleAnswer(14)">Lihat Jawaban</button>
+  <div class="key" id="key-14"><strong>Kunci Jawaban:</strong> D</div>
+  <div class="explanation" id="explanation-14"><em>Kaporit adalah desinfektan pembunuh bakteri.</em></div>
+</div>
+
+<!-- Soal 15 -->
+<div class="question">
+  <p><strong>15. Salah satu persyaratan dalam penggunaan tawas dan PAC dalam penjernihan air adalah ....</strong></p>
+  <div class="answer">A. bahan baku air tidak mengandung bakteri</div>
+  <div class="answer">B. dosis yang digunakan sesuai dengan hasil uji laboratorium</div>
+  <div class="answer">C. proses penjernihan dilakukan pada derajat keasaman rendah</div>
+  <div class="answer">D. air jernih yang diperoleh harus didemineralisasi</div>
+  <div class="answer">E. kotoran yang diflokulasi hanya merupakan suspensi lumpur</div>
+  <button class="reveal-btn" onclick="toggleAnswer(15)">Lihat Jawaban</button>
+  <div class="key" id="key-15"><strong>Kunci Jawaban:</strong> B</div>
+  <div class="explanation" id="explanation-15"><em>Dosis harus tepat karena jika berlebih dapat berdampak negatif.</em></div>
+</div>
+
+</body>
+</html>
