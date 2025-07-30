@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Penyetaraan Reaksi Kimia</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f0f4ff, #e0f7fa);
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 720px;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.01);
+    }
+    .question {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .answer {
+      display: none;
+      margin-top: 10px;
+      background-color: #f0f9ff;
+      padding: 10px;
+      border-left: 4px solid #0284c7;
+      border-radius: 8px;
+    }
+    button {
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0369a1;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Penyetaraan Reaksi Kimia (Soal a–n)</h1>
+
+<!-- Soal a -->
+<div class="card">
+  <div class="question">a) __K + __H<sub>2</sub>O → __H<sub>2</sub> + __KOH</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 2K + 2H<sub>2</sub>O → H<sub>2</sub> + 2KOH<br>
+    <strong>Pembahasan:</strong> 2 mol K menghasilkan 2 mol KOH dan 1 mol H<sub>2</sub>. Jumlah K dan H disetarakan.
+  </div>
+</div>
+
+<!-- Soal b -->
+<div class="card">
+  <div class="question">b) __CuO + __NH<sub>3</sub> → __H<sub>2</sub>O + __N<sub>2</sub> + __Cu</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 3CuO + 2NH<sub>3</sub> → 3Cu + N<sub>2</sub> + 3H<sub>2</sub>O<br>
+    <strong>Pembahasan:</strong> 3 CuO direduksi menjadi Cu, NH<sub>3</sub> teroksidasi jadi N<sub>2</sub>. Jumlah Cu, N, dan H disetarakan.
+  </div>
+</div>
+
+<!-- Soal c -->
+<div class="card">
+  <div class="question">c) __Al + __HCl → __AlCl<sub>3</sub> + __H<sub>2</sub></div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 2Al + 6HCl → 2AlCl<sub>3</sub> + 3H<sub>2</sub><br>
+    <strong>Pembahasan:</strong> 1 mol Al bereaksi dengan 3 mol HCl untuk membentuk AlCl<sub>3</sub> dan H<sub>2</sub>.
+  </div>
+</div>
+
+<!-- Soal d -->
+<div class="card">
+  <div class="question">d) __ZnS + __O<sub>2</sub> → __ZnO + __SO<sub>2</sub></div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 2ZnS + 3O<sub>2</sub> → 2ZnO + 2SO<sub>2</sub><br>
+    <strong>Pembahasan:</strong> Disetarakan berdasarkan jumlah atom Zn, S, dan O di kiri dan kanan.
+  </div>
+</div>
+
+<!-- Soal e -->
+<div class="card">
+  <div class="question">e) __NH<sub>4</sub>Cl + __Ca(OH)<sub>2</sub> → __CaCl<sub>2</sub> + __NH<sub>3</sub> + __H<sub>2</sub>O</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 2NH<sub>4</sub>Cl + Ca(OH)<sub>2</sub> → CaCl<sub>2</sub> + 2NH<sub>3</sub> + 2H<sub>2</sub>O<br>
+    <strong>Pembahasan:</strong> 2 mol NH<sub>4</sub>Cl menghasilkan 2 mol NH<sub>3</sub>, air, dan garam dari Ca.
+  </div>
+</div>
+
+<!-- Soal f -->
+<div class="card">
+  <div class="question">f) __C<sub>4</sub>H<sub>10</sub> + __O<sub>2</sub> → __CO<sub>2</sub> + __H<sub>2</sub>O</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 2C<sub>4</sub>H<sub>10</sub> + 13O<sub>2</sub> → 8CO<sub>2</sub> + 10H<sub>2</sub>O<br>
+    <strong>Pembahasan:</strong> Jumlah atom C = 8, H = 20, O total = 26. Maka 13 O<sub>2</sub>.
+  </div>
+</div>
+
+<!-- Soal g -->
+<div class="card">
+  <div class="question">g) __H<sub>3</sub>PO<sub>4</sub> + __NaOH → __Na<sub>3</sub>PO<sub>4</sub> + __H<sub>2</sub>O</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> H<sub>3</sub>PO<sub>4</sub> + 3NaOH → Na<sub>3</sub>PO<sub>4</sub> + 3H<sub>2</sub>O<br>
+    <strong>Pembahasan:</strong> Netralisasi 3H dari asam dengan 3OH dari basa.
+  </div>
+</div>
+
+<!-- Soal h -->
+<div class="card">
+  <div class="question">h) __C<sub>2</sub>H<sub>2</sub> + __O<sub>2</sub> → __CO<sub>2</sub> + __H<sub>2</sub>O</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 2C<sub>2</sub>H<sub>2</sub> + 5O<sub>2</sub> → 4CO<sub>2</sub> + 2H<sub>2</sub>O<br>
+    <strong>Pembahasan:</strong> C = 4, H = 4, O total di kanan = 10 → 5 O<sub>2</sub>.
+  </div>
+</div>
+
+<!-- Soal i -->
+<div class="card">
+  <div class="question">i) __KClO<sub>3</sub> → __KCl + __O<sub>2</sub></div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 2KClO<sub>3</sub> → 2KCl + 3O<sub>2</sub><br>
+    <strong>Pembahasan:</strong> Jumlah O di kiri = 6 → di kanan 3O<sub>2</sub>.
+  </div>
+</div>
+
+<!-- Soal j -->
+<div class="card">
+  <div class="question">j) __C<sub>2</sub>H<sub>6</sub> + __O<sub>2</sub> → __CO<sub>2</sub> + __H<sub>2</sub>O</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 2C<sub>2</sub>H<sub>6</sub> + 7O<sub>2</sub> → 4CO<sub>2</sub> + 6H<sub>2</sub>O<br>
+    <strong>Pembahasan:</strong> C = 4, H = 12 → 6H<sub>2</sub>O. O total = 10.
+  </div>
+</div>
+
+<!-- Soal k -->
+<div class="card">
+  <div class="question">k) __N<sub>2</sub> + __H<sub>2</sub> → __NH<sub>3</sub></div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> N<sub>2</sub> + 3H<sub>2</sub> → 2NH<sub>3</sub><br>
+    <strong>Pembahasan:</strong> 2N dan 6H di kanan → 1N<sub>2</sub> dan 3H<sub>2</sub>.
+  </div>
+</div>
+
+<!-- Soal l -->
+<div class="card">
+  <div class="question">l) __N<sub>2</sub>H<sub>4</sub> + __O<sub>2</sub> → __N<sub>2</sub> + __H<sub>2</sub>O</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> N<sub>2</sub>H<sub>4</sub> + O<sub>2</sub> → N<sub>2</sub> + 2H<sub>2</sub>O<br>
+    <strong>Pembahasan:</strong> N dan H disetarakan, O dari 2H<sub>2</sub>O = 2 → 1 O<sub>2</sub>.
+  </div>
+</div>
+
+<!-- Soal m -->
+<div class="card">
+  <div class="question">m) __Na + __Cl<sub>2</sub> → __NaCl</div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 2Na + Cl<sub>2</sub> → 2NaCl<br>
+    <strong>Pembahasan:</strong> Cl<sub>2</sub> = 2 Cl atom, dibutuhkan 2 Na → 2 NaCl.
+  </div>
+</div>
+
+<!-- Soal n -->
+<div class="card">
+  <div class="question">n) __Fe + __O<sub>2</sub> → __Fe<sub>2</sub>O<sub>3</sub></div>
+  <button onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>Jawaban:</strong> 4Fe + 3O<sub>2</sub> → 2Fe<sub>2</sub>O<sub>3</sub><br>
+    <strong>Pembahasan:</strong> 4 Fe dan 6 O → dari 3O<sub>2</sub>.
+  </div>
+</div>
+
+<script>
+  function toggleAnswer(button) {
+    const answer = button.nextElementSibling;
+    const isVisible = answer.style.display === 'block';
+    answer.style.display = isVisible ? 'none' : 'block';
+    button.innerText = isVisible ? 'Lihat Jawaban' : 'Tutup Jawaban';
+  }
+</script>
+
+</body>
+</html>
