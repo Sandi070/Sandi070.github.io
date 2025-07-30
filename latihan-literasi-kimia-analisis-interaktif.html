@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Latihan SNBT Literasi Kimia - Tingkat Analisis</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; line-height: 1.6; }
+        h1 { color: #2c3e50; }
+        .text { background-color: #eef6f8; padding: 15px; border-left: 5px solid #2980b9; margin-bottom: 30px; }
+        .question { background-color: #ffffff; padding: 15px; border-left: 5px solid #3498db; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .answer { margin-left: 20px; }
+        .key, .explanation { display: none; margin-top: 10px; }
+        .reveal-btn { margin-top: 10px; padding: 6px 12px; background-color: #3498db; color: #fff; border: none; cursor: pointer; border-radius: 5px; }
+        .reveal-btn:hover { background-color: #2980b9; }
+    </style>
+    <script>
+        function toggleAnswer(id) {
+            var key = document.getElementById("key-" + id);
+            var explanation = document.getElementById("explanation-" + id);
+            if (key.style.display === "none") {
+                key.style.display = "block";
+                explanation.style.display = "block";
+            } else {
+                key.style.display = "none";
+                explanation.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+
+<h1>Latihan SNBT Literasi Kimia - Tingkat Analisis</h1>
+
+<div class="text">
+    <p><strong>Teks Bacaan:</strong></p>
+    <p>Formalin adalah larutan yang mengandung formaldehida (CH₂O) dalam air, biasanya sekitar 37%. Formalin dikenal sebagai pengawet mayat dan bahan desinfektan, namun sering disalahgunakan untuk mengawetkan makanan seperti mie basah, tahu, dan ikan. Penggunaan formalin dalam makanan dilarang karena bersifat karsinogenik, iritatif terhadap jaringan tubuh, serta berpotensi merusak sistem pernapasan.</p>
+    <p>Untuk mendeteksi keberadaan formalin, laboratorium kimia menggunakan metode berbasis reaksi kimia dengan senyawa seperti asam kromotropat dalam suasana asam kuat. Ketika formaldehida bereaksi dengan asam kromotropat dan asam sulfat pekat, akan terbentuk senyawa kompleks berwarna ungu sebagai hasil reaksi kondensasi aldehida aromatik.</p>
+    <p>Selain metode spektrofotometri tersebut, tersedia pula metode sederhana menggunakan larutan Fehling atau larutan Schiff. Larutan Schiff akan berubah warna menjadi merah muda jika bereaksi dengan gugus aldehida bebas. Sementara larutan Fehling menghasilkan endapan merah bata jika reduksi terhadap ion Cu²⁺ terjadi, menunjukkan adanya aldehida dalam sampel.</p>
+    <p>Karena formalin bersifat merusak protein, bahan makanan yang mengandung formalin akan cenderung lebih keras, tidak mudah basi, dan tidak disukai oleh lalat. Oleh sebab itu, masyarakat juga diajak untuk mengenali ciri fisik makanan yang terkontaminasi, meskipun hasil terbaik tetap berasal dari analisis kimia yang akurat.</p>
+</div>
+<div class="question"><p><strong>16. Berdasarkan reaksi antara formaldehida dan asam kromotropat, dapat disimpulkan bahwa sifat kimia utama formalin yang terdeteksi dalam uji tersebut adalah...</strong></p><div class="answer">A. kemampuannya membentuk senyawa kompleks dengan logam berat</div><div class="answer">B. keberadaan gugus aldehida yang reaktif dalam suasana asam pekat</div><div class="answer">C. stabilitasnya dalam larutan basa kuat dan netral</div><div class="answer">D. kecenderungan untuk membentuk senyawa netral dalam suasana alkalis</div><div class="answer">E. kemampuannya mengalami ionisasi sempurna dalam air</div>
+    <button class="reveal-btn" onclick="toggleAnswer(16)">Lihat Jawaban</button>
+    <div class="key" id="key-16"><strong>Kunci Jawaban:</strong> B</div>
+    <div class="explanation" id="explanation-16"><em>Formalin mengandung aldehida yang bereaksi dengan asam kromotropat dalam suasana asam pekat.</em></div>
+    </div>
+    <div class="question"><p><strong>17. Perhatikan reaksi berikut:<br>CH₂O + 2Cu²⁺ + 4OH⁻ → COOH⁻ + Cu₂O (endapan merah) + 2H₂O<br>Reaksi ini menunjukkan bahwa formaldehida bertindak sebagai...</strong></p><div class="answer">A. zat pengoksidasi yang mengubah Cu⁺ menjadi Cu²⁺</div><div class="answer">B. zat pereduksi yang mengubah Cu²⁺ menjadi Cu⁺</div><div class="answer">C. indikator perubahan pH dalam reaksi redoks</div><div class="answer">D. senyawa netral yang bersifat amfoter</div><div class="answer">E. senyawa basa lemah yang larut dalam alkohol</div>
+    <button class="reveal-btn" onclick="toggleAnswer(17)">Lihat Jawaban</button>
+    <div class="key" id="key-17"><strong>Kunci Jawaban:</strong> B</div>
+    <div class="explanation" id="explanation-17"><em>Aldehida mereduksi ion Cu²⁺ menjadi Cu⁺ (Cu₂O) → reaksi redoks khas uji Fehling.</em></div>
+    </div>
+    <div class="question"><p><strong>18. Alasan larutan Schiff digunakan dalam pengujian formalin karena...</strong></p><div class="answer">A. senyawa Schiff mampu bereaksi dengan logam berat dalam formalin</div><div class="answer">B. warna ungu yang dihasilkan menunjukkan reaksi dengan alkohol</div><div class="answer">C. perubahan warna merah muda menunjukkan reaksi spesifik dengan gugus aldehida</div><div class="answer">D. reaksi Schiff dapat menghilangkan bau formalin secara total</div><div class="answer">E. larutan Schiff mengendapkan formalin menjadi senyawa padat</div>
+    <button class="reveal-btn" onclick="toggleAnswer(18)">Lihat Jawaban</button>
+    <div class="key" id="key-18"><strong>Kunci Jawaban:</strong> C</div>
+    <div class="explanation" id="explanation-18"><em>Schiff bereaksi spesifik dengan aldehida → warna merah muda.</em></div>
+    </div>
+    <div class="question"><p><strong>19. Ciri fisik bahan makanan yang mengandung formalin yang disebut dalam teks berhubungan dengan sifat formalin sebagai...</strong></p><div class="answer">A. katalis enzimatis yang mempercepat pelapukan makanan</div><div class="answer">B. pengikat air yang menyebabkan bahan makanan menjadi lunak</div><div class="answer">C. pengoksidasi kuat yang memicu fermentasi protein dalam bahan makanan</div><div class="answer">D. pengawet yang merusak struktur protein dan menghambat pembusukan</div><div class="answer">E. pengasam yang menurunkan pH dan mempercepat reaksi pelarutan</div>
+    <button class="reveal-btn" onclick="toggleAnswer(19)">Lihat Jawaban</button>
+    <div class="key" id="key-19"><strong>Kunci Jawaban:</strong> D</div>
+    <div class="explanation" id="explanation-19"><em>Formalin menyebabkan protein rusak → makanan menjadi keras dan tahan lama.</em></div>
+    </div>
+    <div class="question"><p><strong>20. Seorang siswa melakukan uji formalin pada tahu menggunakan larutan Fehling dan menemukan endapan merah bata. Agar hasil uji lebih valid dan sesuai standar ilmiah, langkah terbaik selanjutnya adalah...</strong></p><div class="answer">A. membiarkan tahu terkena udara terbuka lalu diuji kembali setelah 3 hari</div><div class="answer">B. menambahkan formalin murni ke sampel untuk memastikan warna reaksi</div><div class="answer">C. melarutkan tahu dalam alkohol untuk mempercepat proses reaksi</div><div class="answer">D. melakukan uji konfirmasi menggunakan reagen kromotropat dan spektrofotometri</div><div class="answer">E. mencuci tahu dengan air panas untuk menghilangkan sisa formalin</div>
+    <button class="reveal-btn" onclick="toggleAnswer(20)">Lihat Jawaban</button>
+    <div class="key" id="key-20"><strong>Kunci Jawaban:</strong> D</div>
+    <div class="explanation" id="explanation-20"><em>Uji konfirmasi menggunakan metode spektrofotometri lebih akurat dan valid.</em></div>
+    </div>
+    </body></html>
