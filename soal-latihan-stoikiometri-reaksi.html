@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Soal Interaktif Stoikiometri Reaksi</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f9ff;
+      padding: 20px;
+      color: #1e293b;
+    }
+    h1 {
+      text-align: center;
+      color: #0f172a;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 800px;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.01);
+    }
+    .question {
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    .answer {
+      background: #e0f2fe;
+      border-left: 5px solid #3b82f6;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+    }
+    .toggle-btn {
+      margin-top: 10px;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+  </style>
+  <script>
+    function toggleAnswer(btn) {
+      const answer = btn.nextElementSibling;
+      if (answer.style.display === 'none' || answer.style.display === '') {
+        answer.style.display = 'block';
+        btn.textContent = 'Sembunyikan Jawaban';
+      } else {
+        answer.style.display = 'none';
+        btn.textContent = 'Lihat Jawaban';
+      }
+    }
+  </script>
+</head>
+<body>
+
+<h1>Soal Interaktif Stoikiometri Reaksi</h1>
+
+<div class="card">
+  <div class="question">1. Berapa mol gas hidrogen dan mol larutan aluminium sulfat yang dihasilkan jika digunakan 0,5 mol aluminium?<br>
+    Reaksi: 2Al(s) + 3H<sub>2</sub>SO<sub>4</sub>(aq) → Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>(aq) + 3H<sub>2</sub>(g)
+  </div>
+  <button class="toggle-btn" onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    Diketahui: mol Al = 0,5 mol<br>
+    Dari persamaan reaksi: 2 mol Al menghasilkan 3 mol H<sub>2</sub> dan 1 mol Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub><br>
+    <br>
+    Mol H<sub>2</sub> = (3/2) × 0,5 = <strong>0,75 mol</strong><br>
+    Mol Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> = (1/2) × 0,5 = <strong>0,25 mol</strong>
+  </div>
+</div>
+
+<div class="card">
+  <div class="question">2. Tentukan volume gas H<sub>2</sub> yang dihasilkan jika 5,6 gram besi (Fe) direaksikan dengan asam klorida sesuai reaksi:<br>
+    Fe(s) + 2HCl(aq) → FeCl<sub>2</sub>(aq) + H<sub>2</sub>(g)
+  </div>
+  <button class="toggle-btn" onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    Massa Fe = 5,6 gram, Ar Fe = 56<br>
+    Mol Fe = 5,6 / 56 = <strong>0,1 mol</strong><br>
+    Koefisien reaksi: Fe : H<sub>2</sub> = 1 : 1<br>
+    Maka mol H<sub>2</sub> = 0,1 mol<br>
+    Volume H<sub>2</sub> pada STP = mol × 22,4 L = 0,1 × 22,4 = <strong>2,24 liter</strong>
+  </div>
+</div>
+
+<div class="card">
+  <div class="question">3. Sebanyak 32 gram kalsium karbida (CaC<sub>2</sub>) direaksikan dengan air menurut reaksi:<br>
+    CaC<sub>2</sub>(s) + 2H<sub>2</sub>O(l) → Ca(OH)<sub>2</sub>(s) + C<sub>2</sub>H<sub>2</sub>(g)<br>
+    Tentukan:
+    <ol type="a">
+      <li>mol CaC<sub>2</sub></li>
+      <li>massa Ca(OH)<sub>2</sub> yang dihasilkan</li>
+      <li>volume C<sub>2</sub>H<sub>2</sub> pada STP</li>
+    </ol>
+  </div>
+  <button class="toggle-btn" onclick="toggleAnswer(this)">Lihat Jawaban</button>
+  <div class="answer">
+    <strong>a. Mol CaC<sub>2</sub>:</strong><br>
+    M<sub>r</sub> CaC<sub>2</sub> = 40 + (2 × 12) = 64 g/mol<br>
+    Mol CaC<sub>2</sub> = 32 g / 64 g/mol = <strong>0,5 mol</strong><br><br>
+
+    <strong>b. Massa Ca(OH)<sub>2</sub>:</strong><br>
+    Perbandingan koefisien: CaC<sub>2</sub> : Ca(OH)<sub>2</sub> = 1 : 1<br>
+    Mol Ca(OH)<sub>2</sub> = 0,5 mol<br>
+    M<sub>r</sub> Ca(OH)<sub>2</sub> = 40 + (2 × 16) + (2 × 1) = 74 g/mol<br>
+    Massa = 0,5 × 74 = <strong>37 gram</strong><br><br>
+
+    <strong>c. Volume C<sub>2</sub>H<sub>2</sub>:</strong><br>
+    Koefisien C<sub>2</sub>H<sub>2</sub> = 1 (sama dengan CaC<sub>2</sub>)<br>
+    Mol C<sub>2</sub>H<sub>2</sub> = 0,5 mol<br>
+    Volume pada STP = 0,5 × 22,4 = <strong>11,2 liter</strong>
+  </div>
+</div>
+
+</body>
+</html>
