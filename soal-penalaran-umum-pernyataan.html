@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Latihan Soal PU — 23 April (Nomor 1–20)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --bg:#f7fafc;
+      --card:#ffffff;
+      --accent:#1768ac;
+      --accent-2:#2aa6d6;
+      --muted:#666;
+      --success:#2a9d8f;
+    }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:#111;
+      padding:24px;
+    }
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+    }
+    h1{
+      font-size:20px;
+      margin:0;
+      color:var(--accent);
+    }
+    .controls{
+      display:flex;
+      gap:8px;
+    }
+    button.primary{
+      background:var(--accent);
+      color:#fff;
+      border:0;
+      padding:8px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    button.ghost{
+      background:transparent;
+      border:1px solid #d0e7f5;
+      color:var(--accent);
+      padding:8px 12px;
+      border-radius:8px;
+      cursor:pointer;
+    }
+    .container{
+      max-width:980px;
+      margin:0 auto;
+    }
+    .card{
+      background:var(--card);
+      padding:16px;
+      border-radius:10px;
+      box-shadow:0 6px 18px rgba(16,40,60,0.06);
+      margin-bottom:14px;
+      border-left:6px solid var(--accent-2);
+    }
+    .question h2{
+      margin:0 0 10px 0;
+      font-size:16px;
+      color:#0e3b57;
+    }
+    .options { margin-left:8px; }
+    .option { margin:6px 0; }
+    .reveal-btn{
+      margin-top:10px;
+      padding:8px 10px;
+      background:var(--accent);
+      color:#fff;
+      border:0;
+      border-radius:8px;
+      cursor:pointer;
+    }
+    .answer-block{
+      margin-top:12px;
+      padding:12px;
+      border-radius:8px;
+      background:#f0fbff;
+      border:1px solid #d4f0ff;
+      display:none;
+    }
+    .answer-block .key{ font-weight:700; color:var(--success); }
+    .explain { margin-top:8px; color:var(--muted); line-height:1.5; }
+    footer { text-align:center; margin-top:26px; color:#666; font-size:13px; }
+    /* small screens */
+    @media (max-width:640px){
+      .controls{ flex-direction:column; align-items:flex-end; }
+      header{ gap:8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Latihan Soal PU — 23 April (Nomor 1–20)</h1>
+      <div class="controls">
+        <button id="showAll" class="primary">Tampilkan Semua Jawaban</button>
+        <button id="hideAll" class="ghost">Sembunyikan Semua</button>
+      </div>
+    </header>
+
+    <!-- QUESTION 1 -->
+    <article id="q1" class="card question">
+      <h2>1. Apabila tidak pernah menang dalam kompetisi tingkat daerah, atlet tidak boleh ikut audisi untuk pertandingan nasional. Hal ini berlaku bagi atlet badminton. Manakah simpulan berikut yang BENAR?</h2>
+      <div class="options">
+        <div class="option">A. Atlet badminton diharapkan menang dalam kompetisi daerah agar dapat mengikuti kegiatan audisi nasional.</div>
+        <div class="option">B. Semua atlet boleh ikut audisi untuk pertandingan nasional jika pernah menang dalam kompetisi daerah.</div>
+        <div class="option">C. Para atlet boleh ikut audisi untuk pertandingan nasional meski tidak pernah menang di kompetisi daerah.</div>
+        <div class="option">D. Semua atlet pernah menang dalam kegiatan kompetisi di tingkat daerah, kecuali para pemain badminton.</div>
+        <div class="option">E. Atlet badminton tidak boleh mengikuti audisi pertandingan nasional jika tidak pernah menang di kompetisi daerah.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('1', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-1" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: E</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Pernyataan awal adalah aturan khusus: “Jika (tidak pernah menang) maka (tidak boleh ikut audisi)”, yang berlaku untuk atlet badminton. Bentuk logika yang sama dengan pilihan E yang menyatakan hal tersebut secara langsung.  
+          Pilihan lain salah karena: A berbicara tentang harapan (normatif), bukan simpulan logis; B menggeneralisasi ke semua atlet (tidak tertulis); C berlawanan dengan pernyataan; D membuat klaim luas tentang semua atlet yang tidak didukung teks.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 2 -->
+    <article id="q2" class="card question">
+      <h2>2. Siswa Sekolah JKH yang menjadi juara nasional paduan suara mampu membuat lagu. Sebagian dari mereka juga mampu bermain teater musikal lebih baik dari siswa sekolah lain. Berdasarkan informasi di atas, manakah simpulan yang PALING TEPAT?</h2>
+      <div class="options">
+        <div class="option">A. Semua siswa Sekolah JKH yang menjadi juara nasional lomba paduan suara mampu bermain teater musikal.</div>
+        <div class="option">B. Sebagian siswa yang kurang mahir dalam bermain teater bukan merupakan siswa dari Sekolah JKH.</div>
+        <div class="option">C. Siswa Sekolah JKH yang memenangkan juara nasional lomba paduan suara mampu membuat lagu dan bermain teater.</div>
+        <div class="option">D. Beberapa siswa Sekolah JKH mampu membuat lagu, namun tidak bisa membuat teater musikal.</div>
+        <div class="option">E. Beberapa siswa Sekolah JKH yang dapat membuat lagu juga dapat bermain teater musikal lebih baik dari sekolah lain.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('2', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-2" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: E</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Teks menyatakan dua fakta: (1) Semua pemenang juara nasional paduan suara mampu membuat lagu (kuantor universal pada kelompok tersebut). (2) Sebagian dari mereka (artinya tidak semua) juga mampu bermain teater musikal lebih baik dari siswa lain. Jadi simpulan yang paling tepat adalah bahwa “beberapa dari siswa yang bisa membuat lagu juga dapat bermain teater musikal lebih baik” — ini adalah pilihan E.  
+          Pilihan A keliru karena menyatakan "semua" bermain teater, sedangkan teks hanya menyebut "sebagian".
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 3 -->
+    <article id="q3" class="card question">
+      <h2>3. Pada akhir pekan, SR akan menemani ibu arisan atau mengantar kakak bertemu temannya. Adiknya mengajaknya mengunjungi pameran buku. Karena lokasi pameran terlalu jauh, keduanya tidak jadi pergi ke pameran buku. Apa yang PALING MUNGKIN dilakukan SR pada akhir pekan?</h2>
+      <div class="options">
+        <div class="option">A. Menemani ibu arisan dan mengantar kakak bertemu temannya.</div>
+        <div class="option">B. Menikmati akhir minggu dengan bersantai bersama keluarga di rumah.</div>
+        <div class="option">C. Menemani ibu arisan atau mengantar kakak bertemu temannya.</div>
+        <div class="option">D. Menemani ibu arisan, tetapi tidak mengantar kakak bertemu temannya.</div>
+        <div class="option">E. Mengantar kakak bertemu temannya, tetapi tidak menemani ibu arisan.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('3', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-3" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: C</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Informasi menyebutkan dua kemungkinan awal (menemani ibu <em>atau</em> mengantar kakak). Karena rencana ketiga (pameran buku) batal, yang tersisa adalah salah satu dari dua rencana awal. Pilihan C yang menegaskan “Menemani ibu arisan atau mengantar kakak” adalah pilihan paling sesuai. Pilihan A mengasumsikan kedua kegiatan dilakukan sekaligus (tidak dinyatakan), B adalah kemungkinan generik namun tidak paling mungkin dibanding pilihan C, D/E menuntut informasi tambahan yang tidak diberikan.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 4 -->
+    <article id="q4" class="card question">
+      <h2>4. Ketika festival seni tradisional diadakan di Pulau ABC, jumlah wisatawan meningkat dibandingkan ketika kegiatan tersebut tidak dilakukan. Hal serupa terjadi ketika pameran lukisan diadakan di Pulau ABC. Namun, ketika Pulau ABC mengadakan perayaan adat daerah, jumlah wisatawan yang datang tidak mengalami peningkatan. Berdasarkan informasi di atas manakah dari pernyataan berikut yang PALING MUNGKIN BENAR?</h2>
+      <div class="options">
+        <div class="option">A. Meskipun pameran lukisan diadakan di pulau lain, jumlah kunjungan wisatawan ke Pulau ABC tetap meningkat.</div>
+        <div class="option">B. Jumlah wisatawan akan mengalami penurunan ketika tidak diadakan kegiatan pameran lukisan di Pulau ABC.</div>
+        <div class="option">C. Mengadakan festival seni tradisional atau pameran lukisan di pulau lain akan menurunkan jumlah wisatawan di Pulau ABC.</div>
+        <div class="option">D. Mengadakan perayaan adat meningkatkan jumlah wisatawan dibandingkan dengan tidak mengadakannya.</div>
+        <div class="option">E. Mengadakan festival seni tradisional atau pameran lukisan di Pulau ABC meningkatkan jumlah kunjungan wisatawan.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('4', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-4" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: E</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Teks menyatakan dua observasi: festival seni tradisional → lebih banyak wisatawan; pameran lukisan → juga meningkatkan wisatawan. Sebaliknya, perayaan adat tidak meningkatkan kunjungan. Oleh karena itu pernyataan yang konsisten dengan teks adalah E: mengadakan festival seni tradisional atau pameran lukisan <em>di Pulau ABC</em> meningkatkan kunjungan. Pilihan A dan C berasumsi efek lintas-lokasi tanpa bukti; D bertentangan dengan teks.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 5 -->
+    <article id="q5" class="card question">
+      <h2>5. Banyaknya rumah kosong yang terbengkalai di suatu kampung menyebabkan rumah ditumbuhi tanaman liar. Banyaknya tanaman liar menyebabkan munculnya banyak nyamuk. Meskipun pengurus kampung telah melakukan sosialisasi pola hidup sehat, namun angka penyakit malaria tidak menurun karena banyaknya nyamuk di kampung tersebut. Berdasarkan informasi di atas, manakah pernyataan di bawah ini yang BENAR?</h2>
+      <div class="options">
+        <div class="option">A. Meningkatnya kasus malaria disebabkan oleh banyaknya rumah kosong terbengkalai.</div>
+        <div class="option">B. Lebatnya tanaman liar disebabkan kurang tepatnya sosialisasi pola hidup sehat oleh pengurus kampung.</div>
+        <div class="option">C. Banyaknya nyamuk menyebabkan pengurus kampung melakukan sosialisasi pola hidup sehat.</div>
+        <div class="option">D. Adanya sosialisasi pola hidup sehat menjadikan banyak rumah kosong terbengkalai.</div>
+        <div class="option">E. Banyaknya nyamuk di kampung tersebut disebabkan oleh banyaknya rumah terbengkalai.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('5', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-5" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: E</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Teks menyusun rantai kausal: rumah kosong → tanaman liar → nyamuk → malaria (tetap tinggi). Pernyataan E secara langsung merefleksikan bagian awal rantai kausal: banyaknya nyamuk disebabkan oleh banyaknya rumah terbengkalai (melalui perantara tanaman liar). Pilihan A melebih-lebihkan karena teks tidak mengatakan rumah terbengkalai langsung → malaria (masih ada perantara). Pilihan B salah sebab teks menyatakan sosialisasi sudah dilakukan, bukan penyebab tanaman liar. C dan D juga tidak didukung urutan sebab akibat dalam teks.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 6 -->
+    <article id="q6" class="card question">
+      <h2>6. Listrik banyak digunakan orang untuk mendapatkan pencahayaan di dalam ruangan. Selain itu, listrik juga menjadi sarana untuk menggerakkan mesin di pabrik. Namun, penggunaan listrik yang berlebihan dapat menyebabkan dampak negatif bagi diri sendiri dan lingkungan. Penggunaan listrik yang berlebihan dapat membebani anggaran rumah tangga dan meningkatkan polusi udara. Berdasarkan informasi tersebut, manakah pernyataan berikut yang PASTI SALAH?</h2>
+      <div class="options">
+        <div class="option">A. Polusi udara meningkat karena penggunaan listrik yang berlebihan.</div>
+        <div class="option">B. Anggaran rumah tangga meningkat karena penggunaan listrik.</div>
+        <div class="option">C. Listrik dapat menyebabkan orang dapat mengatur suhu ruangan.</div>
+        <div class="option">D. Pengguna peralatan elektronik mungkin tidak menggunakan listrik.</div>
+        <div class="option">E. Penggunaan listrik berlebihan tidak menyebabkan polusi udara dan air.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('6', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-6" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: E</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Teks menyatakan secara eksplisit bahwa penggunaan listrik yang berlebihan "meningkatkan polusi udara" dan "membebani anggaran rumah tangga". Jadi pernyataan E yang menyatakan sebaliknya ("tidak menyebabkan polusi udara dan air") jelas bertentangan dan oleh karena itu pasti salah.  
+          Catatan: pilihan D juga canggung dan tampak tidak logis secara umum (peralatan elektronik memerlukan listrik), namun teks tidak membahas itu; pilihan E adalah yang paling pasti bertentangan dengan pernyataan dalam teks.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 7 -->
+    <article id="q7" class="card question">
+      <h2>7. Mengonsumsi sayuran mentah banyak dilakukan karena rasanya yang segar dan variasinya berbagai macam. Salah satu jenis sayuran mentah yang banyak dikonsumsi adalah sayuran jenis X yang warnanya yang cerah dan banyak mengandung air. Berdasarkan paparan tersebut, manakah simpulan yang PALING TEPAT?</h2>
+      <div class="options">
+        <div class="option">A. Semua sayuran yang masih mentah banyak mengandung air.</div>
+        <div class="option">B. Sayuran mentah selain jenis X tidak memiliki warna yang cerah.</div>
+        <div class="option">C. Hanya sayuran mentah jenis X yang variasinya berbagai macam.</div>
+        <div class="option">D. Beberapa orang makan sayuran mentah jenis X karena menggugah selera.</div>
+        <div class="option">E. Sayuran mentah yang rasanya segar pasti warnanya cerah.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('7', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-7" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: D</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Teks menyatakan alasan umum (rasanya segar) orang mengonsumsi sayuran mentah dan mencontohkan jenis X yang cerah dan mengandung banyak air. Pilihan D ("Beberapa orang makan ... karena menggugah selera") konsisten dengan fakta bahwa rasa segar menggugah selera — ini adalah simpulan yang paling tepat. Pilihan lain membuat generalisasi yang berlebihan atau kesimpulan yang tidak didukung.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 8 -->
+    <article id="q8" class="card question">
+      <h2>8. Saat ini hanya ada beberapa penjual asongan di stasiun kota karena stasiun kota sepi penumpang. Biasanya, jika jam kantor selesai, stasiun kota ramai dipenuhi penumpang. Berdasarkan pernyataan di atas, manakah simpulan yang BENAR?</h2>
+      <div class="options">
+        <div class="option">A. Saat ini waktunya jam kantor selesai.</div>
+        <div class="option">B. Saat ini stasiun kota ramai oleh penumpang.</div>
+        <div class="option">C. Saat ini bukan waktunya jam kantor selesai.</div>
+        <div class="option">D. Saat ini stasiun kota ramai dengan pedagang asongan.</div>
+        <div class="option">E. Saat ini banyak penumpang kereta di stasiun kota.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('8', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-8" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: C</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Karena kondisi sekarang adalah "stasiun sepi penumpang" dan biasanya akan ramai saat jam kantor selesai, maka kondisi sepi ini menunjukkan bahwa kini <em>bukan</em> waktu jam kantor selesai. Oleh karena itu pilihan C paling logis. Pilihan A/B/D/E bertentangan dengan kondisi yang disebutkan.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 9 -->
+    <article id="q9" class="card question">
+      <h2>9. Siswa X menjuarai olimpiade matematika berkat dukungan keluarga dan dorongan dalam dirinya. Adanya dorongan dalam diri terlihat dari pengurangan waktu bermain dan intensitas mengikuti bimbingan di luar kelas. Selain itu, dukungan keluarga menyebabkan siswa lebih percaya diri yang ditunjukkan oleh sikapnya yang tenang saat menghadapi lomba dan optimis saat mengikuti kejuaraan. Jika siswa X merasa optimis saat mengikuti kejuaraan, manakah kesimpulan di bawah ini yang PALING MUNGKIN BENAR?</h2>
+      <div class="options">
+        <div class="option">A. Keluarganya memberikan dukungan penuh kepada siswa tersebut.</div>
+        <div class="option">B. Siswa tersebut secara konsisten mengurangi waktu bermainnya.</div>
+        <div class="option">C. Siswa X memiliki dorongan yang sangat kuat untuk menjadi juara.</div>
+        <div class="option">D. Siswa tersebut mengikuti bimbingan belajar dengan konsentrasi yang tinggi.</div>
+        <div class="option">E. Siswa tersebut sering menjuarai perlombaan olimpiade matematika.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('9', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-9" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: A</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Teks menyatakan hubungan sebab-akibat: dukungan keluarga → siswa lebih percaya diri → bersikap tenang dan optimis saat lomba. Karena soal sudah menyebut siswa X optimis, simpulan paling langsung dan mungkin adalah bahwa ia mendapatkan dukungan keluarga (A). Pilihan lain mungkin benar tetapi tidak langsung terindikasi dari fakta optimisme saja (mis. B dan C menunjuk pada dorongan/dedikasi pribadi yang juga disebutkan namun "optimis" lebih langsung berkaitan dengan dukungan keluarga dalam pernyataan teks).
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 10 -->
+    <article id="q10" class="card question">
+      <h2>10. Taman bermain yang selalu ramai dihibahkan kepada warga setempat untuk dikelola guna menambah pemasukan bagi warga. Setelah dikelola selama satu tahun, jumlah pengunjung menurun dan banyak penjual makanan ringan yang tutup. Manakah pernyataan yang PALING MUNGKIN menjelaskan perbedaan kedua kondisi tersebut?</h2>
+      <div class="options">
+        <div class="option">A. Warga setempat tidak melakukan penggantian fasilitas bermain yang sudah rusak.</div>
+        <div class="option">B. Setelah dikelola warga, tidak dilakukan perbaikan layanan pada taman bermain.</div>
+        <div class="option">C. Taman bermain sering digunakan untuk kegiatan lain yang dapat merusak fasilitas.</div>
+        <div class="option">D. Pada awal warga mengelola taman tersebut, taman bermain dirawat secara berkala.</div>
+        <div class="option">E. Taman tersebut tidak pernah mendapatkan pengarahan dari dinas pariwisata setempat.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('10', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-10" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: B</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Perbedaan kondisi (awal ramai → setelah satu tahun sepi) kemungkinan besar disebabkan oleh penurunan kualitas layanan atau perawatan setelah pengelolaan berpindah ke warga. Pilihan B menyatakan tidak dilakukan perbaikan layanan setelah warga mengelola—ini alasan umum yang langsung menjelaskan menurunnya pengunjung dan tutupnya pedagang. Pilihan A/C juga mungkin menjelaskan, namun B lebih umum dan langsung merujuk pada aspek layanan yang memengaruhi pengalaman pengunjung.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 11 -->
+    <article id="q11" class="card question">
+      <h2>11. Warga remaja perkotaan mulai menyukai mengenakan pakaian unik dengan warna-warna yang kontras dan berkilau. Banyak di antara mereka yang mengenakannya untuk sekadar berjalan-jalan di pusat perbelanjaan. Para pengamat melihat bahwa hal tersebut memengaruhi perkembangan bisnis dunia fesyen. Berdasarkan tulisan di atas, manakah yang PALING MUNGKIN mendasari argumen pengamat?</h2>
+      <div class="options">
+        <div class="option">A. Remaja kota menyalurkan ekspresinya melalui pakaian yang dikenakan.</div>
+        <div class="option">B. Pakaian dapat menjadi media peningkatan pengakuan terhadap remaja.</div>
+        <div class="option">C. Kegiatan remaja ibu kota tidak hanya dilakukan di pusat perbelanjaan.</div>
+        <div class="option">D. Para pengusaha di bidang fesyen mengamati kreasi pakaian remaja kota.</div>
+        <div class="option">E. Banyak toko yang menjual pakaian-pakaian unik khusus untuk remaja.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('11', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-11" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: D</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Pengamat menyimpulkan perubahan berpengaruh pada bisnis fesyen — alasan paling logis adalah karena para pelaku industri (pengusaha fesyen) memperhatikan dan mengamati preferensi remaja. Pilihan D secara langsung menghubungkan pengamatan remaja dengan reaksi bisnis fesyen. Pilihan A/B juga relevan tetapi lebih bersifat motivasional; D menjelaskan mekanisme perubahan bisnis itu sendiri.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 12 -->
+    <article id="q12" class="card question">
+      <h2>12. Ahli Pendidikan 1 menyatakan bahwa Sekolah O memiliki kualitas sebagai sekolah alam yang lebih baik dibandingkan dengan Sekolah P. Ahli Pendidikan 2 menyatakan bahwa Sekolah P menggunakan lebih banyak waktunya untuk belajar teori di ruangan kelas. Fakta menyatakan bahwa Sekolah P mendapat penghargaan adiwiyata, yaitu sekolah yang mengintegrasikan lingkungan ke dalam sekolah. Manakah pernyataan yang PALING TEPAT berdasarkan fakta tersebut?</h2>
+      <div class="options">
+        <div class="option">A. Memperkuat pernyataan Ahli Pendidikan 1.</div>
+        <div class="option">B. Memperlemah pernyataan Ahli Pendidikan 1.</div>
+        <div class="option">C. Memperkuat pernyataan Ahli Pendidikan 2.</div>
+        <div class="option">D. Memperlemah pernyataan Ahli Pendidikan 2.</div>
+        <div class="option">E. Tidak relevan dengan pernyataan Ahli Pendidikan 1 dan Ahli Pendidikan 2.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('12', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-12" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: B</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Penghargaan adiwiyata menunjukkan Sekolah P juga memiliki praktik pengintegrasian lingkungan — ini melemahkan klaim Ahli 1 yang menyatakan Sekolah O lebih baik sebagai sekolah alam, karena ternyata Sekolah P pun memenuhi kriteria lingkungan. Jadi pernyataan yang paling tepat: B (memperlemah pernyataan Ahli Pendidikan 1). Pilihan lainnya kurang relevan atau tidak tepat berdasarkan fakta.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 13 -->
+    <article id="q13" class="card question">
+      <h2>13. Melukis bermanfaat untuk meningkatkan kemampuan kecerdasan karena mengembangkan pemikiran abstrak. Selain itu, melukis juga melatih motorik halus dan mengembangkan kreativitas. Meskipun demikian, terlalu lama melukis dapat berdampak negatif, seperti memunculkan rasa bosan yang dapat menurunkan minat belajar. Berdasarkan informasi tersebut, manakah pernyataan berikut yang PASTI BENAR?</h2>
+      <div class="options">
+        <div class="option">A. Beberapa orang yang memiliki minat belajar tinggi akan menyukai kegiatan melukis.</div>
+        <div class="option">B. Kegiatan melukis cenderung menurunkan minat belajar seseorang.</div>
+        <div class="option">C. Beberapa masalah terkait kejenuhan disebabkan melukis yang terlalu lama.</div>
+        <div class="option">D. Kurangnya daya kreativitas dapat diatasi dengan melakukan kegiatan melukis.</div>
+        <div class="option">E. Orang yang mengalami rasa bosan biasanya menghabiskan waktunya dengan melukis.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('13', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-13" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: C</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Teks menyatakan secara eksplisit bahwa "terlalu lama melukis dapat berdampak negatif, seperti memunculkan rasa bosan yang dapat menurunkan minat belajar." Ini menjadikan pernyataan C (beberapa masalah kejenuhan disebabkan melukis terlalu lama) sebagai yang pasti benar. Pilihan lain tidak didukung sebagai kebenaran pasti dari teks.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 14 -->
+    <article id="q14" class="card question">
+      <h2>14. Kota ZZ dikenal sebagai kota hijau yang mengutamakan kesehatan lingkungan. Hal ini terlihat dari berbagai program ramah lingkungan yang diterapkan, seperti penanaman pohon secara berkala di ruang umum. Selain itu, pemerintah kota juga memberikan insentif kepada RT yang berpartisipasi aktif dalam kegiatan pelestarian lingkungan. Berdasarkan data yang tercatat, setidaknya setiap tahun ada lima RT yang mendapatkan penghargaan. Berdasarkan paragraf di atas manakah di bawah ini pernyataan yang PALING MUNGKIN BENAR mengenai Kota ZZ?</h2>
+      <div class="options">
+        <div class="option">A. Jumlah RT yang mendapatkan penghargaan akan meningkat setiap tahun.</div>
+        <div class="option">B. Kota ZZ hanya memberikan insentif kepada warga menanam pohon di ruang umum.</div>
+        <div class="option">C. Setiap tahun ada RT yang akan mendapatkan insentif dari Pemerintah Kota ZZ.</div>
+        <div class="option">D. Pemerintah Kota ZZ tidak memberikan insentif sebelum ada program ramah lingkungan.</div>
+        <div class="option">E. Sebelum ada penghargaan, tidak ada RT ikut dalam program ramah lingkungan.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('14', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-14" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: C</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Teks menyatakan: pemerintah memberi insentif kepada RT yang berpartisipasi dan "setidaknya setiap tahun ada lima RT yang mendapatkan penghargaan." Ini menunjukkan secara konsisten setiap tahun ada RT yang mendapat insentif/penghargaan → pilihan C paling sesuai. Pilihan A bersifat spekulatif (menaik/menurun), B menyempitkan cakupan tanpa bukti, D/E tidak didukung teks.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 15 -->
+    <article id="q15" class="card question">
+      <h2>15. Seorang remaja hendak membeli sepatu yang nyaman untuk berlari. Sepatu X cocok dengan kebutuhannya, tetapi harganya mahal. Sepatu Y kurang cocok, tetapi harganya murah. Pelari tersebut akhirnya membeli sepatu X untuk memenuhi kebutuhannya sambil menghindari lecet kaki saat dipakai di lapangan. Manakah yang PALING MEMPERKUAT keputusan remaja tersebut?</h2>
+      <div class="options">
+        <div class="option">A. Remaja tersebut sering berolahraga dengan menggunakan sepatu tersebut.</div>
+        <div class="option">B. Remaja tersebut memiliki tabungan yang cukup untuk membeli sepatu.</div>
+        <div class="option">C. Kenyamanan sepatu bukan pertimbangan penting untuk berlari jarak jauh.</div>
+        <div class="option">D. Sepatu X banyak digunakan oleh para pelari jarak jauh profesional.</div>
+        <div class="option">E. Sepatu Y memiliki model yang menarik sehingga banyak dipakai remaja.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('15', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-15" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: D</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Keputusan didasarkan pada kebutuhan kenyamanan untuk mencegah lecet. Jika sepatu X banyak dipakai pelari jarak jauh profesional (D), itu memperkuat argumen bahwa X memang nyaman dan cocok untuk performa lari — sehingga D paling memperkuat keputusan. Pilihan B hanya menjelaskan kemampuan membeli, bukan alasan memilih X karena kenyamanan/performanya.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 16 -->
+    <article id="q16" class="card question">
+      <h2>16. Kualitas suara gitar dinilai sebagai faktor yang paling dibutuhkan untuk mendukung keberhasilan pemusik saat di panggung. Peneliti berpendapat bahwa suara gitar merek X kurang jernih dibandingkan merek Y. Manakah pernyataan di bawah ini yang PALING MEMPERLEMAH pendapat peneliti tersebut?</h2>
+      <div class="options">
+        <div class="option">A. Gitar merek Y sering dipakai oleh pemusik konser-konser besar.</div>
+        <div class="option">B. Gitar merek X lebih jarang digunakan pemusik profesional.</div>
+        <div class="option">C. Gitar merek Y sudah terkenal kualitasnya di kalangan pemusik.</div>
+        <div class="option">D. Kualitas lagu ditentukan oleh kreativitas pemusik.</div>
+        <div class="option">E. Gitar merek X dibuat dari bahan pilihan yang berkualitas.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('16', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-16" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: E</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Klaim peneliti: "suara gitar X kurang jernih dibanding Y." Untuk melemahkan klaim itu, bukti yang menunjukkan X sebenarnya dibuat dengan bahan berkualitas (E) secara langsung meragukan asumsi bahwa suara X buruk karena faktor internal. Pilihan A/C mendukung reputasi Y tetapi tidak langsung menyangkal kualitas X; B bahkan memperkuat klaim peneliti; D bersifat umum dan tidak menolak pernyataan tentang kualitas suara.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 17 -->
+    <article id="q17" class="card question">
+      <h2>17. Manajer Keuangan PT X mengungkapkan bahwa tingkat pembelian bahan baku mengalami kenaikan yang berarti dalam dua semester ini. Hal ini disebabkan PT X berhasil menjalankan program promosi di akhir tahun. Manakah pernyataan berikut yang jika benar akan MEMPERKUAT pernyataan Manajer Keuangan PT X?</h2>
+      <div class="options">
+        <div class="option">A. Jumlah peserta program promosi di akhir tahun belakangan ini lebih banyak.</div>
+        <div class="option">B. Perusahaan-perusahaan lain tidak menjalankan program promosi di akhir tahun.</div>
+        <div class="option">C. Tidak semua pelanggan memanfaatkan program promosi di akhir tahun.</div>
+        <div class="option">D. Sejak dulu, pelanggan tertarik mengikuti program promosi di akhir tahun.</div>
+        <div class="option">E. Program promosi di akhir tahun fokus pada penjualan produk baru.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('17', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-17" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: A</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Bila program promosi mengundang lebih banyak peserta (A), maka peningkatan pembelian bahan baku sebagai akibat permintaan yang meningkat adalah penjelasan logis. Pilihan B/C/D/E kurang langsung menghubungkan kenaikan pembelian bahan baku dengan keberhasilan program promosi—A merupakan penguat paling langsung.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 18 -->
+    <article id="q18" class="card question">
+      <h2>18. Sejak dahulu, masyarakat Desa XY melestarikan tradisi tarian ritual sakral yang mengandung nilai-nilai sosial yang tinggi untuk menyatukan masyarakat desa. Seperti halnya api unggun yang menghangatkan dan menyatukan orang-orang di malam yang dingin, tarian itu menjadi simbol keakraban dan kebersamaan masyarakat sehingga mempererat ikatan antargenerasi. Jika persatuan masyarakat memudar, rasa memiliki terhadap tradisi Desa XY akan berkurang dan kemungkinan konflik antarwarga akan meningkat. Berdasarkan paragraf tersebut, jika tarian ritual disamakan dengan api unggun, manakah di bawah ini simpulan yang PALING MUNGKIN BENAR?</h2>
+      <div class="options">
+        <div class="option">A. Tradisi api unggun yang tidak dilestarikan menurunkan rasa memiliki terhadap tradisi Desa XY.</div>
+        <div class="option">B. Jika tradisi tarian ritual sakral dilestarikan, konflik antarwarga dapat dicegah.</div>
+        <div class="option">C. Tingginya konflik antarwarga desa ditandai dengan seringnya terjadi ritual diadakan.</div>
+        <div class="option">D. Ikatan antargenerasi tidak akrab hanya jika tradisi tarian ritual tidak dilestarikan.</div>
+        <div class="option">E. Tradisi tarian ritual sakral seperti apu unggun yang menyatukan masyarakat desa.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('18', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-18" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: B</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Teks menyatakan tarian ritual menyatukan masyarakat dan mempererat ikatan—oleh karena itu, pelestariannya berpotensi mencegah memudarnya persatuan dan menurunnya konflik. Pernyataan B menyatakan hubungan preventif tersebut secara langsung. Pilihan A juga mungkin tetapi B lebih jelas menyatakan pencegahan konflik sebagai akibat pelestarian.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 19 -->
+    <article id="q19" class="card question">
+      <h2>19. Seorang atlet lari ingin meningkatkan performa tubuhnya untuk menghadapi kompetisi tingkat nasional. Karena harus menjaga asupan gizi dengan anggaran yang terbatas, ia harus memilih antara mengonsumsi makanan tinggi protein atau mengonsumsi makanan tinggi karbohidrat. Jika memilih makanan tinggi protein, ia dapat menghasilkan otot yang lebih kuat. Namun, jika memilih makanan tinggi karbohidrat, ia akan memiliki lebih banyak energi untuk latihan dan mengikuti kompetisi. Berdasarkan bacaan di atas, manakah dari pernyataan berikut yang PALING TEPAT menggambarkan keputusan atlet lari tersebut?</h2>
+      <div class="options">
+        <div class="option">A. Jika memilih makanan tinggi protein, ia akan memiliki otot yang kuat maupun memiliki lebih banyak energi untuk latihan dan mengikuti kompetisi.</div>
+        <div class="option">B. Jika keduanya, ia akan memiliki otot yang kuat atau memiliki lebih banyak energi untuk latihan dan mengikuti kompetisi.</div>
+        <div class="option">C. Jika memilih salah satu jenis makanan, ia akan memiliki otot yang kuat atau memiliki lebih banyak energi untuk latihan dan mengikuti kompetisi.</div>
+        <div class="option">D. Jika memilih makanan tinggi karbohidrat, ia tidak akan memiliki otot yang kuat.</div>
+        <div class="option">E. Jika memilih salah satu jenis makanan, ia tidak akan memiliki otot yang kuat dan memiliki lebih banyak energi untuk latihan dan mengikuti kompetisi.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('19', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-19" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: C</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Teks menyatakan dua hasil berbeda bergantung pilihan: protein → otot lebih kuat; karbohidrat → lebih banyak energi. Jadi jika atlet memilih salah satu, ia akan memperoleh salah satu dari dua manfaat tersebut (otot kuat <em>atau</em> energi lebih banyak). Ini sesuai dengan pilihan C. Pilihan A mengasumsikan kedua manfaat muncul dari satu pilihan—tidak didukung; D bersifat tegas negatif dan tidak sepenuhnya diformulasikan oleh teks; E kontradiktif.
+        </div>
+      </div>
+    </article>
+
+    <!-- QUESTION 20 -->
+    <article id="q20" class="card question">
+      <h2>20. Untuk bisa menjadi partisipan di konferensi ilmiah tentang anak berkebutuhan khusus, peserta harus mengirimkan abstrak kerja ilmiahnya. Karyanya tersebut belum pernah dipublikasikan dalam media apapun. Salah satu karya ilmiah Dosen X dipublikasikan dalam jurnal nasional milik Universitas Y. Kesimpulannya, Dosen X pernah menjadi partisipan dalam konferensi ilmiah tentang anak berkebutuhan khusus. Manakah pernyataan berikut yang menggambarkan kualitas kesimpulan tersebut?</h2>
+      <div class="options">
+        <div class="option">A. Kesimpulan tidak relevan dengan informasi yang diberikan.</div>
+        <div class="option">B. Kesimpulan tersebut memiliki kemungkinan salah.</div>
+        <div class="option">C. Kesimpulan tersebut dapat dipastikan benar.</div>
+        <div class="option">D. Kesimpulan tersebut memiliki kemungkinan benar.</div>
+        <div class="option">E. Kesimpulan tersebut dapat dipastikan salah.</div>
+      </div>
+      <button class="reveal-btn" onclick="toggle('20', this)" aria-expanded="false">Lihat Jawaban</button>
+      <div id="ans-20" class="answer-block" role="region" aria-hidden="true">
+        <div class="key">Kunci: B</div>
+        <div class="explain">
+          <strong>Penjelasan rinci:</strong><br>
+          Informasi yang diberikan: syarat konferensi = karya belum pernah dipublikasikan. Fakta tambahan: salah satu karya Dosen X dipublikasikan di jurnal. Dari dua pernyataan ini, tidak dapat disimpulkan secara logis bahwa Dosen X pernah menjadi partisipan—kesimpulan tersebut <em>tidak didukung</em> dan berpotensi salah. Namun, tidak bisa dipastikan salah mutlak karena Dosen X mungkin menjadi partisipan dengan karya lain yang belum dipublikasikan. Jadi yang paling tepat: "memiliki kemungkinan salah" (B).
+        </div>
+      </div>
+    </article>
+
+    <footer>
+      File ini berisi soal nomor 1–20 dan pembahasan rinci. Jika Anda ingin versi PDF atau tambahan fitur (skoring otomatis, acak soal, waktu ujian), beri tahu saya.
+    </footer>
+  </div>
+
+  <script>
+    // fungsi toggle per soal: ganti teks tombol dan aria attributes
+    function toggle(id, btn){
+      var ans = document.getElementById('ans-' + id);
+      var isHidden = ans.style.display === '' || ans.style.display === 'none';
+      if(isHidden){
+        ans.style.display = 'block';
+        ans.setAttribute('aria-hidden', 'false');
+        btn.innerText = 'Sembunyikan Jawaban';
+        btn.setAttribute('aria-expanded','true');
+      } else {
+        ans.style.display = 'none';
+        ans.setAttribute('aria-hidden', 'true');
+        btn.innerText = 'Lihat Jawaban';
+        btn.setAttribute('aria-expanded','false');
+      }
+    }
+
+    // tombol show all / hide all
+    document.getElementById('showAll').addEventListener('click', function(){
+      var blocks = document.querySelectorAll('.answer-block');
+      blocks.forEach(function(b){ b.style.display = 'block'; b.setAttribute('aria-hidden','false'); });
+      var btns = document.querySelectorAll('.reveal-btn');
+      btns.forEach(function(b){ b.innerText = 'Sembunyikan Jawaban'; b.setAttribute('aria-expanded','true'); });
+    });
+    document.getElementById('hideAll').addEventListener('click', function(){
+      var blocks = document.querySelectorAll('.answer-block');
+      blocks.forEach(function(b){ b.style.display = 'none'; b.setAttribute('aria-hidden','true'); });
+      var btns = document.querySelectorAll('.reveal-btn');
+      btns.forEach(function(b){ b.innerText = 'Lihat Jawaban'; b.setAttribute('aria-expanded','false'); });
+    });
+
+    // inisialisasi semua jawaban tersembunyi
+    (function init(){
+      var blocks = document.querySelectorAll('.answer-block');
+      blocks.forEach(function(b){ b.style.display = 'none'; b.setAttribute('aria-hidden','true'); });
+    })();
+  </script>
+</body>
+</html>
