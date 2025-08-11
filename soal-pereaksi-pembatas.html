@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Latihan — Pereaksi Pembatas (Interaktif)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1: #e6f7f5;
+      --bg2: #eef7ff;
+      --card: #ffffff;
+      --accent: #0ea5a0; /* teal */
+      --accent-2:#2563eb; /* blue */
+      --muted: #6b7280;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial;
+      background: linear-gradient(120deg,var(--bg2),var(--bg1));
+      color:#0f172a;
+      padding:28px 16px;
+    }
+    header{
+      max-width:980px;
+      margin:0 auto 18px auto;
+      text-align:center;
+    }
+    h1{
+      margin:0;
+      font-size:1.8rem;
+      font-weight:600;
+    }
+    p.lead{margin:8px 0 0 0;color:var(--muted)}
+    .toolbar{
+      max-width:980px;
+      margin:18px auto;
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      align-items:center;
+    }
+    .btn{
+      background:linear-gradient(180deg,var(--accent),#059669);
+      color:white;
+      border:0;
+      padding:10px 16px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      box-shadow:0 6px 18px rgba(6,95,70,0.08);
+      transition:transform .18s ease,box-shadow .18s ease,opacity .12s;
+      display:inline-flex; gap:8px; align-items:center;
+    }
+    .btn:hover{ transform:translateY(-3px) }
+    .container{ max-width:980px; margin:0 auto; padding-bottom:60px; }
+    .card{
+      background:var(--card);
+      border-radius:14px;
+      padding:18px;
+      margin:18px 0;
+      box-shadow:0 10px 30px rgba(2,6,23,0.06);
+      transition:transform .28s ease, box-shadow .28s ease, opacity .4s;
+      opacity:0;
+      transform: translateY(16px);
+      animation: appear .5s ease forwards;
+    }
+    @keyframes appear { to{opacity:1; transform:none} }
+    .question{
+      font-size:1.05rem;
+      font-weight:600;
+      margin-bottom:8px;
+      color:#05263a;
+    }
+    .meta{ color:var(--muted); font-size:0.93rem; margin-bottom:10px; }
+    .equation{
+      display:inline-block;
+      background:#f8fafb;
+      padding:8px 10px;
+      border-radius:8px;
+      margin-top:6px;
+      font-family: 'Courier New', monospace;
+      color:#083344;
+    }
+    .toggle{
+      margin-top:12px;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+    }
+    .toggle button{
+      padding:8px 14px;
+      border-radius:8px;
+      border:0;
+      cursor:pointer;
+      background:linear-gradient(180deg,var(--accent-2),#1848d6);
+      color:#fff;
+      font-weight:600;
+      transition:transform .14s;
+    }
+    .toggle button:hover{ transform:translateY(-3px) }
+    .answer{
+      margin-top:12px;
+      background:linear-gradient(180deg,#e6f7ff,#f0fbff);
+      border-left:4px solid var(--accent-2);
+      padding:14px;
+      border-radius:8px;
+      display:none;
+      line-height:1.5;
+      color:#05263a;
+    }
+    .step{ margin:8px 0; padding-left:6px; }
+    .math{ font-family:'Courier New',monospace; background:#ffffff; padding:4px 8px; border-radius:6px; display:inline-block; margin-top:6px; }
+    code.small{ background:#f3f4f6; padding:2px 6px; border-radius:4px; font-family:monospace;}
+    @media (min-width:880px){
+      .card{ padding:22px 26px; }
+    }
+    /* print styles: always show answers when printing */
+    @media print{
+      .toggle, .btn{ display:none !important; }
+      .answer{ display:block !important; }
+      body{ background: white !important; }
+      .card{ box-shadow:none; border:0; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Latihan: Pereaksi Pembatas (1–7)</h1>
+  <p class="lead">Soal latihan tentang pereaksi pembatas — setiap soal dilengkapi pembahasan langkah demi langkah.</p>
+</header>
+
+<div class="toolbar">
+  <button class="btn" onclick="window.print()">🖨️ Cetak Halaman</button>
+  <button class="btn" style="background:linear-gradient(180deg,#2563eb,#1848d6)" onclick="expandAll()">🔍 Tampilkan Semua Jawaban</button>
+  <button class="btn" style="background:linear-gradient(180deg,#06b6d4,#0891b2)" onclick="collapseAll()">🔒 Sembunyikan Semua Jawaban</button>
+</div>
+
+<div class="container">
+
+  <!-- SOAL 1 -->
+  <div class="card" style="animation-delay:0s">
+    <div class="question">1) Reaksi pembentukan amonia:</div>
+    <div class="meta">
+      <div class="equation">N<sub>2</sub>(g) + 3H<sub>2</sub>(g) → 2NH<sub>3</sub>(g)</div>
+      <div style="margin-top:8px">Diberikan: <strong>5.0 g N<sub>2</sub</strong> dan <strong>3.0 g H<sub>2</sub</strong>. Tentukan pereaksi pembatas, mol dan massa NH<sub>3</sub> yang terbentuk, serta pereaksi sisa (jika ada).</div>
+    </div>
+
+    <div class="toggle">
+      <button onclick="toggle(this)">👁️ Lihat Jawaban</button>
+    </div>
+
+    <div class="answer">
+      <div class="step"><strong>Langkah 1 — Molar massa & mol:</strong></div>
+      <div class="step">M<sub>r</sub> N<sub>2</sub> = 2×14 = <code class="math">28.00 g·mol<sup>−1</sup></code><br>
+        M<sub>r</sub> H<sub>2</sub> = 2×1 = <code class="math">2.00 g·mol<sup>−1</sup></code><br>
+        Mol N<sub>2</sub> = 5.0 / 28.00 = <strong>0.1786 mol</strong><br>
+        Mol H<sub>2</sub> = 3.0 / 2.00 = <strong>1.500 mol</strong>
+      </div>
+
+      <div class="step"><strong>Langkah 2 — Bandingkan rasio stoikiometri:</strong></div>
+      <div class="step">Persamaan: 1 mol N<sub>2</sub> bereaksi dengan 3 mol H<sub>2</sub>.<br>
+        Jika 0.1786 mol N<sub>2</sub> tersedia, H<sub>2</sub> yang dibutuhkan = 0.1786 × 3 = <strong>0.5357 mol</strong>.<br>
+        Karena tersedia 1.500 mol H<sub>2</sub> (lebih besar daripada 0.5357), maka <strong>N<sub>2</sub> adalah pereaksi pembatas</strong>.
+      </div>
+
+      <div class="step"><strong>Langkah 3 — Jumlah produk (NH<sub>3</sub>):</strong></div>
+      <div class="step">Dari stoikiometri: 1 N<sub>2</sub> → 2 NH<sub>3</sub> → mol NH<sub>3</sub> = 0.1786 × 2 = <strong>0.3571 mol</strong>.<br>
+        Massa NH<sub>3</sub> (M<sub>r</sub> NH<sub>3</sub> = 17 g·mol<sup>−1</sup>) = 0.3571 × 17 = <strong>6.07 g</strong>.
+      </div>
+
+      <div class="step"><strong>Langkah 4 — Pereaksi sisa:</strong></div>
+      <div class="step">H<sub>2</sub> digunakan = 0.5357 mol → tersisa H<sub>2</sub> = 1.500 − 0.5357 = <strong>0.9643 mol</strong>.<br>
+        Massa H<sub>2</sub> tersisa = 0.9643 × 2.00 = <strong>1.93 g</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- SOAL 2 -->
+  <div class="card" style="animation-delay:0.03s">
+    <div class="question">2) Reaksi pembentukan air:</div>
+    <div class="meta">
+      <div class="equation">2H<sub>2</sub>(g) + O<sub>2</sub>(g) → 2H<sub>2</sub>O(l)</div>
+      <div style="margin-top:8px">Diberikan: <strong>10.0 g H<sub>2</sub</strong> dan <strong>80.0 g O<sub>2</sub</strong>. Tentukan pereaksi pembatas, massa H<sub>2</sub>O yang terbentuk, dan pereaksi sisa.</div>
+    </div>
+
+    <div class="toggle">
+      <button onclick="toggle(this)">👁️ Lihat Jawaban</button>
+    </div>
+
+    <div class="answer">
+      <div class="step"><strong>Langkah 1 — Mol:</strong></div>
+      <div class="step">Mol H<sub>2</sub> = 10.0 / 2.00 = <strong>5.00 mol</strong><br>
+        Mol O<sub>2</sub> = 80.0 / 32.00 = <strong>2.50 mol</strong>
+      </div>
+
+      <div class="step"><strong>Langkah 2 — Bandingkan stoikiometri:</strong></div>
+      <div class="step">Rasio reaksi: 2 H<sub>2</sub> : 1 O<sub>2</sub>. Untuk 5.00 mol H<sub>2</sub> diperlukan O<sub>2</sub> = 5.00 / 2 = 2.50 mol — sama dengan yang tersedia. Jadi <strong>keduanya habis bersamaan</strong> (tidak ada pereaksi sisa).</div>
+
+      <div class="step"><strong>Langkah 3 — Massa H<sub>2</sub>O yang terbentuk:</strong></div>
+      <div class="step">Mol H<sub>2</sub>O = mol H<sub>2</sub> (karena 2 H<sub>2</sub> → 2 H<sub>2</sub>O) = <strong>5.00 mol</strong>.<br>
+        Massa H<sub>2</sub>O = 5.00 × 18.00 = <strong>90.0 g</strong>.</div>
+    </div>
+  </div>
+
+  <!-- SOAL 3 -->
+  <div class="card" style="animation-delay:0.06s">
+    <div class="question">3) Reduksi CuO oleh aluminium:</div>
+    <div class="meta">
+      <div class="equation">2Al(s) + 3CuO(s) → Al<sub>2</sub>O<sub>3</sub>(s) + 3Cu(s)</div>
+      <div style="margin-top:8px">Diberikan: <strong>10.0 g Al</strong> dan <strong>50.0 g CuO</strong>. Tentukan pereaksi pembatas, massa tembaga (Cu) yang terbentuk, serta massa CuO tersisa (jika ada).</div>
+    </div>
+
+    <div class="toggle">
+      <button onclick="toggle(this)">👁️ Lihat Jawaban</button>
+    </div>
+
+    <div class="answer">
+      <div class="step"><strong>Langkah 1 — Mol:</strong></div>
+      <div class="step">M<sub>r</sub> Al ≈ 26.98 g·mol<sup>−1</sup> → mol Al = 10.0 / 26.98 = <strong>0.3706 mol</strong><br>
+        M<sub>r</sub> CuO ≈ 79.545 g·mol<sup>−1</sup> → mol CuO = 50.0 / 79.545 = <strong>0.6286 mol</strong>
+      </div>
+
+      <div class="step"><strong>Langkah 2 — Bandingkan stoikiometri:</strong></div>
+      <div class="step">Menurut reaksi: 2 Al bereaksi dengan 3 CuO dan menghasilkan 3 Cu.<br>
+        Dari 0.3706 mol Al → potensi mol Cu = 0.3706 × (3/2) = <strong>0.5560 mol Cu</strong>.<br>
+        Dari 0.6286 mol CuO → potensi mol Cu = 0.6286 × 1 = <strong>0.6286 mol Cu</strong>.<br>
+        Yang memberi jumlah produk lebih kecil adalah pembatas → <strong>Al adalah pereaksi pembatas</strong> (menghasilkan 0.5560 mol Cu).
+      </div>
+
+      <div class="step"><strong>Langkah 3 — Massa Cu yang terbentuk:</strong></div>
+      <div class="step">M<sub>r</sub> Cu ≈ 63.546 g·mol<sup>−1</sup> → massa = 0.5560 × 63.546 = <strong>35.33 g Cu</strong>.</div>
+
+      <div class="step"><strong>Langkah 4 — CuO tersisa:</strong></div>
+      <div class="step">Mol CuO digunakan = mol Cu diproduksi (1:1) = 0.5560 mol → tersisa CuO = 0.6286 − 0.5560 = <strong>0.0726 mol</strong>.<br>
+        Massa CuO tersisa = 0.0726 × 79.545 = <strong>5.78 g</strong> (dibulatkan).</div>
+    </div>
+  </div>
+
+  <!-- SOAL 4 -->
+  <div class="card" style="animation-delay:0.09s">
+    <div class="question">4) Pembentukan besi(II) sulfida (FeS):</div>
+    <div class="meta">
+      <div class="equation">Fe(s) + S(s) → FeS(s)</div>
+      <div style="margin-top:8px">Diberikan: <strong>12.0 g Fe</strong> dan <strong>10.0 g S</strong>. Tentukan pereaksi pembatas, massa FeS yang terbentuk, dan massa S tersisa.</div>
+    </div>
+
+    <div class="toggle">
+      <button onclick="toggle(this)">👁️ Lihat Jawaban</button>
+    </div>
+
+    <div class="answer">
+      <div class="step"><strong>Langkah 1 — Mol:</strong></div>
+      <div class="step">M<sub>r</sub> Fe ≈ 55.85 → mol Fe = 12.0 / 55.85 = <strong>0.2149 mol</strong><br>
+        M<sub>r</sub> S ≈ 32.06 → mol S = 10.0 / 32.06 = <strong>0.3119 mol</strong>
+      </div>
+
+      <div class="step"><strong>Langkah 2 — Stoikiometri:</strong></div>
+      <div class="step">Rasio 1:1 → mol FeS yang dapat terbentuk adalah mol terendah = <strong>0.2149 mol</strong> (Fe pembatas).</div>
+
+      <div class="step"><strong>Langkah 3 — Massa FeS:</strong></div>
+      <div class="step">M<sub>r</sub> FeS = 55.85 + 32.06 = 87.91 → massa = 0.2149 × 87.91 = <strong>18.89 g</strong>.</div>
+
+      <div class="step"><strong>Langkah 4 — S tersisa:</strong></div>
+      <div class="step">Mol S tersisa = 0.3119 − 0.2149 = <strong>0.0971 mol</strong> → massa S tersisa = 0.0971 × 32.06 = <strong>3.11 g</strong>.</div>
+    </div>
+  </div>
+
+  <!-- SOAL 5 -->
+  <div class="card" style="animation-delay:0.12s">
+    <div class="question">5) Pembakaran propana (C<sub>3</sub>H<sub>8</sub>):</div>
+    <div class="meta">
+      <div class="equation">C<sub>3</sub>H<sub>8</sub>(g) + 5O<sub>2</sub>(g) → 3CO<sub>2</sub>(g) + 4H<sub>2</sub>O(l)</div>
+      <div style="margin-top:8px">Diberikan: <strong>44.0 g C<sub>3</sub>H<sub>8</sub</strong> dan <strong>160.0 g O<sub>2</sub</strong>. Tentukan pereaksi pembatas dan massa CO<sub>2</sub> yang terbentuk.</div>
+    </div>
+
+    <div class="toggle">
+      <button onclick="toggle(this)">👁️ Lihat Jawaban</button>
+    </div>
+
+    <div class="answer">
+      <div class="step"><strong>Langkah 1 — Mol:</strong></div>
+      <div class="step">M<sub>r</sub> C<sub>3</sub>H<sub>8</sub> ≈ 44.094 → mol C<sub>3</sub>H<sub>8</sub> = 44.0 / 44.094 = <strong>0.9979 mol</strong><br>
+        M<sub>r</sub> O<sub>2</sub> = 32.00 → mol O<sub>2</sub> = 160.0 / 32.00 = <strong>5.00 mol</strong>
+      </div>
+
+      <div class="step"><strong>Langkah 2 — Bandingkan stoikiometri:</strong></div>
+      <div class="step">Dari 1 mol C<sub>3</sub>H<sub>8</sub> dibutuhkan 5 mol O<sub>2</sub>. Untuk 0.9979 mol C<sub>3</sub>H<sub>8</sub> diperlukan O<sub>2</sub> = 0.9979 × 5 = 4.9895 mol (dibawah 5.00 mol tersedia). Jadi <strong>C<sub>3</sub>H<sub>8</sub> sedikit membatasi</strong>.</div>
+
+      <div class="step"><strong>Langkah 3 — Massa CO<sub>2</sub>:</strong></div>
+      <div class="step">Mol CO<sub>2</sub> yang terbentuk = 0.9979 × 3 = <strong>2.994 mol</strong>.<br>
+        M<sub>r</sub> CO<sub>2</sub> ≈ 44.01 → massa CO<sub>2</sub> = 2.994 × 44.01 = <strong>131.7 g</strong>.</div>
+
+      <div class="step"><strong>Langkah 4 — O<sub>2</sub> tersisa:</strong></div>
+      <div class="step">O<sub>2</sub> yang digunakan = 0.9979 × 5 = 4.9895 mol → tersisa = 5.000 − 4.9895 = <strong>0.0107 mol</strong> O<sub>2</sub> → massa ≈ 0.0107 × 32 = <strong>0.34 g</strong>.</div>
+    </div>
+  </div>
+
+  <!-- SOAL 6 -->
+  <div class="card" style="animation-delay:0.15s">
+    <div class="question">6) Reaksi Zn dengan HCl:</div>
+    <div class="meta">
+      <div class="equation">Zn(s) + 2HCl(aq) → ZnCl<sub>2</sub>(aq) + H<sub>2</sub>(g)</div>
+      <div style="margin-top:8px">Diberikan: <strong>6.50 g Zn</strong> dan <strong>20.0 g HCl</strong>. Hitung pereaksi pembatas, berapa mol & volume H<sub>2</sub> (pada STP, 22.4 L·mol<sup>−1</sup>) yang dihasilkan, serta massa HCl tersisa.</div>
+    </div>
+
+    <div class="toggle">
+      <button onclick="toggle(this)">👁️ Lihat Jawaban</button>
+    </div>
+
+    <div class="answer">
+      <div class="step"><strong>Langkah 1 — Mol:</strong></div>
+      <div class="step">M<sub>r</sub> Zn ≈ 65.38 → mol Zn = 6.50 / 65.38 = <strong>0.09942 mol</strong><br>
+        M<sub>r</sub> HCl ≈ 36.46 → mol HCl = 20.0 / 36.46 = <strong>0.5485 mol</strong>
+      </div>
+
+      <div class="step"><strong>Langkah 2 — Stoikiometri & pereaksi pembatas:</strong></div>
+      <div class="step">Reaksi: 1 Zn : 2 HCl → untuk 0.09942 mol Zn diperlukan HCl = 0.09942 × 2 = 0.1988 mol (tersedia 0.5485 mol HCl), jadi <strong>Zn adalah pereaksi pembatas</strong>.</div>
+
+      <div class="step"><strong>Langkah 3 — H<sub>2</sub> dihasilkan:</strong></div>
+      <div class="step">Mol H<sub>2</sub> = mol Zn (1:1) = <strong>0.09942 mol</strong>.<br>
+        Volume (STP 22.4 L·mol<sup>−1</sup>) = 0.09942 × 22.4 = <strong>2.23 L</strong> (dengan 3 signifikasi: 2.23 L).</div>
+
+      <div class="step"><strong>Langkah 4 — HCl tersisa:</strong></div>
+      <div class="step">HCl digunakan = 0.1988 mol → tersisa HCl = 0.5485 − 0.1988 = <strong>0.3497 mol</strong> → massa tersisa = 0.3497 × 36.46 = <strong>12.75 g</strong>.</div>
+    </div>
+  </div>
+
+  <!-- SOAL 7 -->
+  <div class="card" style="animation-delay:0.18s">
+    <div class="question">7) Reaksi pembentukan AgCl (endapan):</div>
+    <div class="meta">
+      <div class="equation">AgNO<sub>3</sub>(aq) + NaCl(aq) → AgCl(s) + NaNO<sub>3</sub>(aq)</div>
+      <div style="margin-top:8px">Diberikan: <strong>34.0 g AgNO<sub>3</sub</strong> dan <strong>25.0 g NaCl</strong>. Tentukan pereaksi pembatas & massa endapan AgCl yang terbentuk, serta NaCl tersisa.</div>
+    </div>
+
+    <div class="toggle">
+      <button onclick="toggle(this)">👁️ Lihat Jawaban</button>
+    </div>
+
+    <div class="answer">
+      <div class="step"><strong>Langkah 1 — Mol senyawa:</strong></div>
+      <div class="step">M<sub>r</sub> AgNO<sub>3</sub> ≈ 107.87 + 14.01 + (3×16.00) = 169.88 → mol AgNO<sub>3</sub> = 34.0 / 169.88 = <strong>0.2001 mol</strong><br>
+        M<sub>r</sub> NaCl ≈ 22.99 + 35.45 = 58.44 → mol NaCl = 25.0 / 58.44 = <strong>0.4278 mol</strong>
+      </div>
+
+      <div class="step"><strong>Langkah 2 — Stoikiometri:</strong></div>
+      <div class="step">Reaksi 1:1 → mol AgCl yang dapat terbentuk adalah mol terkecil dari AgNO<sub>3</sub> atau NaCl = <strong>0.2001 mol</strong> → sehingga <strong>AgNO<sub>3</sub> adalah pereaksi pembatas</strong>.</div>
+
+      <div class="step"><strong>Langkah 3 — Massa AgCl (endapan):</strong></div>
+      <div class="step">M<sub>r</sub> AgCl = 107.87 + 35.45 = 143.32 → massa AgCl = 0.2001 × 143.32 = <strong>28.68 g</strong>.</div>
+
+      <div class="step"><strong>Langkah 4 — NaCl tersisa:</strong></div>
+      <div class="step">Mol NaCl tersisa = 0.4278 − 0.2001 = <strong>0.2276 mol</strong> → massa = 0.2276 × 58.44 = <strong>13.30 g</strong>.</div>
+    </div>
+  </div>
+
+  <p style="color:var(--muted); font-size:0.95rem; margin-top:18px; text-align:center">
+    Selesai — ingin saya tambahkan versi kuis (pilihan ganda & skor otomatis) dari soal-soal ini atau file terpisah yang hanya berisi soal untuk dicetak (tanpa jawaban)?
+  </p>
+
+</div>
+
+<script>
+  function toggle(btn){
+    const ans = btn.closest('.card').querySelector('.answer');
+    const is = ans.style.display === 'block';
+    if(is){
+      ans.style.display = 'none';
+      btn.textContent = '👁️ Lihat Jawaban';
+    } else {
+      ans.style.display = 'block';
+      btn.textContent = '🙈 Tutup Jawaban';
+      // smooth scroll to answer (optional)
+      // ans.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  }
+
+  function expandAll(){
+    document.querySelectorAll('.answer').forEach(a => a.style.display = 'block');
+    document.querySelectorAll('.toggle button').forEach(b => b.textContent = '🙈 Tutup Jawaban');
+  }
+  function collapseAll(){
+    document.querySelectorAll('.answer').forEach(a => a.style.display = 'none');
+    document.querySelectorAll('.toggle button').forEach(b => b.textContent = '👁️ Lihat Jawaban');
+  }
+</script>
+</body>
+</html>
