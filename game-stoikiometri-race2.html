@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stoikiometri Race</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6dd5ed, #2193b0);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        #question-box {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            margin-top: 10px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #timer {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        #leaderboard {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        #leaderboard h2 {
+            margin-top: 0;
+        }
+        .winner {
+            font-weight: bold;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stoikiometri Race</h1>
+        <div id="timer">Waktu: 0 detik</div>
+        <div id="question-box"></div>
+        <input type="text" id="answer" placeholder="Ketik jawaban di sini">
+        <br>
+        <button onclick="submitAnswer()">Kirim Jawaban</button>
+        
+        <div id="result"></div>
+        
+        <div id="leaderboard" class="hidden">
+            <h2>Leaderboard</h2>
+            <ol id="leaderboard-list"></ol>
+        </div>
+    </div>
+
+    <script>
+        const bankSoal = [
+            { q: "Konversikan 0,9 gram H₂O menjadi mol (Ar H = 1 g/mol; Ar O = 16 g/mol)", a: "0.05" },
+            { q: "Berapa liter volume dari 2,4 gram SO₃ pada keadaan STP? (Ar S = 32 g/mol; Ar O = 16 g/mol)", a: "0.672" },
+            { q: "Setarakan reaksi: H₂ + O₂ → H₂O. Berapa koefisien H₂?", a: "2" },
+            { q: "Jika 3 mol H₂ bereaksi dengan O₂, berapa mol H₂O yang dihasilkan?", a: "3" },
+            { q: "Reaksi: C₃H₄ + O₂ → CO₂ + H₂O. Jika ada 1 mol C₃H₄ dan 3 mol O₂, berapa mol H₂O yang terbentuk?", a: "1.5" },
+            { q: "Konversikan 1.32 gram CO₂ menjadi mol (Ar C = 12 g/mol; Ar O = 16 g/mol)", a: "0.03" },
+            { q: "Jika 4 mol CH₄ dibakar sempurna, berapa mol O₂ yang dibutuhkan? (reaksi: CH₄ + O₂ → CO₂ + H₂O)", a: "8" },
+            { q: "Setarakan reaksi: Fe + O₂ → Fe₂O₃. Berapa koefisien Fe?", a: "4" },
+            { q: "Jika 10 mol Na bereaksi dengan oksigen sesuai reaksi Na + O₂ → Na₂O, berapa gram Na₂O yang terbentuk (Ar Na = 23 g/mol; Ar O = 16 g/mol)?", a: "310" },
+            { q: "Konversikan 3.2 gram Fe₂O₃ menjadi mol (Ar Fe = 56 g/mol; Ar O = 16 g/mol)", a: "0.02" },
+            { q: "Jika 2 mol N₂ bereaksi dengan 3 mol H₂ membentuk NH₃, berapa liter volume NH₃ yang dihasilkan pada keadaan STP?", a: "44.8" }
+        ];
+
+        let selectedQuestions = [];
+        let currentQuestion = 0;
+        let startTime;
+        let leaderboard = [];
+        let seconds = 0;
+
+        function startGame() {
+            selectedQuestions = shuffleArray(bankSoal).slice(0, 10); // pilih 10 soal acak
+            startTime = new Date();
+            showQuestion();
+        }
+
+        function shuffleArray(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function showQuestion() {
+            if (currentQuestion < selectedQuestions.length) {
+                document.getElementById("question-box").innerText = `${currentQuestion+1}. ${selectedQuestions[currentQuestion].q}`;
+            } else {
+                endGame();
+            }
+        }
+
+        function submitAnswer() {
+            const userAnswer = document.getElementById("answer").value.trim();
+            const correctAnswer = selectedQuestions[currentQuestion].a;
+
+            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                currentQuestion++;
+                document.getElementById("answer").value = "";
+                document.getElementById("result").innerText = "✅ Benar!";
+                showQuestion();
+            } else {
+                document.getElementById("result").innerText = "❌ Salah, coba lagi.";
+            }
+        }
+
+        function endGame() {
+            const endTime = new Date();
+            const totalTime = Math.round((endTime - startTime) / 1000);
+            document.getElementById("question-box").innerText = `🎉 Selesai! Waktu Anda: ${totalTime} detik`;
+
+            let playerName = prompt("Masukkan nama tim:");
+            leaderboard.push({ name: playerName, time: totalTime });
+            leaderboard.sort((a, b) => a.time - b.time);
+
+            let listHTML = "";
+            leaderboard.forEach((p, index) => {
+                listHTML += `<li class="${index === 0 ? 'winner' : ''}">${p.name} - ${p.time} detik</li>`;
+            });
+            document.getElementById("leaderboard-list").innerHTML = listHTML;
+            document.getElementById("leaderboard").classList.remove("hidden");
+        }
+
+        // Timer
+        setInterval(() => {
+            if (currentQuestion < selectedQuestions.length) {
+                seconds++;
+                document.getElementById("timer").innerText = `Waktu: ${seconds} detik`;
+            }
+        }, 1000);
+
+        // Mulai game saat halaman dibuka
+        window.onload = startGame;
+    </script>
+</body>
+</html>
