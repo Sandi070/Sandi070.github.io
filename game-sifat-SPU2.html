@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Periodic Trends — Interactive Game</title>
+  <style>
+    :root{--bg:#f6fafb;--card:#fff;--accent:#0ea5a4;--muted:#6b7280;--good:#16a34a;--bad:#dc2626}
+    *{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    body{margin:0;background:linear-gradient(180deg,#eef9f8 0%,var(--bg) 100%);color:#0f172a;padding:24px}
+    .container{max-width:980px;margin:0 auto}
+    header{display:flex;align-items:center;gap:16px}
+    header h1{margin:0;font-size:20px}
+    .subtitle{color:var(--muted);font-size:13px}
+    .controls{display:flex;gap:8px;margin:18px 0;flex-wrap:wrap}
+    .btn{background:var(--card);border:1px solid #e6eef0;padding:8px 12px;border-radius:10px;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);color:white;border:0}
+    .panel{background:var(--card);padding:14px;border-radius:12px;border:1px solid #e6eef0;margin-bottom:14px}
+    .game-row{display:flex;gap:12px;align-items:flex-start}
+    .card{background:linear-gradient(180deg,#ffffff, #f8ffff);border-radius:10px;padding:12px;flex:1;border:1px solid #e6eef0;min-width:180px}
+    .element-symbol{font-size:40px;font-weight:700}
+    .element-name{color:var(--muted);font-size:14px}
+    .prop{font-weight:700;margin-top:6px}
+    .status{margin-top:8px;font-size:14px}
+    .scoreboard{display:flex;gap:12px;align-items:center}
+    .score{background:#f1f9f8;padding:8px 10px;border-radius:8px;border:1px solid #e6f3f2}
+    .explain{background:#ffffff;padding:12px;border-radius:10px;border:1px dashed #d6eef0;margin-top:12px}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+    .small{font-size:13px;color:var(--muted)}
+    .property-buttons{display:flex;gap:6px;flex-wrap:wrap}
+    .hint{margin-top:8px}
+    @media (max-width:700px){.game-row{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Periodic Trends — Game Interaktif</h1>
+        <div class="subtitle">Bandingkan unsur, tebak siapa yang "lebih" pada kategori tertentu.</div>
+      </div>
+      <div style="margin-left:auto" class="scoreboard">
+        <div class="score">Skor: <span id="score">0</span></div>
+        <div class="score">Benar: <span id="correct">0</span></div>
+        <div class="score">Salah: <span id="wrong">0</span></div>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div class="small">Mode: <strong id="modeLabel">Trend Battle</strong></div>
+        <div class="controls">
+          <button class="btn" id="newPair">Acak Pasangan</button>
+          <div class="property-buttons">
+            <button class="btn" data-prop="atomicRadius">Jari-jari atom</button>
+            <button class="btn" data-prop="ionizationEnergy">Energi ionisasi</button>
+            <button class="btn" data-prop="electronegativity">Keelektronegatifan</button>
+            <button class="btn" data-prop="electronAffinity">Afinitas elektron</button>
+          </div>
+          <button class="btn" id="showHint">Tampilkan Petunjuk</button>
+        </div>
+      </div>
+      <div class="hint small" id="hintBox" style="display:none">
+        Petunjuk singkat: <br>
+        • Jari-jari atom meningkat ke bawah dan ke kiri. <br>
+        • Energi ionisasi & elektronegativitas meningkat ke kanan dan ke atas. <br>
+        • Afinitas elektron umumnya meningkat ke kanan (dengan beberapa pengecualian pada gas mulia).
+      </div>
+    </section>
+
+    <section class="game-row">
+      <div class="card panel" id="leftCard">
+        <div class="element-symbol" id="leftSymbol">Na</div>
+        <div class="element-name" id="leftName">Natrium — Sodium</div>
+        <div class="prop">Nomor atom: <span id="leftZ">11</span></div>
+        <div class="prop">Golongan / Periode: <span id="leftGP">1 / 3</span></div>
+        <div class="prop">Nilai properti: <span id="leftValue">—</span></div>
+        <div class="status"><button class="btn primary" id="leftBtn">Pilih Kiri</button></div>
+      </div>
+
+      <div style="flex:0 0 10px"></div>
+
+      <div class="card panel" id="rightCard">
+        <div class="element-symbol" id="rightSymbol">Mg</div>
+        <div class="element-name" id="rightName">Magnesium — Magnesium</div>
+        <div class="prop">Nomor atom: <span id="rightZ">12</span></div>
+        <div class="prop">Golongan / Periode: <span id="rightGP">2 / 3</span></div>
+        <div class="prop">Nilai properti: <span id="rightValue">—</span></div>
+        <div class="status"><button class="btn primary" id="rightBtn">Pilih Kanan</button></div>
+      </div>
+    </section>
+
+    <div class="explain" id="explainBox" style="display:none"></div>
+
+    <footer>
+      Tips: Bermain dengan teman — seorang penanya memilih properti, peserta lain menebak. Gunakan bahasa penjelasan yang mengacu pada periode & golongan.
+    </footer>
+  </div>
+
+  <script>
+    // Data unsur (nilai sifat disederhanakan ke skala 1-100 untuk perbandingan)
+    const elements = [
+      {name:'H',symbol:'H',z:1,group:1,period:1,atomicRadius:53,ionizationEnergy:1312,electronAffinity:72,electronegativity:2.20},
+      {name:'He',symbol:'He',z:2,group:18,period:1,atomicRadius:31,ionizationEnergy:2372,electronAffinity:0,electronegativity:0},
+      {name:'Li',symbol:'Li',z:3,group:1,period:2,atomicRadius:167,ionizationEnergy:520,electronAffinity:60,electronegativity:0.98},
+      {name:'Be',symbol:'Be',z:4,group:2,period:2,atomicRadius:112,ionizationEnergy:899,electronAffinity:0,electronegativity:1.57},
+      {name:'B',symbol:'B',z:5,group:13,period:2,atomicRadius:87,ionizationEnergy:800,electronAffinity:27,electronegativity:2.04},
+      {name:'C',symbol:'C',z:6,group:14,period:2,atomicRadius:67,ionizationEnergy:1086,electronAffinity:122,electronegativity:2.55},
+      {name:'N',symbol:'N',z:7,group:15,period:2,atomicRadius:56,ionizationEnergy:1402,electronAffinity:-7,electronegativity:3.04},
+      {name:'O',symbol:'O',z:8,group:16,period:2,atomicRadius:48,ionizationEnergy:1314,electronAffinity:141,electronegativity:3.44},
+      {name:'F',symbol:'F',z:9,group:17,period:2,atomicRadius:42,ionizationEnergy:1681,electronAffinity:328,electronegativity:3.98},
+      {name:'Ne',symbol:'Ne',z:10,group:18,period:2,atomicRadius:38,ionizationEnergy:2081,electronAffinity:0,electronegativity:0},
+      {name:'Na',symbol:'Na',z:11,group:1,period:3,atomicRadius:190,ionizationEnergy:496,electronAffinity:53,electronegativity:0.93},
+      {name:'Mg',symbol:'Mg',z:12,group:2,period:3,atomicRadius:145,ionizationEnergy:737,electronAffinity:0,electronegativity:1.31},
+      {name:'Al',symbol:'Al',z:13,group:13,period:3,atomicRadius:118,ionizationEnergy:578,electronAffinity:44,electronegativity:1.61},
+      {name:'Si',symbol:'Si',z:14,group:14,period:3,atomicRadius:111,ionizationEnergy:786,electronAffinity:134,electronegativity:1.90},
+      {name:'P',symbol:'P',z:15,group:15,period:3,atomicRadius:98,ionizationEnergy:1012,electronAffinity:72,electronegativity:2.19},
+      {name:'S',symbol:'S',z:16,group:16,period:3,atomicRadius:88,ionizationEnergy:1000,electronAffinity:200,electronegativity:2.58},
+      {name:'Cl',symbol:'Cl',z:17,group:17,period:3,atomicRadius:79,ionizationEnergy:1251,electronAffinity:349,electronegativity:3.16},
+      {name:'Ar',symbol:'Ar',z:18,group:18,period:3,atomicRadius:71,ionizationEnergy:1521,electronAffinity:0,electronegativity:0},
+      {name:'K',symbol:'K',z:19,group:1,period:4,atomicRadius:243,ionizationEnergy:419,electronAffinity:48,electronegativity:0.82},
+      {name:'Ca',symbol:'Ca',z:20,group:2,period:4,atomicRadius:194,ionizationEnergy:590,electronAffinity:2,electronegativity:1.00}
+    ];
+
+    // Normalization helpers to compare different units
+    function getPropValue(el, prop){
+      // Map property names to numeric scale suitable for comparison
+      if(prop === 'atomicRadius') return el.atomicRadius; // larger is "more"
+      if(prop === 'ionizationEnergy') return el.ionizationEnergy; // larger is "more"
+      if(prop === 'electronegativity') return el.electronegativity; // larger is "more"
+      if(prop === 'electronAffinity') return el.electronAffinity; // larger (more positive) is "more"
+      return 0;
+    }
+
+    // UI elements
+    const leftSymbol = document.getElementById('leftSymbol');
+    const rightSymbol = document.getElementById('rightSymbol');
+    const leftName = document.getElementById('leftName');
+    const rightName = document.getElementById('rightName');
+    const leftZ = document.getElementById('leftZ');
+    const rightZ = document.getElementById('rightZ');
+    const leftGP = document.getElementById('leftGP');
+    const rightGP = document.getElementById('rightGP');
+    const leftValue = document.getElementById('leftValue');
+    const rightValue = document.getElementById('rightValue');
+    const leftBtn = document.getElementById('leftBtn');
+    const rightBtn = document.getElementById('rightBtn');
+    const newPair = document.getElementById('newPair');
+    const explainBox = document.getElementById('explainBox');
+    const scoreEl = document.getElementById('score');
+    const correctEl = document.getElementById('correct');
+    const wrongEl = document.getElementById('wrong');
+    const hintBox = document.getElementById('hintBox');
+    const showHint = document.getElementById('showHint');
+
+    let current = {left:null,right:null,prop:'atomicRadius'};
+    let score = 0, correct=0, wrong=0;
+
+    function pickRandomPair(){
+      const a = elements[Math.floor(Math.random()*elements.length)];
+      let b = elements[Math.floor(Math.random()*elements.length)];
+      while(b === a) b = elements[Math.floor(Math.random()*elements.length)];
+      current.left = a; current.right = b;
+      renderPair();
+      explainBox.style.display='none';
+    }
+
+    function renderPair(){
+      leftSymbol.textContent = current.left.symbol;
+      rightSymbol.textContent = current.right.symbol;
+      leftName.textContent = elementFullName(current.left);
+      rightName.textContent = elementFullName(current.right);
+      leftZ.textContent = current.left.z;
+      rightZ.textContent = current.right.z;
+      leftGP.textContent = `${current.left.group} / ${current.left.period}`;
+      rightGP.textContent = `${current.right.group} / ${current.right.period}`;
+      leftValue.textContent = '—'; rightValue.textContent = '—';
+    }
+
+    function elementFullName(el){
+      // For simplicity, map a few symbols to common Indonesian names
+      const names = {Na:'Natrium',Mg:'Magnesium',Cl:'Klorin',O:'Oksigen',H:'Hidrogen',K:'Kalium',Ca:'Kalsium',Al:'Aluminium',Si:'Silikon',S:'Belerang',P:'Fosfor'};
+      return (names[el.symbol] || el.symbol) + ' — ' + el.name;
+    }
+
+    // handle property button clicks
+    document.querySelectorAll('.property-buttons .btn').forEach(b=>{
+      b.addEventListener('click',()=>{
+        current.prop = b.dataset.prop;
+        // show small visual cue
+        document.getElementById('modeLabel').textContent = `Trend Battle — ${b.textContent}`;
+        explainBox.style.display='none';
+      });
+    });
+
+    newPair.addEventListener('click',pickRandomPair);
+    showHint.addEventListener('click',()=>{hintBox.style.display = hintBox.style.display==='none' ? 'block' : 'none'});
+
+    leftBtn.addEventListener('click',()=>handleChoice('left'));
+    rightBtn.addEventListener('click',()=>handleChoice('right'));
+
+    function handleChoice(side){
+      const L = getPropValue(current.left,current.prop);
+      const R = getPropValue(current.right,current.prop);
+      const chosen = side === 'left' ? current.left : current.right;
+      const chosenVal = side === 'left' ? L : R;
+      const other = side === 'left' ? current.right : current.left;
+      const otherVal = side === 'left' ? R : L;
+
+      // Determine winner: larger value considered "lebih" (for all properties in our mapping)
+      let outcome;
+      if(Math.abs(L-R) < 1e-6) outcome = 'tie';
+      else outcome = ( (side==='left' && L>R) || (side==='right' && R>L) ) ? 'win' : 'lose';
+
+      if(outcome === 'win'){
+        score += 10; correct +=1; explainBox.innerHTML = `<strong style='color:var(--good)'>Benar!</strong> ${chosen.symbol} memiliki nilai ${formatVal(chosen,current.prop)} lebih besar daripada ${other.symbol} (${formatVal(other,current.prop)}).<br>${explainTrend(current.prop,chosen,other)}`;
+      } else if(outcome === 'lose'){
+        score -= 5; wrong +=1; explainBox.innerHTML = `<strong style='color:var(--bad)'>Salah.</strong> ${chosen.symbol} bernilai ${formatVal(chosen,current.prop)} sementara ${other.symbol} bernilai ${formatVal(other,current.prop)}.<br>${explainTrend(current.prop,other,chosen)}`;
+      } else {
+        score += 5; explainBox.innerHTML = `<strong>Seri.</strong> Keduanya memiliki nilai yang sama: ${formatVal(current.left,current.prop)}.`;
+      }
+      updateScore();
+      explainBox.style.display='block';
+    }
+
+    function formatVal(el,prop){
+      if(prop === 'electronegativity') return el.electronegativity === 0 ? '—' : el.electronegativity;
+      if(prop === 'electronAffinity') return el.electronAffinity === 0 ? '—' : el.electronAffinity+ ' kJ/mol (relatif)';
+      if(prop === 'ionizationEnergy') return el.ionizationEnergy + ' kJ/mol';
+      if(prop === 'atomicRadius') return el.atomicRadius + ' pm';
+      return '?'
+    }
+
+    function explainTrend(prop,winner,loser){
+      const lines = [];
+      // Generic explanations referencing period & group
+      if(prop === 'atomicRadius'){
+        lines.push(`Jari-jari atom meningkat ke bawah (periode lebih besar → jari-jari ↑) dan ke kiri (golongan lebih kecil → jari-jari ↑).`);
+        lines.push(`${winner.symbol} (gol ${winner.group}, per ${winner.period}) memiliki jari-jari lebih besar karena letaknya ${winner.period > loser.period ? 'lebih bawah' : (winner.group < loser.group ? 'lebih ke kiri' : 'tergantung elektron valensi')}.`);
+      } else if(prop === 'ionizationEnergy'){
+        lines.push(`Energi ionisasi umumnya meningkat ke kanan dan ke atas. Unsur yang berada di kanan/atas tabel lebih sulit melepaskan elektron.`);
+        lines.push(`${winner.symbol} lebih sulit melepaskan elektron dibanding ${loser.symbol} karena letaknya lebih ${winner.group > loser.group ? 'ke kanan' : (winner.period < loser.period ? 'ke atas' : 'lebih berikatan terhadap elektronnya')}.`);
+      } else if(prop === 'electronegativity'){
+        lines.push(`Keelektronegatifan meningkat ke kanan dan ke atas; fluor adalah yang tertinggi.`);
+        lines.push(`${winner.symbol} lebih elektronegatif daripada ${loser.symbol} karena posisinya cenderung lebih ke kanan atau ke atas pada tabel periodik.`);
+      } else if(prop === 'electronAffinity'){
+        lines.push(`Afinitas elektron sering meningkat ke kanan; unsur seperti halogen memiliki afinitas tinggi.`);
+        lines.push(`${winner.symbol} memiliki afinitas elektron lebih besar daripada ${loser.symbol}, membuatnya lebih "ingin" menangkap elektron.`);
+      }
+      return lines.join('<br>');
+    }
+
+    function updateScore(){
+      document.getElementById('score').textContent = score;
+      document.getElementById('correct').textContent = correct;
+      document.getElementById('wrong').textContent = wrong;
+    }
+
+    // initialize
+    pickRandomPair();
+  </script>
+</body>
+</html>
