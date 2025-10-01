@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangun Struktur Lewis - Garis & Titik</title>
+    <style>
+        /* CSS untuk Tata Letak dan Gaya */
+        :root {
+            --bond-spacing: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .game-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 95%;
+            max-width: 900px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        #target-molecule {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 2px dashed #28a745;
+            border-radius: 8px;
+            background-color: #e6ffe6;
+        }
+
+        .palette-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px; /* Tambah gap agar ada ruang untuk label Z */
+            margin-top: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+
+        /* Gaya Atom (Draggable) */
+        .atom-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .atom-draggable {
+            width: 70px;
+            height: 70px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: grab;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 1.5em;
+            transition: all 0.2s;
+        }
+        
+        /* Label Nomor Atom */
+        .atomic-info {
+            font-size: 0.8em;
+            margin-top: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Pewarnaan Atom */
+        .atom-draggable[data-atom-symbol="P"],
+        .atom-in-workspace[data-atom-symbol="P"] { background-color: #ff9900; }
+        .atom-draggable[data-atom-symbol="S"],
+        .atom-in-workspace[data-atom-symbol="S"] { background-color: #ffcc00; color: #333;}
+        .atom-draggable[data-atom-symbol="F"],
+        .atom-in-workspace[data-atom-symbol="F"] { background-color: #00a000; }
+        .atom-draggable[data-atom-symbol="Cl"],
+        .atom-in-workspace[data-atom-symbol="Cl"] { background-color: #0099cc; }
+
+        .atom-draggable:hover, .atom-in-workspace:hover {
+            opacity: 0.9;
+        }
+
+        /* Gaya Atom di Workspace */
+        .atom-in-workspace {
+            box-sizing: border-box; 
+            position: absolute;
+            cursor: move; 
+            border: 3px solid transparent;
+            width: 70px;
+            height: 70px;
+            background-color: #007bff; 
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            overflow: visible;
+        }
+        
+        .atom-in-workspace.selected {
+            border-color: #dc3545;
+        }
+
+        /* Gaya Tombol Mode (Ikatan/PEB/Hapus) */
+        .mode-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .mode-btn.active {
+            background-color: #ffc107;
+            color: #333;
+            box-shadow: 0 0 8px rgba(255, 193, 7, 0.8);
+        }
+        .mode-btn:hover {
+            opacity: 0.9;
+        }
+        .mode-btn[data-mode="delete"].active {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        #workspace {
+            min-height: 450px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+            background-color: #e0e0e0;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* Gaya Ikatan (Garis) */
+        .bond-line {
+            position: absolute;
+            height: 2px; 
+            background-color: black; 
+            transform-origin: 0 50%;
+            pointer-events: all; 
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        .bond-line::before,
+        .bond-line::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 2px;
+            width: 100%;
+            background-color: black;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.12s, opacity 0.12s;
+        }
+
+        /* DOUBLE */
+        .bond-line[data-type="double"] { background-color: transparent; }
+        .bond-line[data-type="double"]::before { opacity: 1; transform: translateY(calc(var(--bond-spacing) * -0.5)); }
+        .bond-line[data-type="double"]::after { opacity: 1; transform: translateY(calc(var(--bond-spacing) * 0.5)); }
+
+        /* TRIPLE */
+        .bond-line[data-type="triple"] { background-color: black; }
+        .bond-line[data-type="triple"]::before { opacity: 1; transform: translateY(calc(var(--bond-spacing) * -1)); }
+        .bond-line[data-type="triple"]::after { opacity: 1; transform: translateY(calc(var(--bond-spacing) * 1)); }
+        
+        /* Gaya Pasangan Elektron Bebas (Titik) */
+        .lone-pair {
+            position: absolute;
+            pointer-events: all; 
+            cursor: pointer;
+            display: flex;
+            gap: 2px;
+        }
+        .lone-pair .dot {
+            width: 5px; 
+            height: 5px;
+            background-color: black;
+            border-radius: 50%;
+        }
+
+        /* Kontainer Selector PEB */
+        .lp-selector-container {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            z-index: 10;
+        }
+
+        .lp-position-btn {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: rgba(255, 255, 0, 0.8);
+            border: 1px solid #cc0;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: #333;
+            transition: opacity 0.2s;
+        }
+
+        /* Posisi Tombol PEB */
+        .lp-position-btn[data-pos="0"] { top: 0px; left: 37px; } 
+        .lp-position-btn[data-pos="1"] { top: 37px; right: 0px; } 
+        .lp-position-btn[data-pos="2"] { bottom: 0px; left: 37px; } 
+        .lp-position-btn[data-pos="3"] { top: 37px; left: 0px; } 
+
+
+        .check-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        #feedback {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>🔨 Bangun Struktur Lewis (Garis & Titik) 🔨</h1>
+        
+        <div id="target-molecule">Susun Struktur Lewis untuk: <span id="current-molecule-name"></span></div>
+        
+        <h3>1. Seret Atom ke Area Kerja</h3>
+        <div class="palette-group">
+            
+            <div class="atom-wrapper">
+                <div class="atom-draggable" draggable="true" data-atom-symbol="H" data-valence="1">H</div>
+                <div class="atomic-info">Z=1</div>
+            </div>
+            <div class="atom-wrapper">
+                <div class="atom-draggable" draggable="true" data-atom-symbol="C" data-valence="4">C</div>
+                <div class="atomic-info">Z=6</div>
+            </div>
+            <div class="atom-wrapper">
+                <div class="atom-draggable" draggable="true" data-atom-symbol="N" data-valence="5">N</div>
+                <div class="atomic-info">Z=7</div>
+            </div>
+            <div class="atom-wrapper">
+                <div class="atom-draggable" draggable="true" data-atom-symbol="P" data-valence="5">P</div> 
+                <div class="atomic-info">Z=15</div>
+            </div>
+            <div class="atom-wrapper">
+                <div class="atom-draggable" draggable="true" data-atom-symbol="O" data-valence="6">O</div>
+                <div class="atomic-info">Z=8</div>
+            </div>
+            <div class="atom-wrapper">
+                <div class="atom-draggable" draggable="true" data-atom-symbol="S" data-valence="6">S</div> 
+                <div class="atomic-info">Z=16</div>
+            </div>
+            <div class="atom-wrapper">
+                <div class="atom-draggable" draggable="true" data-atom-symbol="F" data-valence="7">F</div> 
+                <div class="atomic-info">Z=9</div>
+            </div>
+            <div class="atom-wrapper">
+                <div class="atom-draggable" draggable="true" data-atom-symbol="Cl" data-valence="7">Cl</div>
+                <div class="atomic-info">Z=17</div>
+            </div>
+
+        </div>
+
+        <h3>2. Pilih Mode & Beri Interaksi</h3>
+        <div class="palette-group" id="mode-palette">
+            <button class="mode-btn" data-mode="single">Ikatan Tunggal (—)</button>
+            <button class="mode-btn" data-mode="double">Ikatan Rangkap Dua (=)</button>
+            <button class="mode-btn" data-mode="triple">Ikatan Rangkap Tiga (≡)</button>
+            <button class="mode-btn" data-mode="lone-pair">Pasangan Bebas (··)</button>
+            <button class="mode-btn" data-mode="delete">🗑️ Hapus</button>
+        </div>
+        <p style="font-size: 0.9em; color: #555;">(Untuk Ikatan: Klik Atom 1, lalu klik Atom 2. Untuk PEB: Klik Atom, lalu pilih posisi. Untuk Hapus: Klik tombol hapus, lalu klik Ikatan/PEB yang salah.)</p>
+
+        <div id="workspace" ondrop="drop(event)" ondragover="allowDrop(event)">
+            </div>
+
+        <button class="check-btn" onclick="checkStructure()">Periksa Struktur</button>
+        <button id="next-level-btn" onclick="nextMolecule()" style="display:none;">Molekul Selanjutnya</button>
+        
+        <div id="feedback"></div>
+
+    </div>
+
+    <script>
+        const molecules = [
+            { id: 1, name: "H₂O", atomsNeeded: { "O": 1, "H": 2 }, expectedBonds: { "O": { PEI: 2, PEB: 2 }, "H": { PEI: 1, PEB: 0 } } },
+            { id: 2, name: "CH₄", atomsNeeded: { "C": 1, "H": 4 }, expectedBonds: { "C": { PEI: 4, PEB: 0 }, "H": { PEI: 1, PEB: 0 } } },
+            { id: 3, name: "O₂", atomsNeeded: { "O": 2 }, expectedBonds: { "O": { PEI: 2, PEB: 2 } } }, 
+            { id: 4, name: "N₂", atomsNeeded: { "N": 2 }, expectedBonds: { "N": { PEI: 3, PEB: 1 } } }, 
+            { id: 5, name: "CO₂", atomsNeeded: { "C": 1, "O": 2 }, expectedBonds: { "C": { PEI: 4, PEB: 0 }, "O": { PEI: 2, PEB: 2 } } },
+            
+            { id: 6, name: "NH₃", atomsNeeded: { "N": 1, "H": 3 }, expectedBonds: { "N": { PEI: 3, PEB: 1 }, "H": { PEI: 1, PEB: 0 } } },
+            { id: 7, name: "H₂S", atomsNeeded: { "S": 1, "H": 2 }, expectedBonds: { "S": { PEI: 2, PEB: 2 }, "H": { PEI: 1, PEB: 0 } } },
+            { id: 8, name: "CCl₄", atomsNeeded: { "C": 1, "Cl": 4 }, expectedBonds: { "C": { PEI: 4, PEB: 0 }, "Cl": { PEI: 1, PEB: 3 } } },
+            { id: 9, name: "HF", atomsNeeded: { "H": 1, "F": 1 }, expectedBonds: { "H": { PEI: 1, PEB: 0 }, "F": { PEI: 1, PEB: 3 } } },
+            { id: 10, name: "PCl₃", atomsNeeded: { "P": 1, "Cl": 3 }, expectedBonds: { "P": { PEI: 3, PEB: 1 }, "Cl": { PEI: 1, PEB: 3 } } },
+        ];
+
+        let currentMoleculeIndex = 0;
+        let currentMode = null; 
+        let selectedAtom = null; 
+        let atomCounter = 0; 
+
+        const workspace = document.getElementById('workspace');
+        const currentMoleculeNameDisplay = document.getElementById('current-molecule-name');
+        const feedbackDisplay = document.getElementById('feedback');
+        const nextLevelBtn = document.getElementById('next-level-btn');
+        const modeButtons = document.querySelectorAll('.mode-btn');
+        
+        // POSISI PEB (Untuk penempatan visual)
+        const LP_OFFSETS = [
+            { top: -15, left: 25 },  // Posisi 0: Atas
+            { top: 25, left: 75 },   // Posisi 1: Kanan
+            { top: 65, left: 25 },   // Posisi 2: Bawah
+            { top: 25, left: -15 }    // Posisi 3: Kiri
+        ];
+        
+        // --- Setup dan State Management ---
+
+        function loadMolecule() {
+            if (currentMoleculeIndex >= molecules.length) {
+                currentMoleculeNameDisplay.textContent = "Semua Selesai!";
+                feedbackDisplay.innerHTML = "Hebat! Anda telah menyelesaikan semua tantangan Ikatan Kovalen! 🎉";
+                workspace.innerHTML = '';
+                nextLevelBtn.style.display = 'none';
+                return;
+            }
+
+            const currentMolecule = molecules[currentMoleculeIndex];
+            currentMoleculeNameDisplay.innerHTML = currentMolecule.name;
+            if (currentMolecule.note) {
+                 currentMoleculeNameDisplay.innerHTML += `<span style="font-size: 0.6em; color: #555;"> ${currentMolecule.note}</span>`;
+            }
+
+            workspace.innerHTML = '';
+            feedbackDisplay.textContent = '';
+            nextLevelBtn.style.display = 'none';
+            currentMode = null;
+            selectedAtom = null;
+            atomCounter = 0;
+            modeButtons.forEach(btn => btn.classList.remove('active'));
+        }
+
+        // --- Drag and Drop Atom ---
+        let draggedAtom = null;
+        document.querySelectorAll('.atom-draggable').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                draggedAtom = e.target.cloneNode(true);
+                draggedAtom.classList.remove('atom-draggable');
+                draggedAtom.classList.add('atom-in-workspace');
+                draggedAtom.setAttribute('draggable', 'true');
+                draggedAtom.setAttribute('data-atom-id', 'atom-' + atomCounter++);
+                draggedAtom.addEventListener('click', handleAtomClick);
+                
+                // Salin data atom (symbol dan warna)
+                draggedAtom.setAttribute('data-atom-symbol', e.target.dataset.atomSymbol);
+                draggedAtom.style.backgroundColor = getComputedStyle(e.target).backgroundColor;
+                draggedAtom.style.color = getComputedStyle(e.target).color;
+
+                draggedAtom.addEventListener('dragstart', (ev) => {
+                    draggedAtom = ev.target;
+                    ev.dataTransfer.setData('text/plain', 'move'); 
+                });
+            });
+        });
+
+        function allowDrop(e) {
+            e.preventDefault();
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            workspace.querySelectorAll('.lp-selector-container').forEach(c => c.remove()); 
+            selectedAtom = null;
+
+            if (draggedAtom) {
+                draggedAtom.style.left = (e.clientX - workspace.getBoundingClientRect().left - draggedAtom.offsetWidth / 2) + 'px';
+                draggedAtom.style.top = (e.clientY - workspace.getBoundingClientRect().top - draggedAtom.offsetHeight / 2) + 'px';
+                workspace.appendChild(draggedAtom);
+                draggedAtom = null;
+            }
+        }
+        
+        // --- Logika Mode Klik (Sama seperti sebelumnya) ---
+        
+        modeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modeButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentMode = btn.dataset.mode;
+                selectedAtom = null; 
+                workspace.querySelectorAll('.atom-in-workspace').forEach(a => a.classList.remove('selected'));
+                workspace.querySelectorAll('.lp-selector-container').forEach(c => c.remove()); 
+                feedbackDisplay.textContent = '';
+            });
+        });
+
+        function handleAtomClick(e) {
+            const clickedAtom = e.currentTarget;
+            
+            if (!currentMode) {
+                feedbackDisplay.textContent = "Pilih mode (Ikatan, Pasangan Bebas, atau Hapus) terlebih dahulu!";
+                feedbackDisplay.style.color = '#ffc107';
+                return;
+            }
+            
+            workspace.querySelectorAll('.lp-selector-container').forEach(c => c.remove());
+
+            if (currentMode === 'lone-pair') {
+                showLonePairSelector(clickedAtom);
+                return;
+            }
+            
+            if (currentMode === 'delete') {
+                return; // Mode delete berfungsi pada ikatan/PEB, bukan atom
+            }
+            
+            // Logika untuk Ikatan (single, double, triple)
+            if (!selectedAtom) {
+                selectedAtom = clickedAtom;
+                clickedAtom.classList.add('selected');
+            } else if (selectedAtom === clickedAtom) {
+                selectedAtom.classList.remove('selected');
+                selectedAtom = null;
+            } else {
+                createBond(selectedAtom, clickedAtom, currentMode);
+                selectedAtom.classList.remove('selected');
+                selectedAtom = null;
+            }
+            
+            feedbackDisplay.textContent = '';
+        }
+
+        // --- Fungsi PEB dan Ikatan (Sama seperti sebelumnya) ---
+
+        function showLonePairSelector(atom) {
+            workspace.querySelectorAll('.lp-selector-container').forEach(c => c.remove());
+            const rect = atom.getBoundingClientRect();
+            const workspaceRect = workspace.getBoundingClientRect();
+            const containerLeft = rect.left - workspaceRect.left - 15; 
+            const containerTop = rect.top - workspaceRect.top - 15; 
+
+            const container = document.createElement('div');
+            container.classList.add('lp-selector-container');
+            container.style.left = `${containerLeft}px`;
+            container.style.top = `${containerTop}px`;
+            container.setAttribute('data-target-atom-id', atom.dataset.atomId);
+            
+            LP_OFFSETS.forEach((offset, index) => {
+                const lpBtn = document.createElement('button');
+                lpBtn.classList.add('lp-position-btn');
+                lpBtn.setAttribute('data-pos', index);
+                lpBtn.textContent = index === 0 ? '⬆' : (index === 1 ? '➡' : (index === 2 ? '⬇' : '⬅'));
+                
+                lpBtn.addEventListener('click', () => {
+                    addLonePair(atom, index, container);
+                });
+                container.appendChild(lpBtn);
+            });
+            
+            workspace.appendChild(container);
+            feedbackDisplay.textContent = `Klik posisi di sekitar ${atom.dataset.atomSymbol} untuk menempatkan Pasangan Bebas.`;
+            feedbackDisplay.style.color = '#007bff';
+        }
+
+        function addLonePair(atom, positionIndex, container) {
+            const atomId = atom.dataset.atomId;
+            
+            if (workspace.querySelector(`.lone-pair[data-atom-id="${atomId}"][data-lp-pos="${positionIndex}"]`)) {
+                 feedbackDisplay.textContent = "Posisi tersebut sudah terisi!";
+                 feedbackDisplay.style.color = '#dc3545';
+                 return;
+            }
+            
+            const existingPEB = workspace.querySelectorAll(`.lone-pair[data-atom-id="${atomId}"]`).length;
+            if (existingPEB >= 4) {
+                 feedbackDisplay.textContent = `Atom ${atom.dataset.atomSymbol} tidak bisa menampung lebih dari 4 Pasangan Elektron Bebas!`;
+                 feedbackDisplay.style.color = '#dc3545';
+                 container.remove(); 
+                 return;
+            }
+
+            const position = LP_OFFSETS[positionIndex];
+
+            const lp = document.createElement('div');
+            lp.classList.add('lone-pair');
+            lp.setAttribute('data-atom-id', atomId);
+            lp.setAttribute('data-lp-pos', positionIndex); 
+
+            const dot1 = document.createElement('span');
+            dot1.classList.add('dot');
+            const dot2 = document.createElement('span');
+            dot2.classList.add('dot');
+            lp.appendChild(dot1);
+            lp.appendChild(dot2);
+            
+            const atomRect = atom.getBoundingClientRect();
+            const workspaceRect = workspace.getBoundingClientRect();
+            lp.style.left = `${atomRect.left - workspaceRect.left + position.left}px`;
+            lp.style.top = `${atomRect.top - workspaceRect.top + position.top}px`;
+            
+            lp.addEventListener('click', handleDeleteClick);
+
+            workspace.appendChild(lp); 
+            container.remove(); 
+
+            feedbackDisplay.textContent = `Pasangan Bebas berhasil ditempatkan!`;
+            feedbackDisplay.style.color = '#28a745';
+        }
+
+        function createBond(atom1, atom2, type) {
+            workspace.querySelectorAll('.lp-selector-container').forEach(c => c.remove());
+            
+            const id1 = atom1.dataset.atomId;
+            const id2 = atom2.dataset.atomId;
+            const bondIdKey = id1 < id2 ? `${id1}-${id2}` : `${id2}-${id1}`; 
+            
+            const existingBond = workspace.querySelector(`.bond-line[data-bond-id="${bondIdKey}"]`);
+            if (existingBond) {
+                 if (existingBond.dataset.type === type) {
+                     feedbackDisplay.textContent = `Ikatan ${type.toUpperCase()} sudah ada!`;
+                 } else {
+                     feedbackDisplay.textContent = `Ikatan sudah ada dengan tipe berbeda. Hapus dulu!`;
+                 }
+                 feedbackDisplay.style.color = '#dc3545';
+                 return;
+            }
+
+            const center1 = atom1.getBoundingClientRect();
+            const center2 = atom2.getBoundingClientRect();
+            const workspaceRect = workspace.getBoundingClientRect();
+
+            const x1 = center1.left + center1.width / 2 - workspaceRect.left;
+            const y1 = center1.top + center1.height / 2 - workspaceRect.top;
+            const x2 = center2.left + center2.width / 2 - workspaceRect.left;
+            const y2 = center2.top + center2.height / 2 - workspaceRect.top;
+
+            const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+
+            const bond = document.createElement('div');
+            bond.classList.add('bond-line');
+            bond.setAttribute('data-type', type);
+            bond.setAttribute('data-from', id1);
+            bond.setAttribute('data-to', id2);
+            bond.setAttribute('data-bond-id', bondIdKey); 
+
+            bond.style.width = `${distance}px`;
+            bond.style.left = `${x1}px`;
+            bond.style.top = `${y1}px`;
+            bond.style.transform = `rotate(${angle}deg)`;
+            
+            bond.addEventListener('click', handleDeleteClick);
+
+            workspace.appendChild(bond);
+            
+            feedbackDisplay.textContent = `${type.toUpperCase()} Ikatan berhasil dibuat!`;
+            feedbackDisplay.style.color = '#28a745';
+        }
+        
+        // --- Logika Hapus (Sama seperti sebelumnya) ---
+
+        function handleDeleteClick(e) {
+            if (currentMode === 'delete') {
+                const item = e.currentTarget;
+                const type = item.classList.contains('bond-line') ? 'Ikatan' : 'Pasangan Bebas';
+                item.remove();
+                
+                workspace.querySelectorAll('.lp-selector-container').forEach(c => c.remove());
+                selectedAtom = null;
+
+                feedbackDisplay.textContent = `${type} berhasil dihapus.`;
+                feedbackDisplay.style.color = '#dc3545';
+                e.stopPropagation(); 
+            } else {
+                 e.stopPropagation();
+            }
+        }
+        
+        // --- Validasi Struktur (Sama seperti sebelumnya) ---
+
+        function checkStructure() {
+            workspace.querySelectorAll('.lp-selector-container').forEach(c => c.remove());
+
+            const currentMolecule = molecules[currentMoleculeIndex];
+            const atomsInWorkspace = workspace.querySelectorAll('.atom-in-workspace');
+            const bondsInWorkspace = workspace.querySelectorAll('.bond-line');
+            const lonePairsInWorkspace = workspace.querySelectorAll('.lone-pair');
+            
+            let isCorrect = true;
+            let messages = [];
+
+            // 1. Cek jumlah atom yang ada
+            let actualAtomCounts = {};
+            atomsInWorkspace.forEach(atom => {
+                actualAtomCounts[atom.dataset.atomSymbol] = (actualAtomCounts[atom.dataset.atomSymbol] || 0) + 1;
+            });
+
+            // Cek kelebihan atom
+            for (const symbol in actualAtomCounts) {
+                if (actualAtomCounts[symbol] > (currentMolecule.atomsNeeded[symbol] || 0)) {
+                    isCorrect = false;
+                    messages.push(`Kelebihan atom ${symbol}. Maksimal yang dibutuhkan adalah ${currentMolecule.atomsNeeded[symbol] || 0}.`);
+                }
+            }
+            
+            // Cek kekurangan atom
+            for (const symbol in currentMolecule.atomsNeeded) {
+                if (actualAtomCounts[symbol] !== currentMolecule.atomsNeeded[symbol]) {
+                    isCorrect = false;
+                    messages.push(`Jumlah atom ${symbol} salah. Dibutuhkan ${currentMolecule.atomsNeeded[symbol]}, Anda menempatkan ${actualAtomCounts[symbol] || 0}.`);
+                }
+            }
+            
+            // 2. Cek Aturan Oktet/Duplet (Konektivitas dan PEB per Atom)
+            atomsInWorkspace.forEach(atom => {
+                const atomId = atom.dataset.atomId;
+                const symbol = atom.dataset.atomSymbol;
+                const expected = currentMolecule.expectedBonds[symbol];
+                if (!expected) return; 
+
+                // Hitung PEI aktual
+                let actualPEI = 0;
+                bondsInWorkspace.forEach(bond => {
+                    if (bond.dataset.from === atomId || bond.dataset.to === atomId) {
+                        const type = bond.dataset.type;
+                        if (type === 'single') actualPEI += 1;
+                        else if (type === 'double') actualPEI += 2;
+                        else if (type === 'triple') actualPEI += 3;
+                    }
+                });
+                
+                // Hitung PEB aktual
+                let actualPEB = 0;
+                lonePairsInWorkspace.forEach(lp => {
+                    if (lp.dataset.atomId === atomId) {
+                        actualPEB += 1; 
+                    }
+                });
+
+                // Validasi
+                if (actualPEI !== expected.PEI) {
+                    isCorrect = false;
+                    messages.push(`Atom ${symbol} memiliki ${actualPEI} PEI, seharusnya ${expected.PEI}.`);
+                }
+                if (actualPEB !== expected.PEB) {
+                    isCorrect = false;
+                    messages.push(`Atom ${symbol} memiliki ${actualPEB} PEB, seharusnya ${expected.PEB}.`);
+                }
+            });
+
+
+            if (isCorrect && messages.length === 0) {
+                feedbackDisplay.innerHTML = `✅ **BENAR!** Struktur Lewis untuk ${currentMolecule.name} tepat.`;
+                feedbackDisplay.style.color = '#28a745';
+                nextLevelBtn.style.display = 'block';
+            } else {
+                feedbackDisplay.innerHTML = `❌ **SALAH.** Struktur Anda tidak memenuhi aturan yang benar. Perbaiki: <br>${messages.join('<br>')}`;
+                feedbackDisplay.style.color = '#dc3545';
+                nextLevelBtn.style.display = 'none';
+            }
+        }
+        
+        function nextMolecule() {
+            currentMoleculeIndex++;
+            loadMolecule();
+        }
+
+        // Inisialisasi game
+        loadMolecule();
+    </script>
+</body>
+</html>
