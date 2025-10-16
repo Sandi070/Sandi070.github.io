@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Ikatan Kimia</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f0f0; }
+        canvas { border: 1px solid #000; background-color: #fff; margin: 20px auto; display: inline-block; }
+        input, button { margin: 10px; padding: 5px; }
+        #output1, #output2 { margin: 20px; font-size: 18px; display: inline-block; vertical-align: top; }
+        #bondingOutput { margin: 20px; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <h1>Media Pembelajaran Ikatan Kimia</h1>
+    
+    <h2>Model Atom Bohr</h2>
+    <p>Masukkan dua nomor atom (1-20 untuk contoh sederhana):</p>
+    <input type="number" id="z1" min="1" max="20" value="11"> (Atom 1)
+    <input type="number" id="z2" min="1" max="20" value="16"> (Atom 2)
+    <button onclick="drawBohrModels()">Tampilkan Model Bohr</button>
+    <br>
+    <canvas id="bohrCanvas1" width="400" height="400"></canvas>
+    <canvas id="bohrCanvas2" width="400" height="400"></canvas>
+    <div id="output1"></div>
+    <div id="output2"></div>
+    
+    <h2>Pembentukan Senyawa</h2>
+    <button onclick="formCompound()">Bentuk Senyawa</button>
+    <canvas id="bondingCanvas" width="800" height="600"></canvas>
+    <div id="bondingOutput"></div>
+
+    <script>
+        const elements = {
+            1: 'H', 2: 'He', 3: 'Li', 4: 'Be', 5: 'B', 6: 'C', 7: 'N', 8: 'O', 9: 'F', 10: 'Ne',
+            11: 'Na', 12: 'Mg', 13: 'Al', 14: 'Si', 15: 'P', 16: 'S', 17: 'Cl', 18: 'Ar', 19: 'K', 20: 'Ca'
+        };
+
+        function getBohrShells(z) {
+            if (z <= 0) return [];
+            let shells = [];
+            let remaining = z;
+            const capacities = [2, 8, 8, 18, 18, 32, 32];
+            for (let cap of capacities) {
+                if (remaining <= 0) break;
+                let e = Math.min(remaining, cap);
+                shells.push(e);
+                remaining -= e;
+            }
+            if (remaining > 0) shells.push(remaining);
+            return shells;
+        }
+
+        function getIonChargeAndDesc(shells) {
+            if (shells.length === 0) return { charge: 0, desc: 'Tidak valid' };
+            const valence = shells[shells.length - 1];
+            let charge, desc;
+            if (valence === 8 || (shells.length === 1 && valence === 2)) {
+                charge = 0;
+                desc = 'Atom stabil, tidak membentuk ion.';
+            } else if (valence <= 3) {
+                charge = valence;
+                desc = `Cenderung melepas ${valence} elektron, bermuatan +${valence}.`;
+            } else if (valence >= 4 && valence <= 7) {
+                const gain = 8 - valence;
+                charge = -gain;
+                desc = `Cenderung menangkap ${gain} elektron, bermuatan ${charge}.`;
+            } else {
+                charge = 0;
+                desc = 'Stabil atau tidak standar.';
+            }
+            return { charge, desc };
+        }
+
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+
+        let bohrAnimationFrameId1, bohrAnimationFrameId2;
+        let bondingAnimationFrameId;
+
+        function drawSingleBohrModel(canvasId, outputId, z, symbol) {
+            const shells = getBohrShells(z);
+            const { charge, desc } = getIonChargeAndDesc(shells);
+
+            document.getElementById(outputId).innerHTML = `
+                <p>Atom: ${symbol} (Nomor atom: ${z})</p>
+                <p>Konfigurasi elektron: ${shells.join(', ')}</p>
+                <p>Elektron valensi: ${shells[shells.length - 1]}</p>
+                <p>${desc}</p>
+                <p>Ion: ${symbol}${charge > 0 ? '+' + charge : (charge < 0 ? charge : '')}</p>
+            `;
+
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const nucleusRadius = 20;
+            const shellBaseRadius = 50;
+            const electronRadius = 5;
+            let angle = 0;
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Gambar nukleus
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, nucleusRadius, 0, 2 * Math.PI);
+                ctx.fillStyle = 'red';
+                ctx.fill();
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText(`${z}p+`, centerX - 15, centerY + 5);
+
+                // Gambar kulit dan elektron
+                shells.forEach((electrons, index) => {
+                    const radius = shellBaseRadius + index * 40;
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                    ctx.strokeStyle = 'black';
+                    ctx.stroke();
+
+                    for (let i = 0; i < electrons; i++) {
+                        const electronAngle = (2 * Math.PI * i / electrons) + angle;
+                        const ex = centerX + radius * Math.cos(electronAngle);
+                        const ey = centerY + radius * Math.sin(electronAngle);
+                        ctx.beginPath();
+                        ctx.arc(ex, ey, electronRadius, 0, 2 * Math.PI);
+                        ctx.fillStyle = 'blue';
+                        ctx.fill();
+                    }
+                });
+
+                angle += 0.02; // Kecepatan rotasi
+                if (canvasId === 'bohrCanvas1') {
+                    bohrAnimationFrameId1 = requestAnimationFrame(animate);
+                } else {
+                    bohrAnimationFrameId2 = requestAnimationFrame(animate);
+                }
+            }
+
+            if (canvasId === 'bohrCanvas1' && bohrAnimationFrameId1) cancelAnimationFrame(bohrAnimationFrameId1);
+            if (canvasId === 'bohrCanvas2' && bohrAnimationFrameId2) cancelAnimationFrame(bohrAnimationFrameId2);
+            animate();
+        }
+
+        function drawBohrModels() {
+            const z1 = parseInt(document.getElementById('z1').value);
+            const z2 = parseInt(document.getElementById('z2').value);
+            if (isNaN(z1) || isNaN(z2) || z1 < 1 || z1 > 20 || z2 < 1 || z2 > 20) {
+                alert('Nomor atom harus antara 1-20.');
+                return;
+            }
+            const sym1 = elements[z1] || 'Unk1';
+            const sym2 = elements[z2] || 'Unk2';
+
+            drawSingleBohrModel('bohrCanvas1', 'output1', z1, sym1);
+            drawSingleBohrModel('bohrCanvas2', 'output2', z2, sym2);
+        }
+
+        function formCompound() {
+            const z1 = parseInt(document.getElementById('z1').value);
+            const z2 = parseInt(document.getElementById('z2').value);
+            if (isNaN(z1) || isNaN(z2) || z1 < 1 || z1 > 20 || z2 < 1 || z2 > 20) {
+                alert('Nomor atom harus antara 1-20.');
+                return;
+            }
+            const sym1 = elements[z1] || 'Unk1';
+            const sym2 = elements[z2] || 'Unk2';
+            const shells1 = getBohrShells(z1);
+            const shells2 = getBohrShells(z2);
+            const ion1 = getIonChargeAndDesc(shells1);
+            const ion2 = getIonChargeAndDesc(shells2);
+            const val1 = Math.abs(ion1.charge);
+            const val2 = Math.abs(ion2.charge);
+
+            let type = 'tidak berikatan (salah satu stabil)';
+            let formula = '';
+            let isIonic = false;
+            let sub1 = 1, sub2 = 1;
+            if (val1 > 0 && val2 > 0) {
+                const g = gcd(val1, val2);
+                sub1 = val2 / g;
+                sub2 = val1 / g;
+                formula = `${sym1}${sub1 > 1 ? sub1 : ''}${sym2}${sub2 > 1 ? sub2 : ''}`;
+                isIonic = (ion1.charge > 0 && ion2.charge < 0) || (ion1.charge < 0 && ion2.charge > 0);
+                type = isIonic ? 'ionik' : 'kovalen (pemakaian bersama)';
+            }
+
+            // Untuk homodiatomik seperti O2 atau N2
+            let bondMultiplicity = 1; // Default single
+            if (z1 === z2) {
+                if (z1 === 8) { // O2
+                    formula = 'O2';
+                    bondMultiplicity = 2; // Double bond
+                } else if (z1 === 7) { // N2
+                    formula = 'N2';
+                    bondMultiplicity = 3; // Triple bond
+                }
+                type = 'kovalen (pemakaian bersama)';
+                sub1 = 1;
+                sub2 = 1;
+            }
+
+            document.getElementById('bondingOutput').innerHTML = `
+                <p>Atom 1: ${sym1} (${ion1.desc}), ion ${sym1}${ion1.charge > 0 ? '+' + ion1.charge : ion1.charge}</p>
+                <p>Atom 2: ${sym2} (${ion2.desc}), ion ${sym2}${ion2.charge > 0 ? '+' + ion2.charge : ion2.charge}</p>
+                <p>Jenis ikatan: ${type}</p>
+                <p>Senyawa: ${formula}</p>
+            `;
+
+            // Mulai animasi
+            animateTransfer(z1, z2, sym1, sym2, ion1.charge, ion2.charge, isIonic, val1, val2, type, sub1, sub2, bondMultiplicity);
+        }
+
+        function animateTransfer(z1, z2, sym1, sym2, charge1, charge2, isIonic, val1, val2, type, sub1, sub2, bondMultiplicity) {
+            const canvas = document.getElementById('bondingCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            const atomRadius = 50;
+            const electronRadius = 5;
+            let progress = 0;
+            const speed = 0.01;
+
+            // Untuk ionik: Tentukan donor (charge >0) dan acceptor (charge <0)
+            let donorSym, acceptorSym, donorCharge, acceptorCharge, donorSub, acceptorSub, donorZ, acceptorZ;
+            if (charge1 > 0) {
+                donorSym = sym1;
+                donorCharge = charge1;
+                donorSub = sub1;
+                donorZ = z1;
+                acceptorSym = sym2;
+                acceptorCharge = charge2;
+                acceptorSub = sub2;
+                acceptorZ = z2;
+            } else {
+                donorSym = sym2;
+                donorCharge = charge2;
+                donorSub = sub2;
+                donorZ = z2;
+                acceptorSym = sym1;
+                acceptorCharge = charge1;
+                acceptorSub = sub1;
+                acceptorZ = z1;
+            }
+
+            // Posisi untuk ionik: donor di kiri, acceptor di kanan, susun vertikal
+            const donorPositions = [];
+            const acceptorPositions = [];
+            const spacing = height / Math.max(donorSub, acceptorSub, 1);
+            for (let i = 0; i < donorSub; i++) {
+                donorPositions.push({ x: width / 4, y: spacing * (i + 0.5) });
+            }
+            for (let i = 0; i < acceptorSub; i++) {
+                acceptorPositions.push({ x: 3 * width / 4, y: spacing * (i + 0.5) });
+            }
+
+            // Elektron untuk ionik
+            const electrons = [];
+            if (isIonic) {
+                const electronsPerDonor = donorCharge;
+                let electronIndex = 0;
+                for (let d = 0; d < donorSub; d++) {
+                    for (let e = 0; e < electronsPerDonor; e++) {
+                        const angle = Math.PI * 2 * (e + electronsPerDonor * d) / (donorSub * electronsPerDonor);
+                        const startX = donorPositions[d].x + atomRadius * Math.cos(angle);
+                        const startY = donorPositions[d].y + atomRadius * Math.sin(angle);
+                        const targetAcceptor = electronIndex % acceptorSub;
+                        const targetAngle = Math.PI * 2 * (electronIndex % Math.abs(acceptorCharge)) / Math.abs(acceptorCharge) + Math.PI;
+                        const targetX = acceptorPositions[targetAcceptor].x + atomRadius * Math.cos(targetAngle);
+                        const targetY = acceptorPositions[targetAcceptor].y + atomRadius * Math.sin(targetAngle);
+                        electrons.push({ x: startX, y: startY, targetX, targetY });
+                        electronIndex++;
+                    }
+                }
+            }
+
+            // Untuk kovalen: Tentukan central (sub lebih kecil atau val lebih besar untuk tangkap)
+            let centralSym, peripheralSym, centralSub, peripheralSub, centralPositions, peripheralPositions;
+            if (!isIonic) {
+                const isAtom1Central = (sub1 <= sub2) || (z1 === z2);
+                centralSym = isAtom1Central ? sym1 : sym2;
+                peripheralSym = isAtom1Central ? sym2 : sym1;
+                centralSub = isAtom1Central ? sub1 : sub2;
+                peripheralSub = isAtom1Central ? sub2 : sub1;
+
+                // Asumsi centralSub =1 untuk sederhana
+                centralPositions = [{ x: width / 2, y: height / 2 }];
+                peripheralPositions = [];
+                const angleStep = 2 * Math.PI / peripheralSub;
+                const bondRadius = Math.min(width / 4, height / 4) + 100;
+                for (let i = 0; i < peripheralSub; i++) {
+                    peripheralPositions.push({
+                        x: centralPositions[0].x + bondRadius * Math.cos(i * angleStep),
+                        y: centralPositions[0].y + bondRadius * Math.sin(i * angleStep)
+                    });
+                }
+
+                if (z1 === z2) {
+                    // Untuk homodiatomik, posisi samping
+                    centralPositions = [{ x: width / 3, y: height / 2 }];
+                    peripheralPositions = [{ x: 2 * width / 3, y: height / 2 }];
+                    peripheralSub = 1;
+                }
+            }
+
+            // Untuk kovalen: midPoints dan electrons per bond
+            const midPoints = [];
+            let electronsPerBond = bondMultiplicity * 2; // 2 e per single bond, 4 for double, 6 for triple
+            if (!isIonic) {
+                for (let i = 0; i < peripheralSub; i++) {
+                    const dx = peripheralPositions[i].x - centralPositions[0].x;
+                    const dy = peripheralPositions[i].y - centralPositions[0].y;
+                    const dist = Math.hypot(dx, dy);
+                    midPoints.push({
+                        midX: (centralPositions[0].x + peripheralPositions[i].x) / 2,
+                        midY: (centralPositions[0].y + peripheralPositions[i].y) / 2,
+                        directionX: dx / dist,
+                        directionY: dy / dist,
+                        startX: centralPositions[0].x + (atomRadius * dx / dist),
+                        startY: centralPositions[0].y + (atomRadius * dy / dist),
+                        endX: peripheralPositions[i].x - (atomRadius * dx / dist),
+                        endY: peripheralPositions[i].y - (atomRadius * dy / dist)
+                    });
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+
+                if (isIonic) {
+                    // Gambar donors
+                    donorPositions.forEach((pos) => {
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, atomRadius, 0, 2 * Math.PI);
+                        ctx.fillStyle = 'lightblue';
+                        ctx.fill();
+                        ctx.fillStyle = 'black';
+                        ctx.font = 'bold 20px Arial';
+                        ctx.fillText(donorSym, pos.x - 10, pos.y + 10);
+                    });
+
+                    // Gambar acceptors
+                    acceptorPositions.forEach((pos) => {
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, atomRadius, 0, 2 * Math.PI);
+                        ctx.fillStyle = 'lightgreen';
+                        ctx.fill();
+                        ctx.fillStyle = 'black';
+                        ctx.font = 'bold 20px Arial';
+                        ctx.fillText(acceptorSym, pos.x - 10, pos.y + 10);
+                    });
+
+                    // Animasi transfer
+                    electrons.forEach(e => {
+                        e.x += (e.targetX - e.x) * speed;
+                        e.y += (e.targetY - e.y) * speed;
+                        ctx.beginPath();
+                        ctx.arc(e.x, e.y, electronRadius, 0, 2 * Math.PI);
+                        ctx.fillStyle = 'blue';
+                        ctx.fill();
+                    });
+
+                    progress += speed;
+                    if (progress < 1) {
+                        bondingAnimationFrameId = requestAnimationFrame(animate);
+                    } else {
+                        // Tampilkan muatan dan elektron akhir
+                        electrons.forEach(e => {
+                            ctx.beginPath();
+                            ctx.arc(e.targetX, e.targetY, electronRadius, 0, 2 * Math.PI);
+                            ctx.fillStyle = 'blue';
+                            ctx.fill();
+                        });
+                        ctx.fillStyle = 'red';
+                        ctx.font = 'bold 16px Arial';
+                        donorPositions.forEach(pos => {
+                            ctx.fillText(`+${donorCharge}`, pos.x + atomRadius + 5, pos.y);
+                        });
+                        acceptorPositions.forEach(pos => {
+                            ctx.fillText(`${acceptorCharge}`, pos.x + atomRadius + 5, pos.y);
+                        });
+                    }
+                } else {
+                    // Gambar central
+                    centralPositions.forEach((pos) => {
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, atomRadius, 0, 2 * Math.PI);
+                        ctx.fillStyle = 'lightblue';
+                        ctx.fill();
+                        ctx.fillStyle = 'black';
+                        ctx.font = 'bold 20px Arial';
+                        ctx.fillText(centralSym, pos.x - 10, pos.y + 10);
+                    });
+
+                    // Gambar peripherals
+                    peripheralPositions.forEach((pos) => {
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, atomRadius, 0, 2 * Math.PI);
+                        ctx.fillStyle = 'lightgreen';
+                        ctx.fill();
+                        ctx.fillStyle = 'black';
+                        ctx.font = 'bold 20px Arial';
+                        ctx.fillText(peripheralSym, pos.x - 10, pos.y + 10);
+                    });
+
+                    // Gambar garis ikatan (multiple lines for double/triple)
+                    midPoints.forEach((mid) => {
+                        for (let k = 0; k < bondMultiplicity; k++) {
+                            const offsetX = (k - (bondMultiplicity - 1)/2) * 5 * mid.directionY; // Perpendicular offset for multiple lines
+                            const offsetY = (k - (bondMultiplicity - 1)/2) * 5 * -mid.directionX;
+                            ctx.beginPath();
+                            ctx.moveTo(mid.startX + offsetX, mid.startY + offsetY);
+                            ctx.lineTo(mid.endX + offsetX, mid.endY + offsetY);
+                            ctx.strokeStyle = 'black';
+                            ctx.lineWidth = 2;
+                            ctx.stroke();
+                        }
+                    });
+
+                    // Animasi elektron berbagi
+                    midPoints.forEach((mid, i) => {
+                        for (let j = 0; j < electronsPerBond; j++) {
+                            const offset = Math.sin(progress + i + j * Math.PI / electronsPerBond) * (atomRadius / 2);
+                            const ex = mid.midX + offset * mid.directionX;
+                            const ey = mid.midY + offset * mid.directionY;
+                            ctx.beginPath();
+                            ctx.arc(ex, ey, electronRadius, 0, 2 * Math.PI);
+                            ctx.fillStyle = 'blue';
+                            ctx.fill();
+                        }
+                    });
+
+                    progress += speed * 2;
+                    bondingAnimationFrameId = requestAnimationFrame(animate);
+                }
+            }
+
+            if (bondingAnimationFrameId) cancelAnimationFrame(bondingAnimationFrameId);
+            animate();
+        }
+    </script>
+</body>
+</html>
