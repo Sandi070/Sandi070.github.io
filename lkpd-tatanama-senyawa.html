@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memecahkan Kode Kimia: Tata Nama Senyawa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS DARI RESPON SEBELUMNYA */
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        /* Variabel Warna */
+        :root {
+            --primary-color: #3f51b5; /* Biru Indigo */
+            --secondary-color: #ff9800; /* Oranye */
+            --background-color: #f4f6f9; /* Abu-abu terang */
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --success-color: #4CAF50; /* Hijau untuk benar */
+            --error-color: #F44336; /* Merah untuk salah */
+        }
+
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header Styling */
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Card Styling for Sections */
+        .card {
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--secondary-color); /* Aksen Warna */
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .description {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        /* Table Styling (Bagian 1) */
+        .table-responsive {
+            overflow-x: auto; /* Untuk responsivitas di layar kecil */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        thead th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        td input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        td input[type="text"]:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+        
+        /* Feedback Styling */
+        .feedback {
+            font-size: 0.9em;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+        .correct {
+            color: var(--success-color);
+        }
+        .incorrect {
+            color: var(--error-color);
+        }
+
+        /* Input Group Styling (Bagian 2 & 3) */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .input-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+        }
+
+        /* Button Styling */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .submit-btn:hover {
+            background-color: #e68900;
+            transform: translateY(-2px);
+        }
+        
+        /* Skor Box Styling */
+        #score-box {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            background-color: #e8f5e9; /* Light green background */
+            border: 2px solid var(--success-color);
+            font-size: 1.2em;
+            font-weight: 700;
+            display: none; /* Sembunyikan secara default */
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background-color: #eeeeee;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        /* Responsiveness for small screens */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            th, td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🧪 Detektif Penamaan Senyawa</h1>
+        <p>LKPD Berbasis Pemecahan Masalah Terpandu</p>
+    </header>
+
+    <main class="container">
+
+        <section class="card">
+            <h2>🔍 Bagian 1: Memilah Kasus (Identifikasi Ikatan)</h2>
+            <p class="description">Tentukan jenis ikatan **(Ionik / Kovalen)** untuk setiap sampel zat.</p>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rumus Kimia</th>
+                            <th>Unsur Penyusun</th>
+                            <th>Jenis Ikatan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>NaCl</td>
+                            <td>Na (Logam) + Cl (Non-Logam)</td>
+                            <td><input type="text" id="ans1a" data-answer="ionik" placeholder="Tulis di sini..."></td>
+                        </tr>
+                        <tr>
+                            <td>P<sub>2</sub>O<sub>5</sub></td>
+                            <td>P (Non-Logam) + O (Non-Logam)</td>
+                            <td><input type="text" id="ans1b" data-answer="kovalen" placeholder="Tulis di sini..."></td>
+                        </tr>
+                        <tr>
+                            <td>Fe<sub>2</sub>O<sub>3</sub></td>
+                            <td>Fe (Logam) + O (Non-Logam)</td>
+                            <td><input type="text" id="ans1c" data-answer="ionik" placeholder="Tulis di sini..."></td>
+                        </tr>
+                        <tr>
+                            <td>N<sub>2</sub>O<sub>4</sub></td>
+                            <td>N (Non-Logam) + O (Non-Logam)</td>
+                            <td><input type="text" id="ans1d" data-answer="kovalen" placeholder="Tulis di sini..."></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="card challenge-section">
+            <h2>🔑 Bagian 2: Menentukan Aturan (Panduan Solusi)</h2>
+            
+            <h3>Tantangan 1: Senyawa Kovalen (Penamaan Rumus)</h3>
+            <div class="input-group">
+                <label for="ans2a">P₂O₅ adalah...</label>
+                <input type="text" id="ans2a" data-answer="difosfor pentoksida" placeholder="Tulis nama senyawanya">
+            </div>
+            <div class="input-group">
+                <label for="ans2b">N₂O₄ adalah...</label>
+                <input type="text" id="ans2b" data-answer="dinitrogen tetraoksida" placeholder="Tulis nama senyawanya">
+            </div>
+            
+            <h3>Tantangan 2: Senyawa Ionik (Penamaan Rumus)</h3>
+            <div class="input-group">
+                <label for="ans2c">NaCl adalah...</label>
+                <input type="text" id="ans2c" data-answer="natrium klorida" placeholder="Tulis nama senyawanya">
+            </div>
+            <div class="input-group">
+                <label for="ans2d">Fe₂O₃ adalah...</label>
+                <input type="text" id="ans2d" data-answer="besi(iii) oksida" placeholder="Tulis nama senyawanya (gunakan Romawi)">
+            </div>
+        </section>
+        
+        <section class="card final-challenge">
+            <h2>💡 Bagian 3: Aplikasi Praktis (Rumus Kimia)</h2>
+            <p class="description">Tentukan rumus kimia dari nama-nama berikut.</p>
+            
+            <div class="input-group">
+                <label for="ans3a">Belerang Trioksida</label>
+                <input type="text" id="ans3a" data-answer="so3" placeholder="Tulis rumus kimianya (tanpa subscript)">
+            </div>
+            <div class="input-group">
+                <label for="ans3b">Kalium Nitrat</label>
+                <input type="text" id="ans3b" data-answer="kno3" placeholder="Tulis rumus kimianya (tanpa subscript)">
+            </div>
+            <div class="input-group">
+                <label for="ans3c">Timbal(IV) Oksida</label>
+                <input type="text" id="ans3c" data-answer="pbo2" placeholder="Tulis rumus kimianya (tanpa subscript)">
+            </div>
+
+            <button class="submit-btn" onclick="checkAnswers()">Kirim Jawaban & Cek Skor! 🚀</button>
+            <div id="score-box"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LKPD Kimia. Belajar dengan Cerdas dan Menyenangkan.</p>
+    </footer>
+
+    <script>
+        // JAVASCRIPT UNTUK FUNGSI PENGECEKAN
+        
+        // Objek berisi semua jawaban yang benar (dikonversi ke lowercase)
+        const CORRECT_ANSWERS = {
+            'ans1a': 'ionik',
+            'ans1b': 'kovalen',
+            'ans1c': 'ionik',
+            'ans1d': 'kovalen',
+            'ans2a': 'difosfor pentoksida',
+            'ans2b': 'dinitrogen tetraoksida',
+            'ans2c': 'natrium klorida',
+            'ans2d': 'besi(iii) oksida',
+            'ans3a': 'so3',
+            'ans3b': 'kno3',
+            'ans3c': 'pbo2'
+        };
+
+        const TOTAL_QUESTIONS = Object.keys(CORRECT_ANSWERS).length;
+
+        function checkAnswers() {
+            let score = 0;
+            const inputElements = document.querySelectorAll('input[type="text"]');
+            
+            // Loop melalui setiap elemen input
+            inputElements.forEach(input => {
+                const id = input.id;
+                // Ambil jawaban siswa, hapus spasi berlebih, dan konversi ke lowercase
+                // Menghapus spasi agar 'besi (iii) oksida' tetap dianggap benar jika jawaban sebenarnya 'besi(iii) oksida'
+                const studentAnswer = input.value.trim().toLowerCase().replace(/\s+/g, ' '); 
+                const correctAnswer = CORRECT_ANSWERS[id];
+
+                // Hapus feedback sebelumnya
+                let feedbackElement = input.parentNode.querySelector('.feedback');
+                if (feedbackElement) {
+                    feedbackElement.remove();
+                }
+
+                // Buat elemen feedback baru
+                feedbackElement = document.createElement('p');
+                feedbackElement.classList.add('feedback');
+
+                // Lakukan pengecekan jawaban
+                if (studentAnswer === correctAnswer) {
+                    score++;
+                    feedbackElement.classList.add('correct');
+                    feedbackElement.innerHTML = '&#10003; Benar!';
+                    input.style.borderColor = 'var(--success-color)';
+                } else {
+                    feedbackElement.classList.add('incorrect');
+                    feedbackElement.innerHTML = `&#10007; Salah. Jawaban yang benar: **${correctAnswer}**`;
+                    input.style.borderColor = 'var(--error-color)';
+                }
+
+                // Sisipkan feedback setelah input
+                input.parentNode.insertBefore(feedbackElement, input.nextSibling);
+            });
+
+            // Tampilkan Skor Akhir
+            const percentage = ((score / TOTAL_QUESTIONS) * 100).toFixed(0);
+            const scoreBox = document.getElementById('score-box');
+            
+            scoreBox.style.display = 'block';
+            scoreBox.innerHTML = `
+                🎉 **Hasil Anda!** 🎉<br>
+                Skor: ${score} dari ${TOTAL_QUESTIONS} pertanyaan.<br>
+                Persentase: **${percentage}%**
+            `;
+
+            // Scroll ke hasil
+            scoreBox.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
