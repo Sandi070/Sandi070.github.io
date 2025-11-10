@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LKPD Laju Reaksi Berbasis Masalah (Web)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        h2 {
+            color: #28a745;
+            border-left: 5px solid #28a745;
+            padding-left: 10px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h3 {
+            color: #17a2b8;
+            margin-top: 20px;
+        }
+        .info-box {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .problem-text {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .question-area {
+            margin-bottom: 25px;
+            padding: 10px;
+            border: 1px dashed #ced4da;
+            border-radius: 4px;
+        }
+        textarea {
+            width: 98%;
+            min-height: 80px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .link-simulation {
+            display: block;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #ff4500;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .link-simulation:hover {
+            background-color: #e63900;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>LKPD Laju Reaksi Berbasis Masalah 🧪</h1>
+    
+    <div class="info-box">
+        <p><strong>Materi Pokok:</strong> Laju Reaksi dan Faktor-faktor yang Memengaruhinya</p>
+        <p><strong>Kelas/Semester:</strong> XI/Ganjil</p>
+        <p><strong>Alokasi Waktu:</strong> 2 x 45 Menit (Disesuaikan)</p>
+        <p><strong>Kelompok:</strong> <input type="text" style="width: 250px; border: none; border-bottom: 1px solid #333; padding-left: 5px;" placeholder="Nama Anggota Kelompok"></p>
+    </div>
+
+    <hr>
+
+    <h2>A. Tujuan Pembelajaran 🎯</h2>
+    <p>Setelah menyelesaikan kegiatan pada LKPD ini, peserta didik diharapkan dapat:</p>
+    <ul>
+        <li>Mengidentifikasi faktor-faktor yang memengaruhi laju reaksi (**konsentrasi** dan **suhu**).</li>
+        <li>Menganalisis hubungan antara perubahan konsentrasi dan suhu terhadap laju reaksi berdasarkan data simulasi.</li>
+        <li>Menjelaskan pengaruh konsentrasi dan suhu terhadap laju reaksi menggunakan **Teori Tumbukan**.</li>
+    </ul>
+
+    <hr>
+
+    <h2>B. Orientasi Masalah 🤔</h2>
+
+    <h3>❓ Fenomena Awal:</h3>
+    <ol>
+        <li>Anda melarutkan tablet vitamin C dalam dua gelas air yang berbeda: air dingin dan air hangat. Reaksi pelarutan mana yang akan berlangsung lebih cepat?</li>
+        <li>Anda ingin membersihkan noda karat menggunakan larutan Asam Klorida (HCl) dengan dua konsentrasi yang berbeda (1 M dan 4 M). Larutan HCl mana yang akan membersihkan noda karat lebih cepat?</li>
+    </ol>
+
+    <div class="problem-text">
+        <strong>Permasalahan Inti:</strong>
+        <p>Bagaimana mekanisme faktor **konsentrasi** dan **suhu** dapat memengaruhi kecepatan suatu reaksi kimia?</p>
+    </div>
+
+    <hr>
+
+    <h2>C. Pembimbingan Penyelidikan Kelompok 🔬</h2>
+
+    <h3>1. Persiapan Simulasi</h3>
+    <p>Akses dan eksplorasi simulasi "Reactions & Rates" dari LabXchange:</p>
+    <a href="https://www.labxchange.org/library/items/lbxdlg:3d865c36-7c98-4c13-a4e9-0268516e8851/original/reactions-rates-01-introduction" target="_blank" class="link-simulation">▶️ KLIK DI SINI UNTUK SIMULASI REACTIONS & RATES</a>
+    <p>Pilih bagian <strong>"Reaction Rate"</strong> atau <strong>"Factors Affecting Reaction Rate"</strong>.</p>
+
+    <h3>2. Aktivitas 1: Pengaruh Konsentrasi</h3>
+    <p><strong>Tujuan:</strong> Menganalisis pengaruh perubahan konsentrasi zat pereaksi terhadap laju reaksi. Tetapkan suhu sebagai variabel kontrol.</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Perlakuan (Variasi Konsentrasi Awal)</th>
+                <th>Variabel Kontrol (Suhu)</th>
+                <th>Data Hasil (Laju Reaksi/Waktu Reaksi)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1.</td>
+                <td>Konsentrasi **Rendah** (misalnya 5 mol)</td>
+                <td>Tetap (misalnya 300 K)</td>
+                <td><input type="text" style="width: 90%;"></td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td>Konsentrasi **Sedang** (misalnya 10 mol)</td>
+                <td>Tetap (misalnya 300 K)</td>
+                <td><input type="text" style="width: 90%;"></td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td>Konsentrasi **Tinggi** (misalnya 15 mol)</td>
+                <td>Tetap (misalnya 300 K)</td>
+                <td><input type="text" style="width: 90%;"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>Pertanyaan Analisis Aktivitas 1:</h4>
+    <div class="question-area">
+        <p>1. Apa yang terjadi pada laju reaksi ketika konsentrasi zat pereaksi ditingkatkan?</p>
+        <textarea placeholder="Tulis jawaban di sini..."></textarea>
+    </div>
+    <div class="question-area">
+        <p>2. Jelaskan kaitan antara peningkatan konsentrasi dengan **Teori Tumbukan** (frekuensi tumbukan)!</p>
+        <textarea placeholder="Tulis jawaban di sini..."></textarea>
+    </div>
+
+    <h3>3. Aktivitas 2: Pengaruh Suhu</h3>
+    <p><strong>Tujuan:</strong> Menganalisis pengaruh perubahan suhu terhadap laju reaksi. Tetapkan konsentrasi sebagai variabel kontrol.</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Variasi Suhu</th>
+                <th>Variabel Kontrol (Konsentrasi Awal)</th>
+                <th>Data Hasil (Laju Reaksi/Waktu Reaksi)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1.</td>
+                <td>Suhu **Rendah** (misalnya 273 K)</td>
+                <td>Tetap (misalnya 10 mol)</td>
+                <td><input type="text" style="width: 90%;"></td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td>Suhu **Sedang** (misalnya 300 K)</td>
+                <td>Tetap (misalnya 10 mol)</td>
+                <td><input type="text" style="width: 90%;"></td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td>Suhu **Tinggi** (misalnya 350 K)</td>
+                <td>Tetap (misalnya 10 mol)</td>
+                <td><input type="text" style="width: 90%;"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>Pertanyaan Analisis Aktivitas 2:</h4>
+    <div class="question-area">
+        <p>1. Apa yang terjadi pada laju reaksi ketika suhu dinaikkan?</p>
+        <textarea placeholder="Tulis jawaban di sini..."></textarea>
+    </div>
+    <div class="question-area">
+        <p>2. Jelaskan bagaimana peningkatan energi kinetik partikel pada suhu tinggi memengaruhi **Tumbukan Efektif** berdasarkan dua syaratnya!</p>
+        <textarea placeholder="Tulis jawaban di sini..."></textarea>
+    </div>
+
+    <hr>
+
+    <h2>D. Pengembangan dan Penyajian Hasil Karya 💡</h2>
+
+    <h3>1. Sintesis Konsep:</h3>
+    <p>Isilah tabel berikut sebagai rangkuman hasil penyelidikan kelompok Anda:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Faktor</th>
+                <th>Pengaruh terhadap Partikel/Tumbukan</th>
+                <th>Dampak pada Laju Reaksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Suhu</td>
+                <td><input type="text" style="width: 90%;"></td>
+                <td><input type="text" style="width: 90%;"></td>
+            </tr>
+            <tr>
+                <td>Konsentrasi</td>
+                <td><input type="text" style="width: 90%;"></td>
+                <td><input type="text" style="width: 90%;"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>2. Aplikasi Masalah Awal:</h3>
+    <div class="question-area">
+        <p>Jelaskan mengapa tablet vitamin C lebih cepat larut dalam air hangat daripada air dingin.</p>
+        <textarea placeholder="Jelaskan di sini..."></textarea>
+    </div>
+    <div class="question-area">
+        <p>Jelaskan mengapa Asam Klorida dengan konsentrasi 4 M membersihkan karat lebih cepat daripada 1 M.</p>
+        <textarea placeholder="Jelaskan di sini..."></textarea>
+    </div>
+
+    <hr>
+
+    <h2>E. Evaluasi Proses Pemecahan Masalah ✅</h2>
+
+    <div class="question-area">
+        <p><strong>Refleksi Kelompok:</strong> Apakah hasil simulasi yang Anda peroleh sudah sejalan dengan hipotesis awal Anda mengenai pengaruh konsentrasi dan suhu? Jelaskan mengapa.</p>
+        <textarea placeholder="Tulis refleksi di sini..."></textarea>
+    </div>
+
+</div>
+
+</body>
+</html>
