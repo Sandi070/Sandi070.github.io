@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChemNamer: Game Tata Nama Senyawa Kimia</title>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6; /* Latar belakang abu-abu muda */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        #game-container {
+            width: 90%;
+            max-width: 650px; /* Lebar sedikit diperbesar */
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #1e88e5; /* Biru terang */
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .info-box {
+            display: flex;
+            justify-content: space-around;
+            background-color: #e0f7fa; /* Biru muda sangat terang */
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #00796b; /* Hijau kebiruan tua */
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 15px;
+        }
+
+        #compound-formula {
+            font-size: 1.8em; /* Ukuran formula diperbesar */
+            font-weight: bold;
+            color: #d84315; /* Merah oranye untuk senyawa */
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        #answer-input {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 15px 0 10px 0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            color: white; 
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #hint-button {
+            background-color: #ffb300; /* Kuning/Oranye untuk bantuan */
+        }
+
+        #hint-button[disabled] {
+            background-color: #ffcc80;
+            cursor: not-allowed;
+        }
+        
+        button:not(#hint-button) {
+            background-color: #1e88e5; /* Biru default untuk Jawab */
+        }
+
+        #next-level-button {
+            background-color: #43a047; /* Hijau untuk lanjut */
+        }
+
+        #reset-game-button {
+            background-color: #e53935; /* Merah untuk coba lagi */
+        }
+
+        /* Teks feedback */
+        .correct {
+            color: #43a047;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .incorrect {
+            color: #e53935;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .info-hint {
+             color: #ffb300;
+             font-style: italic;
+             padding: 5px;
+             border: 1px dashed #ffb300;
+             border-radius: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>🧪 ChemNamer: Tantangan Tata Nama Kimia</h1>
+        
+        <div id="level-info" class="info-box">
+            <p>Level: <span id="current-level">1</span>/15</p>
+            <p>Sisa Bantuan: <span id="hint-count">3</span></p>
+        </div>
+
+        <div id="question-area" class="card">
+            <h2>Level <span id="display-level">1</span></h2>
+            <p id="question-text">Bagaimana nama senyawa dari:</p>
+            <span id="compound-formula">NaCl</span>
+            
+            <input type="text" id="answer-input" placeholder="Masukkan nama senyawa..." required>
+            <button onclick="checkAnswer()">Jawab</button>
+            <button onclick="getHint()" id="hint-button">Minta Bantuan</button>
+        </div>
+
+        <div id="feedback-area" class="card hidden">
+            <p id="feedback-text"></p>
+            <button onclick="nextLevel()" id="next-level-button" class="hidden">Lanjut Level</button>
+            <button onclick="resetGame()" id="reset-game-button" class="hidden">Coba Lagi</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Data Soal Kimia (TOTAL 15 SOAL) ---
+        const levels = [
+            // Kategori 1: Senyawa Ion Biner (Logam Biloks Tunggal) - Level 1-4
+            { 
+                formula: "NaCl", 
+                answer: "natrium klorida", 
+                hint: "Ini adalah senyawa ion biner. Logamnya (Na) hanya punya satu biloks ($+1$). Anionnya mendapat akhiran -ida." 
+            },
+            { 
+                formula: "MgO", 
+                answer: "magnesium oksida", 
+                hint: "Mg adalah logam Golongan IIA, biloksnya selalu $+2$. Anion O menjadi oksida." 
+            },
+            { 
+                formula: "AlF3", 
+                answer: "aluminium fluorida", 
+                hint: "Al adalah logam Golongan IIIA, biloksnya $+3$. Tidak perlu angka Romawi." 
+            },
+            { 
+                formula: "KI", 
+                answer: "kalium iodida", 
+                hint: "K adalah logam Golongan IA, biloksnya $+1$." 
+            },
+            
+            // Kategori 2: Senyawa Kovalen Biner - Level 5-8
+            { 
+                formula: "CO2", 
+                answer: "karbon dioksida", 
+                hint: "Ini senyawa kovalen (nonlogam + nonlogam). Gunakan awalan Yunani (di- untuk $2\text{ O}$). Awalan mono- di awal biasanya diabaikan." 
+            },
+            { 
+                formula: "N2O5", 
+                answer: "dinitrogen pentaoksida", 
+                hint: "Perhatikan awalan untuk kedua nonlogam (di- untuk $\text{N}$ dan penta- untuk $\text{O}$). Akhiran $a$ pada penta biasanya hilang." 
+            },
+            { 
+                formula: "PCl5", 
+                answer: "fosfor pentaklorida", 
+                hint: "Senyawa kovalen. Perhatikan jumlah atom $\text{Cl}$ (penta-)." 
+            },
+            { 
+                formula: "SO3", 
+                answer: "sulfur trioksida", 
+                hint: "Nonlogam bertemu nonlogam. Awalan tri- untuk $3\text{ O}$." 
+            },
+
+            // Kategori 3: Senyawa Ion (Logam Biloks Majemuk) - Level 9-11
+            { 
+                formula: "FeCl3", 
+                answer: "besi(III) klorida", 
+                hint: "Logamnya (Fe) punya lebih dari satu biloks. $\text{Cl}$ biloksnya $-1$. Tentukan biloks $\text{Fe}$ $(+3)$ dan gunakan angka Romawi." 
+            },
+            { 
+                formula: "Cu2O", 
+                answer: "tembaga(I) oksida", 
+                hint: "O biloksnya $-2$. Tentukan biloks $\text{Cu}$ $(+1)$ dan gunakan angka Romawi. Ada $2$ $\text{Cu}$." 
+            },
+            { 
+                formula: "PbO2", 
+                answer: "timbal(IV) oksida", 
+                hint: "Timbal adalah logam biloks majemuk. Oksigen biloksnya $-2$. Jadi biloks $\text{Pb}$ harus $+4$." 
+            },
+
+            // Kategori 4: Senyawa Ion Poliatomik - Level 12-15
+            { 
+                formula: "CaSO4", 
+                answer: "kalsium sulfat", 
+                hint: "Ion positif: Kalsium. Ion negatif: Poliatomik $\\text{SO}_4^{2-}$ (Sulfat). Tidak perlu angka Romawi." 
+            },
+            { 
+                formula: "KNO3", 
+                answer: "kalium nitrat", 
+                hint: "Ion poliatomik: $\\text{NO}_3^-$ (Nitrat). Logam K adalah biloks tunggal." 
+            },
+            { 
+                formula: "NH4Cl", 
+                answer: "amonium klorida", 
+                hint: "Ini adalah senyawa ion yang kedua-duanya nonlogam, karena $\\text{NH}_4^+$ adalah ion poliatomik Amonium. Anionnya Klorida." 
+            },
+            { 
+                formula: "Cu(NO3)2", 
+                answer: "tembaga(II) nitrat", 
+                hint: "Logam $\text{Cu}$ biloks majemuk. Ion $\\text{NO}_3^-$ (Nitrat) biloksnya $-1$. Tentukan biloks $\text{Cu}$ ($+2$). Gunakan angka Romawi." 
+            }
+        ];
+
+        // --- Variabel State Game ---
+        let currentLevel = 1;
+        let hintCount = 3;
+        const totalLevels = levels.length;
+
+        // --- DOM Elements ---
+        const levelDisplay = document.getElementById('current-level');
+        const hintCountDisplay = document.getElementById('hint-count');
+        const compoundFormula = document.getElementById('compound-formula');
+        const answerInput = document.getElementById('answer-input');
+        const feedbackArea = document.getElementById('feedback-area');
+        const feedbackText = document.getElementById('feedback-text');
+        const nextLevelButton = document.getElementById('next-level-button');
+        const resetButton = document.getElementById('reset-game-button');
+        const hintButton = document.getElementById('hint-button');
+        const questionArea = document.getElementById('question-area');
+
+        // --- Fungsi Utama Game ---
+
+        /** Memuat soal untuk level saat ini */
+        function loadLevel() {
+            if (currentLevel > totalLevels) {
+                // Game Selesai
+                questionArea.classList.add('hidden');
+                feedbackArea.classList.remove('hidden');
+                feedbackText.className = 'correct';
+                feedbackText.innerHTML = "🎉 **SELAMAT!** Anda telah menyelesaikan semua " + totalLevels + " level. Anda ahli tata nama senyawa kimia!";
+                resetButton.textContent = "Main Lagi dari Level 1";
+                resetButton.classList.remove('hidden');
+                nextLevelButton.classList.add('hidden');
+                return;
+            }
+
+            const levelData = levels[currentLevel - 1];
+
+            // Update Tampilan
+            document.getElementById('display-level').textContent = currentLevel;
+            levelDisplay.textContent = `${currentLevel}/${totalLevels}`; // Menampilkan Level X/15
+            compoundFormula.textContent = levelData.formula;
+            answerInput.value = '';
+            answerInput.disabled = false;
+            hintButton.disabled = hintCount <= 0;
+            hintButton.style.display = 'inline-block';
+            
+            // Sembunyikan Feedback
+            feedbackArea.classList.add('hidden');
+            nextLevelButton.classList.add('hidden');
+            resetButton.classList.add('hidden');
+            
+            // Fokuskan input untuk kemudahan pengguna
+            answerInput.focus(); 
+        }
+
+        /** Memeriksa Jawaban Pengguna */
+        function checkAnswer() {
+            // Normalisasi input dan jawaban: huruf kecil dan hapus spasi/strip
+            const userInput = answerInput.value.trim().toLowerCase().replace(/[\s-]/g, ''); 
+            const correctAns = levels[currentLevel - 1].answer.toLowerCase().replace(/[\s-]/g, ''); 
+
+            feedbackArea.classList.remove('hidden');
+            answerInput.disabled = true;
+            hintButton.style.display = 'none';
+
+            if (userInput === correctAns) {
+                // Jawaban Benar
+                feedbackText.className = 'correct';
+                feedbackText.innerHTML = `**BENAR!** Jawaban Anda tepat: **${levels[currentLevel - 1].answer}**`;
+                nextLevelButton.classList.remove('hidden');
+            } else {
+                // Jawaban Salah
+                feedbackText.className = 'incorrect';
+                feedbackText.innerHTML = `**SALAH.** Jawaban Anda kurang tepat. Silakan coba lagi. Fokus pada aturan: ion, kovalen, atau biloks logam.`;
+                resetButton.textContent = "Coba Lagi Level Ini";
+                resetButton.classList.remove('hidden');
+            }
+        }
+
+        /** Mengambil Petunjuk/Bantuan */
+        function getHint() {
+            if (hintCount > 0) {
+                hintCount--;
+                hintCountDisplay.textContent = hintCount;
+                
+                const hint = levels[currentLevel - 1].hint;
+                // Tampilkan petunjuk di feedback area
+                feedbackText.className = 'info-hint';
+                feedbackText.innerHTML = `💡 **Petunjuk:** ${hint}`;
+                feedbackArea.classList.remove('hidden');
+                answerInput.disabled = false; // Bolehkan menjawab setelah melihat petunjuk
+                answerInput.focus();
+            }
+
+            if (hintCount <= 0) {
+                hintButton.disabled = true;
+                alert("Kesempatan bantuan Anda sudah habis! Jawab dengan yakin.");
+            }
+        }
+
+        /** Lanjut ke Level Berikutnya */
+        function nextLevel() {
+            currentLevel++;
+            loadLevel();
+        }
+
+        /** Mengulang Game (atau Level) */
+        function resetGame() {
+            // Reset penuh jika game sudah selesai
+            if (currentLevel > totalLevels) {
+                currentLevel = 1;
+                hintCount = 3;
+                hintCountDisplay.textContent = hintCount;
+            } 
+            // Memuat ulang level saat ini
+            loadLevel();
+        }
+
+        // Inisialisasi Game saat halaman dimuat
+        loadLevel();
+    </script>
+</body>
+</html>
