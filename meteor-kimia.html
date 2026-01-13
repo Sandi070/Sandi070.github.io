@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misi Kesetimbangan Kimia: Hindari Meteor!</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f0f23;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 100vh;
+            background-color: #000;
+            border: 2px solid #444;
+        }
+        canvas {
+            display: block;
+            background: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80') no-repeat center center;
+            background-size: cover;
+        }
+        #ui-layer {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px black;
+        }
+        .hud-item {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        /* Modal Soal */
+        #quizModal, #startModal, #gameOverModal, #winModal {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .hidden { display: none !important; }
+        
+        h2 { color: #ffcc00; margin-bottom: 20px; }
+        p { font-size: 1.1em; line-height: 1.5; }
+        
+        .option-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 5px;
+            width: 80%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.2s;
+        }
+        .option-btn:hover { background: #0b7dda; }
+        
+        .start-btn {
+            background: #4CAF50;
+            font-size: 20px;
+            padding: 15px 30px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        /* Controls clue */
+        .controls-hint {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<div id="gameContainer">
+    <canvas id="gameCanvas"></canvas>
+    
+    <div id="ui-layer">
+        <div class="hud-item">❤️ Nyawa: <span id="livesDisplay">3</span></div>
+        <div class="hud-item">⏳ Waktu: <span id="timeDisplay">7:00</span></div>
+    </div>
+
+    <div id="startModal">
+        <h1>Misi Kesetimbangan Kimia</h1>
+        <p>Hindari meteor yang jatuh!</p>
+        <p>Jika tertabrak, kamu harus menjawab soal kimia.<br>Salah jawab = Nyawa berkurang.</p>
+        <p>Bertahanlah selama 30 menit untuk menang!</p>
+        <button class="start-btn" onclick="startGame()">Mulai Misi</button>
+        <div class="controls-hint">Gunakan Panah Kiri/Kanan atau Sentuh Layar</div>
+    </div>
+
+    <div id="quizModal" class="hidden">
+        <h2 id="q-text">Pertanyaan disini?</h2>
+        <div id="options-container" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
+    </div>
+
+    <div id="gameOverModal" class="hidden">
+        <h1 style="color: red;">MISI GAGAL</h1>
+        <p>Nyawa kamu habis.</p>
+        <button class="start-btn" onclick="location.reload()">Coba Lagi</button>
+    </div>
+
+    <div id="winModal" class="hidden">
+        <h1 style="color: gold;">MISI SUKSES!</h1>
+        <p>Kamu berhasil mempertahankan kesetimbangan.</p>
+        <h2>SKOR: 100</h2>
+        <button class="start-btn" onclick="location.reload()">Main Lagi</button>
+    </div>
+</div>
+
+<script>
+    // --- KONFIGURASI GAME ---
+    const TOTAL_TIME = 30 * 60; // 30 menit dalam detik (1800 detik)
+    const PLAYER_SPEED = 7;
+    const METEOR_SPEED_BASE = 3;
+    const SPAWN_RATE = 40; // Semakin kecil semakin banyak meteor
+
+    // --- BANK SOAL KESETIMBANGAN KIMIA (15 NOMOR) ---
+    const questions = [
+        // TINGKAT MUDAH (Konsep Dasar)
+        {
+            q: "Dalam reaksi kesetimbangan: 2A(g) + B(s) ⇌ A<sub>2</sub>B(g), rumus K<sub>c</sub> yang benar adalah...",
+            options: ["Kc = [A2B] / ([A]^2 [B])", "Kc = [A2B] / [A]^2", "Kc = [A]^2 / [A2B]", "Kc = [A2B] / [B]"],
+            a: 1 // Padatan (s) tidak masuk rumus
+        },
+        {
+            q: "Suatu reaksi dikatakan setimbang dinamis apabila...",
+            options: ["Massa reaktan sama dengan massa produk", "Reaksi berhenti total", "Laju reaksi ke kanan = laju reaksi ke kiri", "Konsentrasi zat terus berubah"],
+            a: 2
+        },
+        {
+            q: "Nilai tetapan kesetimbangan (K) hanya dapat berubah jika...",
+            options: ["Suhu berubah", "Tekanan berubah", "Volume berubah", "Katalis ditambahkan"],
+            a: 0
+        },
+        {
+            q: "Pada reaksi: H<sub>2</sub>(g) + I<sub>2</sub>(g) ⇌ 2HI(g). Hubungan Kp dan Kc adalah...",
+            options: ["Kp = Kc", "Kp > Kc", "Kp < Kc", "Kp = Kc(RT)"],
+            a: 0 // Delta n = 2 - (1+1) = 0
+        },
+        {
+            q: "Fungsi katalis dalam kesetimbangan kimia adalah...",
+            options: ["Memperbesar nilai K", "Memperbanyak produk", "Mempercepat tercapainya kesetimbangan", "Menggeser kesetimbangan ke kanan"],
+            a: 2
+        },
+
+        // TINGKAT SEDANG (Perhitungan Sederhana & Logika)
+        {
+            q: "Reaksi A ⇌ B memiliki nilai K = 4. Jika reaksinya dibalik menjadi B ⇌ A, nilai K barunya adalah...",
+            options: ["-4", "0.25", "2", "tetap 4"],
+            a: 1 // 1 dibagi 4 = 0.25
+        },
+        {
+            q: "Jika K<sub>c</sub> = 2 dan suhu T = 300 K. Berapa K<sub>p</sub> untuk reaksi dengan Δn = 1? (R = 0.08)",
+            options: ["48", "24", "12", "6"],
+            a: 0 // Kp = Kc(RT)^1 -> 2 * (0.08 * 300) = 2 * 24 = 48
+        },
+        {
+            q: "Dalam wadah 1 L terdapat 2 mol gas A dan 4 mol gas B dalam keadaan setimbang sesuai reaksi A ⇌ 2B. Nilai K<sub>c</sub> adalah...",
+            options: ["2", "4", "8", "16"],
+            a: 2 // (4)^2 / 2 = 16 / 2 = 8
+        },
+        {
+            q: "Reaksi eksoterm (ΔH = -). Jika suhu dinaikkan, maka kesetimbangan akan...",
+            options: ["Bergeser ke produk (kanan), K bertambah", "Bergeser ke reaktan (kiri), K berkurang", "Tetap, K tetap", "Bergeser ke kanan, K berkurang"],
+            a: 1
+        },
+        {
+            q: "Diketahui reaksi N<sub>2</sub>(g) + 3H<sub>2</sub>(g) ⇌ 2NH<sub>3</sub>(g). Jika volume diperkecil, sistem akan bergeser ke...",
+            options: ["Kanan (koefisien kecil)", "Kiri (koefisien besar)", "Tetap", "Tidak tentu"],
+            a: 0
+        },
+
+        // TINGKAT SUKAR (Perhitungan Lanjut & Derajat Disosiasi)
+        {
+            q: "Mula-mula ada 4 mol gas NO<sub>2</sub>. Saat setimbang tersisa 1 mol NO<sub>2</sub>. Berapakah derajat disosiasi (α)?",
+            options: ["0.25", "0.50", "0.75", "1.00"],
+            a: 2 // Bereaksi 3 mol. alpha = 3/4 = 0.75
+        },
+        {
+            q: "Tekanan total sistem adalah 10 atm. Jika fraksi mol gas A = 0.2 dan gas B = 0.8. Berapa tekanan parsial gas A?",
+            options: ["8 atm", "5 atm", "2 atm", "0.2 atm"],
+            a: 2 // 0.2 x 10 = 2 atm
+        },
+        {
+            q: "Reaksi 2A ⇌ B. Mula-mula 3 mol A. Saat setimbang terbentuk 1 mol B. Tentukan mol A sisa!",
+            options: ["0.5 mol", "1 mol", "1.5 mol", "2 mol"],
+            a: 1 // B terbentuk 1, berarti A bereaksi 2. Sisa A = 3 - 2 = 1 mol
+        },
+        {
+            q: "Diketahui reaksi: PCl<sub>5</sub> ⇌ PCl<sub>3</sub> + Cl<sub>2</sub>. Jika pada saat setimbang perbandingan mol PCl<sub>5</sub> : PCl<sub>3</sub> adalah 1:2, dan tekanan total 3 atm. Tentukan Kp! (Anggap mol Cl2 = PCl3)",
+            options: ["1.0", "1.2", "2.4", "4.0"],
+            a: 2 // Mol total = 1+2+2 = 5. P(PCl5)=1/5*3=0.6. P(PCl3)=2/5*3=1.2. P(Cl2)=1.2. Kp = (1.2*1.2)/0.6 = 2.4
+        },
+        {
+            q: "Satuan K<sub>c</sub> untuk reaksi: 2SO<sub>2</sub>(g) + O<sub>2</sub>(g) ⇌ 2SO<sub>3</sub>(g) adalah...",
+            options: ["M", "M<sup>-1</sup>", "M<sup>-2</sup>", "M<sup>2</sup>"],
+            a: 1 // (M^2) / (M^2 . M) = 1/M = M^-1
+        }
+    ];
+
+    // --- VARIABEL GAME ---
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Sesuaikan ukuran canvas
+    function resize() {
+        canvas.width = document.getElementById('gameContainer').clientWidth;
+        canvas.height = document.getElementById('gameContainer').clientHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let player = { x: canvas.width/2, y: canvas.height - 60, w: 40, h: 40, color: '#00d2ff' };
+    let meteors = [];
+    let lives = 3;
+    let timeRemaining = TOTAL_TIME;
+    let frameCount = 0;
+    let gameRunning = false;
+    let isPaused = false;
+    let keys = {};
+    let currentMeteorIndex = -1; // Meteor yang menabrak
+
+    // Input Handler
+    window.addEventListener('keydown', e => keys[e.key] = true);
+    window.addEventListener('keyup', e => keys[e.key] = false);
+    
+    // Touch control (sederhana: klik kiri/kanan layar)
+    canvas.addEventListener('touchstart', (e) => {
+        const touchX = e.touches[0].clientX;
+        const rect = canvas.getBoundingClientRect();
+        const x = touchX - rect.left;
+        if(x < canvas.width / 2) keys['ArrowLeft'] = true;
+        else keys['ArrowRight'] = true;
+    });
+    canvas.addEventListener('touchend', () => {
+        keys['ArrowLeft'] = false;
+        keys['ArrowRight'] = false;
+    });
+
+    function startGame() {
+        document.getElementById('startModal').classList.add('hidden');
+        lives = 3;
+        timeRemaining = TOTAL_TIME;
+        meteors = [];
+        player.x = canvas.width / 2 - 20;
+        gameRunning = true;
+        isPaused = false;
+        updateTimerDisplay();
+        updateLivesDisplay();
+        gameLoop();
+        
+        // Timer countdown
+        const timerInterval = setInterval(() => {
+            if(!gameRunning) clearInterval(timerInterval);
+            if(!isPaused && gameRunning) {
+                timeRemaining--;
+                updateTimerDisplay();
+                if(timeRemaining <= 0) winGame();
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const m = Math.floor(timeRemaining / 60);
+        const s = timeRemaining % 60;
+        document.getElementById('timeDisplay').innerText = `${m}:${s < 10 ? '0'+s : s}`;
+    }
+
+    function updateLivesDisplay() {
+        document.getElementById('livesDisplay').innerText = lives;
+    }
+
+    function spawnMeteor() {
+        const size = Math.random() * 30 + 20;
+        meteors.push({
+            x: Math.random() * (canvas.width - size),
+            y: -size,
+            w: size,
+            h: size,
+            speed: METEOR_SPEED_BASE + Math.random() * 2
+        });
+    }
+
+    function showQuiz() {
+        isPaused = true;
+        const qIdx = Math.floor(Math.random() * questions.length);
+        const qData = questions[qIdx];
+        
+        const modal = document.getElementById('quizModal');
+        const qText = document.getElementById('q-text');
+        const optsContainer = document.getElementById('options-container');
+        
+        qText.innerHTML = qData.q;
+        optsContainer.innerHTML = '';
+        
+        qData.options.forEach((opt, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(index, qData.a);
+            optsContainer.appendChild(btn);
+        });
+        
+        modal.classList.remove('hidden');
+    }
+
+    function checkAnswer(selected, correct) {
+        document.getElementById('quizModal').classList.add('hidden');
+        
+        if (selected === correct) {
+            // Benar: Lanjut main, hapus meteor penyebab
+            if(currentMeteorIndex > -1) meteors.splice(currentMeteorIndex, 1);
+            isPaused = false;
+        } else {
+            // Salah: Nyawa berkurang
+            lives--;
+            updateLivesDisplay();
+            if(currentMeteorIndex > -1) meteors.splice(currentMeteorIndex, 1);
+            
+            if (lives <= 0) {
+                gameOver();
+            } else {
+                isPaused = false;
+            }
+        }
+    }
+
+    function gameOver() {
+        gameRunning = false;
+        document.getElementById('gameOverModal').classList.remove('hidden');
+    }
+
+    function winGame() {
+        gameRunning = false;
+        document.getElementById('winModal').classList.remove('hidden');
+    }
+
+    function update() {
+        if (!gameRunning || isPaused) return;
+
+        // Player Movement
+        if (keys['ArrowLeft'] && player.x > 0) player.x -= PLAYER_SPEED;
+        if (keys['ArrowRight'] && player.x < canvas.width - player.w) player.x += PLAYER_SPEED;
+
+        // Meteor Management
+        frameCount++;
+        if (frameCount % SPAWN_RATE === 0) spawnMeteor();
+
+        for (let i = 0; i < meteors.length; i++) {
+            let m = meteors[i];
+            m.y += m.speed;
+
+            // Collision Detection (Simple AABB)
+            if (player.x < m.x + m.w &&
+                player.x + player.w > m.x &&
+                player.y < m.y + m.h &&
+                player.h + player.y > m.y) {
+                
+                currentMeteorIndex = i;
+                showQuiz();
+            }
+
+            // Remove meteors off screen
+            if (m.y > canvas.height) {
+                meteors.splice(i, 1);
+                i--;
+            }
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw Player
+        ctx.fillStyle = player.color;
+        ctx.beginPath();
+        ctx.moveTo(player.x + player.w/2, player.y);
+        ctx.lineTo(player.x + player.w, player.y + player.h);
+        ctx.lineTo(player.x, player.y + player.h);
+        ctx.fill();
+
+        // Draw Meteors
+        ctx.fillStyle = '#ff4d4d';
+        for (let m of meteors) {
+            ctx.beginPath();
+            ctx.arc(m.x + m.w/2, m.y + m.h/2, m.w/2, 0, Math.PI*2);
+            ctx.fill();
+        }
+    }
+
+    function gameLoop() {
+        if (gameRunning) {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+    }
+</script>
+
+</body>
+</html>
