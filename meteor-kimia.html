@@ -105,14 +105,14 @@
     
     <div id="ui-layer">
         <div class="hud-item">❤️ Nyawa: <span id="livesDisplay">3</span></div>
-        <div class="hud-item">⏳ Waktu: <span id="timeDisplay">7:00</span></div>
+        <div class="hud-item">⏳ Waktu: <span id="timeDisplay">10:00</span></div>
     </div>
 
     <div id="startModal">
         <h1>Misi Kesetimbangan Kimia</h1>
         <p>Hindari meteor yang jatuh!</p>
         <p>Jika tertabrak, kamu harus menjawab soal kimia.<br>Salah jawab = Nyawa berkurang.</p>
-        <p>Bertahanlah selama 30 menit untuk menang!</p>
+        <p style="color: #ff4d4d; font-size: 0.9em;">Waspada! Meteor makin lama makin cepat!</p>
         <button class="start-btn" onclick="startGame()">Mulai Misi</button>
         <div class="controls-hint">Gunakan Panah Kiri/Kanan atau Sentuh Layar</div>
     </div>
@@ -138,10 +138,10 @@
 
 <script>
     // --- KONFIGURASI GAME ---
-    const TOTAL_TIME = 30 * 60; // 30 menit dalam detik (1800 detik)
-    const PLAYER_SPEED = 7;
-    const METEOR_SPEED_BASE = 3;
-    const SPAWN_RATE = 40; // Semakin kecil semakin banyak meteor
+    const TOTAL_TIME = 10 * 60; // 10 menit
+    const PLAYER_SPEED = 9; // Kecepatan pemain dinaikkan sedikit agar imbang
+    const METEOR_SPEED_BASE = 3; 
+    const SPAWN_RATE = 40; 
 
     // --- BANK SOAL KESETIMBANGAN KIMIA (15 NOMOR) ---
     const questions = [
@@ -149,7 +149,7 @@
         {
             q: "Dalam reaksi kesetimbangan: 2A(g) + B(s) ⇌ A<sub>2</sub>B(g), rumus K<sub>c</sub> yang benar adalah...",
             options: ["Kc = [A2B] / ([A]^2 [B])", "Kc = [A2B] / [A]^2", "Kc = [A]^2 / [A2B]", "Kc = [A2B] / [B]"],
-            a: 1 // Padatan (s) tidak masuk rumus
+            a: 1 
         },
         {
             q: "Suatu reaksi dikatakan setimbang dinamis apabila...",
@@ -164,7 +164,7 @@
         {
             q: "Pada reaksi: H<sub>2</sub>(g) + I<sub>2</sub>(g) ⇌ 2HI(g). Hubungan Kp dan Kc adalah...",
             options: ["Kp = Kc", "Kp > Kc", "Kp < Kc", "Kp = Kc(RT)"],
-            a: 0 // Delta n = 2 - (1+1) = 0
+            a: 0 
         },
         {
             q: "Fungsi katalis dalam kesetimbangan kimia adalah...",
@@ -176,17 +176,17 @@
         {
             q: "Reaksi A ⇌ B memiliki nilai K = 4. Jika reaksinya dibalik menjadi B ⇌ A, nilai K barunya adalah...",
             options: ["-4", "0.25", "2", "tetap 4"],
-            a: 1 // 1 dibagi 4 = 0.25
+            a: 1 
         },
         {
             q: "Jika K<sub>c</sub> = 2 dan suhu T = 300 K. Berapa K<sub>p</sub> untuk reaksi dengan Δn = 1? (R = 0.08)",
             options: ["48", "24", "12", "6"],
-            a: 0 // Kp = Kc(RT)^1 -> 2 * (0.08 * 300) = 2 * 24 = 48
+            a: 0 
         },
         {
             q: "Dalam wadah 1 L terdapat 2 mol gas A dan 4 mol gas B dalam keadaan setimbang sesuai reaksi A ⇌ 2B. Nilai K<sub>c</sub> adalah...",
             options: ["2", "4", "8", "16"],
-            a: 2 // (4)^2 / 2 = 16 / 2 = 8
+            a: 2 
         },
         {
             q: "Reaksi eksoterm (ΔH = -). Jika suhu dinaikkan, maka kesetimbangan akan...",
@@ -203,27 +203,27 @@
         {
             q: "Mula-mula ada 4 mol gas NO<sub>2</sub>. Saat setimbang tersisa 1 mol NO<sub>2</sub>. Berapakah derajat disosiasi (α)?",
             options: ["0.25", "0.50", "0.75", "1.00"],
-            a: 2 // Bereaksi 3 mol. alpha = 3/4 = 0.75
+            a: 2 
         },
         {
             q: "Tekanan total sistem adalah 10 atm. Jika fraksi mol gas A = 0.2 dan gas B = 0.8. Berapa tekanan parsial gas A?",
             options: ["8 atm", "5 atm", "2 atm", "0.2 atm"],
-            a: 2 // 0.2 x 10 = 2 atm
+            a: 2 
         },
         {
             q: "Reaksi 2A ⇌ B. Mula-mula 3 mol A. Saat setimbang terbentuk 1 mol B. Tentukan mol A sisa!",
             options: ["0.5 mol", "1 mol", "1.5 mol", "2 mol"],
-            a: 1 // B terbentuk 1, berarti A bereaksi 2. Sisa A = 3 - 2 = 1 mol
+            a: 1 
         },
         {
             q: "Diketahui reaksi: PCl<sub>5</sub> ⇌ PCl<sub>3</sub> + Cl<sub>2</sub>. Jika pada saat setimbang perbandingan mol PCl<sub>5</sub> : PCl<sub>3</sub> adalah 1:2, dan tekanan total 3 atm. Tentukan Kp! (Anggap mol Cl2 = PCl3)",
             options: ["1.0", "1.2", "2.4", "4.0"],
-            a: 2 // Mol total = 1+2+2 = 5. P(PCl5)=1/5*3=0.6. P(PCl3)=2/5*3=1.2. P(Cl2)=1.2. Kp = (1.2*1.2)/0.6 = 2.4
+            a: 2 
         },
         {
             q: "Satuan K<sub>c</sub> untuk reaksi: 2SO<sub>2</sub>(g) + O<sub>2</sub>(g) ⇌ 2SO<sub>3</sub>(g) adalah...",
             options: ["M", "M<sup>-1</sup>", "M<sup>-2</sup>", "M<sup>2</sup>"],
-            a: 1 // (M^2) / (M^2 . M) = 1/M = M^-1
+            a: 1 
         }
     ];
 
@@ -231,7 +231,6 @@
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     
-    // Sesuaikan ukuran canvas
     function resize() {
         canvas.width = document.getElementById('gameContainer').clientWidth;
         canvas.height = document.getElementById('gameContainer').clientHeight;
@@ -247,13 +246,12 @@
     let gameRunning = false;
     let isPaused = false;
     let keys = {};
-    let currentMeteorIndex = -1; // Meteor yang menabrak
+    let currentMeteorIndex = -1; 
 
     // Input Handler
     window.addEventListener('keydown', e => keys[e.key] = true);
     window.addEventListener('keyup', e => keys[e.key] = false);
     
-    // Touch control (sederhana: klik kiri/kanan layar)
     canvas.addEventListener('touchstart', (e) => {
         const touchX = e.touches[0].clientX;
         const rect = canvas.getBoundingClientRect();
@@ -278,7 +276,6 @@
         updateLivesDisplay();
         gameLoop();
         
-        // Timer countdown
         const timerInterval = setInterval(() => {
             if(!gameRunning) clearInterval(timerInterval);
             if(!isPaused && gameRunning) {
@@ -299,14 +296,24 @@
         document.getElementById('livesDisplay').innerText = lives;
     }
 
+    // --- MODIFIKASI: Meteor Makin Cepat ---
     function spawnMeteor() {
         const size = Math.random() * 30 + 20;
+        
+        // Hitung Progress Waktu (0.0 = Awal, 1.0 = Akhir Waktu)
+        const timeElapsed = TOTAL_TIME - timeRemaining;
+        const difficultyRatio = timeElapsed / TOTAL_TIME; 
+
+        // Tambah kecepatan berdasarkan progress waktu (Max tambah 5 speed)
+        const speedBoost = difficultyRatio * 5; 
+
         meteors.push({
             x: Math.random() * (canvas.width - size),
             y: -size,
             w: size,
             h: size,
-            speed: METEOR_SPEED_BASE + Math.random() * 2
+            // Kecepatan Dasar + Random + Boost Kesulitan
+            speed: METEOR_SPEED_BASE + (Math.random() * 2) + speedBoost
         });
     }
 
@@ -337,11 +344,9 @@
         document.getElementById('quizModal').classList.add('hidden');
         
         if (selected === correct) {
-            // Benar: Lanjut main, hapus meteor penyebab
             if(currentMeteorIndex > -1) meteors.splice(currentMeteorIndex, 1);
             isPaused = false;
         } else {
-            // Salah: Nyawa berkurang
             lives--;
             updateLivesDisplay();
             if(currentMeteorIndex > -1) meteors.splice(currentMeteorIndex, 1);
@@ -367,11 +372,9 @@
     function update() {
         if (!gameRunning || isPaused) return;
 
-        // Player Movement
         if (keys['ArrowLeft'] && player.x > 0) player.x -= PLAYER_SPEED;
         if (keys['ArrowRight'] && player.x < canvas.width - player.w) player.x += PLAYER_SPEED;
 
-        // Meteor Management
         frameCount++;
         if (frameCount % SPAWN_RATE === 0) spawnMeteor();
 
@@ -379,7 +382,6 @@
             let m = meteors[i];
             m.y += m.speed;
 
-            // Collision Detection (Simple AABB)
             if (player.x < m.x + m.w &&
                 player.x + player.w > m.x &&
                 player.y < m.y + m.h &&
@@ -389,7 +391,6 @@
                 showQuiz();
             }
 
-            // Remove meteors off screen
             if (m.y > canvas.height) {
                 meteors.splice(i, 1);
                 i--;
