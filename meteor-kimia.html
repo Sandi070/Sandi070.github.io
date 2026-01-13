@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Misi Kesetimbangan Kimia: Hindari Meteor!</title>
+    <title>Misi Kesetimbangan Kimia: Hujan Meteor!</title>
     <style>
         body {
             margin: 0;
@@ -50,7 +50,7 @@
         #quizModal, #startModal, #gameOverModal, #winModal {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -62,7 +62,7 @@
         }
         .hidden { display: none !important; }
         
-        h2 { color: #ffcc00; margin-bottom: 20px; }
+        h2 { color: #ffcc00; margin-bottom: 20px; font-size: 1.5rem; }
         p { font-size: 1.1em; line-height: 1.5; }
         
         .option-btn {
@@ -71,7 +71,8 @@
             border: none;
             padding: 12px 20px;
             margin: 5px;
-            width: 80%;
+            width: 90%;
+            max-width: 400px;
             font-size: 16px;
             cursor: pointer;
             border-radius: 5px;
@@ -88,9 +89,9 @@
             cursor: pointer;
             border-radius: 8px;
             margin-top: 20px;
+            font-weight: bold;
         }
         
-        /* Controls clue */
         .controls-hint {
             margin-top: 15px;
             font-size: 0.9em;
@@ -105,16 +106,16 @@
     
     <div id="ui-layer">
         <div class="hud-item">❤️ Nyawa: <span id="livesDisplay">3</span></div>
-        <div class="hud-item">⏳ Waktu: <span id="timeDisplay">10:00</span></div>
+        <div class="hud-item">⏳ Waktu: <span id="timeDisplay">05:00</span></div>
     </div>
 
     <div id="startModal">
-        <h1>Misi Kesetimbangan Kimia</h1>
-        <p>Hindari meteor yang jatuh!</p>
-        <p>Jika tertabrak, kamu harus menjawab soal kimia.<br>Salah jawab = Nyawa berkurang.</p>
-        <p style="color: #ff4d4d; font-size: 0.9em;">Waspada! Meteor makin lama makin cepat!</p>
-        <button class="start-btn" onclick="startGame()">Mulai Misi</button>
-        <div class="controls-hint">Gunakan Panah Kiri/Kanan atau Sentuh Layar</div>
+        <h1 style="color: #00d2ff; text-shadow: 0 0 10px cyan;">TANTANGAN KESETIMBANGAN</h1>
+        <p>Waktu: 5 Menit</p>
+        <p>Waspada! Jumlah meteor akan bertambah banyak seiring waktu.</p>
+        <p>Tertabrak? Jawab soal kimia dengan benar untuk lanjut!</p>
+        <button class="start-btn" onclick="startGame()">MULAI MISI</button>
+        <div class="controls-hint">Gerakkan pesawat dengan Panah Kiri/Kanan atau Sentuh Layar</div>
     </div>
 
     <div id="quizModal" class="hidden">
@@ -123,107 +124,112 @@
     </div>
 
     <div id="gameOverModal" class="hidden">
-        <h1 style="color: red;">MISI GAGAL</h1>
-        <p>Nyawa kamu habis.</p>
+        <h1 style="color: red; font-size: 3em;">MISI GAGAL</h1>
+        <p>Nyawa Habis.</p>
         <button class="start-btn" onclick="location.reload()">Coba Lagi</button>
     </div>
 
     <div id="winModal" class="hidden">
-        <h1 style="color: gold;">MISI SUKSES!</h1>
-        <p>Kamu berhasil mempertahankan kesetimbangan.</p>
-        <h2>SKOR: 100</h2>
+        <h1 style="color: gold; font-size: 3em;">MISI SUKSES!</h1>
+        <p>Kamu ahli dalam mengatasi tekanan!</p>
+        <h2 style="color: white;">Nilai: 100</h2>
         <button class="start-btn" onclick="location.reload()">Main Lagi</button>
     </div>
 </div>
 
 <script>
     // --- KONFIGURASI GAME ---
-    const TOTAL_TIME = 10 * 60; // 10 menit
-    const PLAYER_SPEED = 9; // Kecepatan pemain dinaikkan sedikit agar imbang
-    const METEOR_SPEED_BASE = 3; 
-    const SPAWN_RATE = 40; 
+    const TOTAL_TIME = 5 * 60; // 5 Menit
+    const PLAYER_SPEED = 9; 
+    const METEOR_SPEED_BASE = 3.5; 
+    
+    // Spawn Rate Awal (35 frame sekali). Semakin kecil angka = semakin banyak meteor.
+    const SPAWN_RATE_START = 35; 
+    const SPAWN_RATE_END = 10;   // Di akhir game, meteor muncul sangat cepat (chaos)
 
-    // --- BANK SOAL KESETIMBANGAN KIMIA (15 NOMOR) ---
+    // --- BANK SOAL KHUSUS (KONSEP, Kc, Kp) ---
     const questions = [
-        // TINGKAT MUDAH (Konsep Dasar)
+        // --- KONSEP DASAR & JENIS KESETIMBANGAN ---
         {
-            q: "Dalam reaksi kesetimbangan: 2A(g) + B(s) ⇌ A<sub>2</sub>B(g), rumus K<sub>c</sub> yang benar adalah...",
-            options: ["Kc = [A2B] / ([A]^2 [B])", "Kc = [A2B] / [A]^2", "Kc = [A]^2 / [A2B]", "Kc = [A2B] / [B]"],
-            a: 1 
-        },
-        {
-            q: "Suatu reaksi dikatakan setimbang dinamis apabila...",
-            options: ["Massa reaktan sama dengan massa produk", "Reaksi berhenti total", "Laju reaksi ke kanan = laju reaksi ke kiri", "Konsentrasi zat terus berubah"],
-            a: 2
-        },
-        {
-            q: "Nilai tetapan kesetimbangan (K) hanya dapat berubah jika...",
-            options: ["Suhu berubah", "Tekanan berubah", "Volume berubah", "Katalis ditambahkan"],
-            a: 0
-        },
-        {
-            q: "Pada reaksi: H<sub>2</sub>(g) + I<sub>2</sub>(g) ⇌ 2HI(g). Hubungan Kp dan Kc adalah...",
-            options: ["Kp = Kc", "Kp > Kc", "Kp < Kc", "Kp = Kc(RT)"],
-            a: 0 
-        },
-        {
-            q: "Fungsi katalis dalam kesetimbangan kimia adalah...",
-            options: ["Memperbesar nilai K", "Memperbanyak produk", "Mempercepat tercapainya kesetimbangan", "Menggeser kesetimbangan ke kanan"],
-            a: 2
-        },
-
-        // TINGKAT SEDANG (Perhitungan Sederhana & Logika)
-        {
-            q: "Reaksi A ⇌ B memiliki nilai K = 4. Jika reaksinya dibalik menjadi B ⇌ A, nilai K barunya adalah...",
-            options: ["-4", "0.25", "2", "tetap 4"],
-            a: 1 
-        },
-        {
-            q: "Jika K<sub>c</sub> = 2 dan suhu T = 300 K. Berapa K<sub>p</sub> untuk reaksi dengan Δn = 1? (R = 0.08)",
-            options: ["48", "24", "12", "6"],
-            a: 0 
-        },
-        {
-            q: "Dalam wadah 1 L terdapat 2 mol gas A dan 4 mol gas B dalam keadaan setimbang sesuai reaksi A ⇌ 2B. Nilai K<sub>c</sub> adalah...",
-            options: ["2", "4", "8", "16"],
-            a: 2 
-        },
-        {
-            q: "Reaksi eksoterm (ΔH = -). Jika suhu dinaikkan, maka kesetimbangan akan...",
-            options: ["Bergeser ke produk (kanan), K bertambah", "Bergeser ke reaktan (kiri), K berkurang", "Tetap, K tetap", "Bergeser ke kanan, K berkurang"],
+            q: "Keadaan setimbang dinamis tercapai apabila...",
+            options: ["Massa reaktan sama dengan massa produk", "Laju reaksi ke kanan = laju reaksi ke kiri", "Reaksi berhenti total", "Volume gas di kedua ruas sama"],
             a: 1
         },
         {
-            q: "Diketahui reaksi N<sub>2</sub>(g) + 3H<sub>2</sub>(g) ⇌ 2NH<sub>3</sub>(g). Jika volume diperkecil, sistem akan bergeser ke...",
-            options: ["Kanan (koefisien kecil)", "Kiri (koefisien besar)", "Tetap", "Tidak tentu"],
+            q: "Manakah yang merupakan contoh kesetimbangan heterogen?",
+            options: ["N2(g) + 3H2(g) ⇌ 2NH3(g)", "2SO2(g) + O2(g) ⇌ 2SO3(g)", "CaCO3(s) ⇌ CaO(s) + CO2(g)", "H2(g) + I2(g) ⇌ 2HI(g)"],
+            a: 2 // Ada fase padat (s) dan gas (g)
+        },
+        {
+            q: "Pada persamaan reaksi: 2H2(g) + O2(g) ⇌ 2H2O(l), zat yang tidak dimasukkan dalam rumus Kc adalah...",
+            options: ["H2(g)", "O2(g)", "H2O(l)", "Semua dimasukkan"],
+            a: 2 // Cairan murni (l) tidak masuk
+        },
+        {
+            q: "Dalam perhitungan Kp, fase zat yang diperhitungkan hanya...",
+            options: ["Gas (g) saja", "Larutan (aq) saja", "Padat (s) dan Cair (l)", "Gas (g) dan Larutan (aq)"],
             a: 0
         },
+        
+        // --- RUMUS & PERHITUNGAN Kc ---
+        {
+            q: "Rumus tetapan kesetimbangan (Kc) untuk reaksi: BiCl3(aq) + H2O(l) ⇌ BiOCl(s) + 2HCl(aq) adalah...",
+            options: ["Kc = [HCl]^2 / [BiCl3]", "Kc = [BiOCl][HCl]^2 / [BiCl3][H2O]", "Kc = [BiCl3] / [HCl]^2", "Kc = [HCl] / [BiCl3]"],
+            a: 0 // H2O(l) dan BiOCl(s) diabaikan
+        },
+        {
+            q: "Diketahui reaksi A(g) ⇌ 2B(g). Jika saat setimbang [A]=0,5 M dan [B]=2 M, berapakah nilai Kc?",
+            options: ["2", "4", "8", "16"],
+            a: 2 // Kc = [B]^2 / [A] = (2)^2 / 0.5 = 4 / 0.5 = 8
+        },
+        {
+            q: "Jika nilai Kc sangat kecil (Kc << 1), maka pada kesetimbangan...",
+            options: ["Produk melimpah", "Reaktan melimpah (sedikit produk)", "Laju reaksi sangat cepat", "Suhu sangat tinggi"],
+            a: 1
+        },
+        {
+            q: "Dalam wadah 2 Liter terdapat 4 mol gas NO2 saat setimbang. Berapakah konsentrasi [NO2]?",
+            options: ["0.5 M", "2 M", "4 M", "8 M"],
+            a: 1 // M = n/V = 4/2 = 2
+        },
 
-        // TINGKAT SUKAR (Perhitungan Lanjut & Derajat Disosiasi)
+        // --- RUMUS & PERHITUNGAN Kp ---
         {
-            q: "Mula-mula ada 4 mol gas NO<sub>2</sub>. Saat setimbang tersisa 1 mol NO<sub>2</sub>. Berapakah derajat disosiasi (α)?",
-            options: ["0.25", "0.50", "0.75", "1.00"],
-            a: 2 
+            q: "Rumus Kp untuk reaksi: 2SO2(g) + O2(g) ⇌ 2SO3(g) adalah...",
+            options: ["Kp = (P_SO3) / (P_SO2 . P_O2)", "Kp = (P_SO3)^2 / ((P_SO2)^2 . P_O2)", "Kp = (P_SO2)^2 / (P_SO3)", "Kp = P_total"],
+            a: 1
         },
         {
-            q: "Tekanan total sistem adalah 10 atm. Jika fraksi mol gas A = 0.2 dan gas B = 0.8. Berapa tekanan parsial gas A?",
-            options: ["8 atm", "5 atm", "2 atm", "0.2 atm"],
-            a: 2 
+            q: "Diketahui reaksi P(g) ⇌ Q(g) + R(g). Jika tekanan parsial P=2 atm, Q=3 atm, R=4 atm. Berapa nilai Kp?",
+            options: ["12", "6", "1.5", "0.6"],
+            a: 1 // Kp = (3 * 4) / 2 = 12 / 2 = 6
+        },
+
+        // --- HUBUNGAN Kc DAN Kp ---
+        {
+            q: "Hubungan matematis antara Kp dan Kc adalah...",
+            options: ["Kp = Kc (RT)", "Kp = Kc / (RT)", "Kp = Kc (RT)^Δn", "Kp = Kc + RT"],
+            a: 2
         },
         {
-            q: "Reaksi 2A ⇌ B. Mula-mula 3 mol A. Saat setimbang terbentuk 1 mol B. Tentukan mol A sisa!",
-            options: ["0.5 mol", "1 mol", "1.5 mol", "2 mol"],
-            a: 1 
+            q: "Nilai Δn (selisih koefisien gas) untuk reaksi N2(g) + 3H2(g) ⇌ 2NH3(g) adalah...",
+            options: ["-2", "-1", "1", "2"],
+            a: 0 // Kanan(2) - Kiri(1+3) = 2 - 4 = -2
         },
         {
-            q: "Diketahui reaksi: PCl<sub>5</sub> ⇌ PCl<sub>3</sub> + Cl<sub>2</sub>. Jika pada saat setimbang perbandingan mol PCl<sub>5</sub> : PCl<sub>3</sub> adalah 1:2, dan tekanan total 3 atm. Tentukan Kp! (Anggap mol Cl2 = PCl3)",
-            options: ["1.0", "1.2", "2.4", "4.0"],
-            a: 2 
+            q: "Kapan nilai Kp sama dengan Kc (Kp = Kc)?",
+            options: ["Saat suhu tinggi", "Saat tekanan rendah", "Saat Δn = 0 (koefisien kiri = kanan)", "Saat berwujud padat"],
+            a: 2
         },
         {
-            q: "Satuan K<sub>c</sub> untuk reaksi: 2SO<sub>2</sub>(g) + O<sub>2</sub>(g) ⇌ 2SO<sub>3</sub>(g) adalah...",
-            options: ["M", "M<sup>-1</sup>", "M<sup>-2</sup>", "M<sup>2</sup>"],
-            a: 1 
+            q: "Pada reaksi H2(g) + I2(g) ⇌ 2HI(g), hubungan Kp dan Kc adalah...",
+            options: ["Kp > Kc", "Kp < Kc", "Kp = Kc", "Tidak berhubungan"],
+            a: 2 // Koefisien kiri (1+1=2) sama dengan kanan (2). Delta n = 0.
+        },
+        {
+            q: "Jika Kc = 2 dan RT = 5. Berapakah Kp untuk reaksi dengan Δn = 2?",
+            options: ["10", "20", "50", "100"],
+            a: 2 // Kp = 2 * (5)^2 = 2 * 25 = 50
         }
     ];
 
@@ -296,23 +302,22 @@
         document.getElementById('livesDisplay').innerText = lives;
     }
 
-    // --- MODIFIKASI: Meteor Makin Cepat ---
+    // --- LOGIKA SPAWN METEOR DINAMIS ---
     function spawnMeteor() {
-        const size = Math.random() * 30 + 20;
+        const size = Math.random() * 25 + 15; // Ukuran variasi
         
         // Hitung Progress Waktu (0.0 = Awal, 1.0 = Akhir Waktu)
         const timeElapsed = TOTAL_TIME - timeRemaining;
         const difficultyRatio = timeElapsed / TOTAL_TIME; 
 
-        // Tambah kecepatan berdasarkan progress waktu (Max tambah 5 speed)
+        // 1. Kecepatan bertambah
         const speedBoost = difficultyRatio * 5; 
-
+        
         meteors.push({
             x: Math.random() * (canvas.width - size),
             y: -size,
             w: size,
             h: size,
-            // Kecepatan Dasar + Random + Boost Kesulitan
             speed: METEOR_SPEED_BASE + (Math.random() * 2) + speedBoost
         });
     }
@@ -332,7 +337,7 @@
         qData.options.forEach((opt, index) => {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
-            btn.innerText = opt;
+            btn.innerHTML = opt; // Pakai innerHTML agar subscript terbaca
             btn.onclick = () => checkAnswer(index, qData.a);
             optsContainer.appendChild(btn);
         });
@@ -372,11 +377,23 @@
     function update() {
         if (!gameRunning || isPaused) return;
 
+        // Player Movement
         if (keys['ArrowLeft'] && player.x > 0) player.x -= PLAYER_SPEED;
         if (keys['ArrowRight'] && player.x < canvas.width - player.w) player.x += PLAYER_SPEED;
 
         frameCount++;
-        if (frameCount % SPAWN_RATE === 0) spawnMeteor();
+
+        // --- DINAMIS SPAWN RATE ---
+        // Menghitung spawn rate saat ini berdasarkan waktu tersisa
+        // Awal: spawn setiap 35 frame. Akhir: spawn setiap 10 frame (3.5x lebih banyak meteor)
+        const timeElapsed = TOTAL_TIME - timeRemaining;
+        const difficultyRatio = timeElapsed / TOTAL_TIME; 
+        
+        // Rumus interpolasi linear sederhana
+        const currentSpawnRate = SPAWN_RATE_START - ((SPAWN_RATE_START - SPAWN_RATE_END) * difficultyRatio);
+        
+        // Gunakan Math.floor agar menjadi integer
+        if (frameCount % Math.floor(currentSpawnRate) === 0) spawnMeteor();
 
         for (let i = 0; i < meteors.length; i++) {
             let m = meteors[i];
@@ -403,11 +420,14 @@
         
         // Draw Player
         ctx.fillStyle = player.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = player.color;
         ctx.beginPath();
         ctx.moveTo(player.x + player.w/2, player.y);
         ctx.lineTo(player.x + player.w, player.y + player.h);
         ctx.lineTo(player.x, player.y + player.h);
         ctx.fill();
+        ctx.shadowBlur = 0; // Reset shadow
 
         // Draw Meteors
         ctx.fillStyle = '#ff4d4d';
