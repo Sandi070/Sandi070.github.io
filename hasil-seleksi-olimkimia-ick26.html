@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengumuman Tim Olimpiade Kimia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0056b3; /* Biru Gelap */
+            --accent-color: #00a8cc;  /* Cyan Cerah */
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Header Section */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        header .icon-chemistry {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid var(--primary-color);
+            
+            /* PERBAIKAN DI SINI: Animasi fadeInUp digabung */
+            opacity: 0; 
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+        }
+
+        li {
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .student-name {
+            font-weight: 600;
+        }
+
+        .student-class {
+            font-size: 0.85rem;
+            background-color: #e3f2fd;
+            color: var(--primary-color);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        /* Special Styling for Teams */
+        .team-section {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .team-title {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Staggered Animation Delay for cards */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="icon-chemistry">
+            <i class="fas fa-atom"></i>
+        </div>
+        <h1>Hasil Seleksi Tim Olimpiade Kimia</h1>
+        <p>Selamat kepada seluruh siswa yang telah lolos seleksi.</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="card">
+            <h2><i class="fas fa-flask"></i> Kategori OSN</h2>
+            <ul>
+                <li>
+                    <span class="student-name">Muhamad Emirsyah Amran</span>
+                    <span class="student-class">XI-1</span>
+                </li>
+                <li>
+                    <span class="student-name">Naisyah Zumratul Islam</span>
+                    <span class="student-class">XI-1</span>
+                </li>
+                <li>
+                    <span class="student-name">Siti Salwa Nur Azzah</span>
+                    <span class="student-class">XI-5</span>
+                </li>
+                <li>
+                    <span class="student-name">Al Ashar Sarwan Saputra</span>
+                    <span class="student-class">X-5</span>
+                </li>
+                <li>
+                    <span class="student-name">Muhammad Abyan Asmar</span>
+                    <span class="student-class">X-2</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-users"></i> LCTK COMIC</h2>
+            
+            <div class="team-section">
+                <span class="team-title">Tim A</span>
+                <ul>
+                    <li>
+                        <span class="student-name">Naisyah Zumratul Islam</span>
+                        <span class="student-class">XI-1</span>
+                    </li>
+                    <li>
+                        <span class="student-name">Salwa</span>
+                        <span class="student-class">XI-1</span>
+                    </li>
+                    <li>
+                        <span class="student-name">Wa Ode Uyun Ramadhani</span>
+                        <span class="student-class">XI-3</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="team-section">
+                <span class="team-title">Tim B</span>
+                <ul>
+                    <li>
+                        <span class="student-name">Al Ashar Sarwan Saputra</span>
+                        <span class="student-class">X-5</span>
+                    </li>
+                    <li>
+                        <span class="student-name">Valda Nufah Ramadhani</span>
+                        <span class="student-class">X-3</span>
+                    </li>
+                    <li>
+                        <span class="student-name">Nasywa Zakia Budiani</span>
+                        <span class="student-class">X-2</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-microscope"></i> KTK COMIC</h2>
+            <ul>
+                <li>
+                    <span class="student-name">Muhamad Emirsyah Amran</span>
+                    <span class="student-class">XI-1</span>
+                </li>
+                <li>
+                    <span class="student-name">Al Ashar Sarwan Saputra</span>
+                    <span class="student-class">X-5</span>
+                </li>
+                <li>
+                    <span class="student-name">Sitti Zahra Aira Badi</span>
+                    <span class="student-class">X-5</span>
+                </li>
+                <li>
+                    <span class="student-name">Wa Ode Uyun Ramadhani</span>
+                    <span class="student-class">XI-3</span>
+                </li>
+                <li>
+                    <span class="student-name">Muhammad Abyan Asmar</span>
+                    <span class="student-class">X-2</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-trophy"></i> Ranking 1</h2>
+            <ul>
+                <li>
+                    <span class="student-name">Muhamad Emirsyah Amran</span>
+                    <span class="student-class">XI-1</span>
+                </li>
+                <li>
+                    <span class="student-name">Wa Ode Uyun Ramadhani</span>
+                    <span class="student-class">XI-3</span>
+                </li>
+                <li>
+                    <span class="student-name">Naisyah Zumratul Islam</span>
+                    <span class="student-class">XI-1</span>
+                </li>
+                <li>
+                    <span class="student-name">Al Ashar Sarwan Saputra</span>
+                    <span class="student-class">X-5</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Tim Olimpiade Kimia Sekolah. Dibuat dengan semangat <i class="fas fa-heart" style="color:red;"></i> dan Kimia.</p>
+    </footer>
+
+</body>
+</html>
